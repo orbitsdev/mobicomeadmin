@@ -203,7 +203,7 @@
                                 <ul role="list" class="-mx-2 space-y-1">
                                     <li>
                                       
-                                        <a href="#"
+                                        <a href="{{route('list-users')}}"
                                             class="bg-gray-50 text-indigo-600 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
                                             <svg class="h-6 w-6 shrink-0 text-indigo-600" fill="none"
                                                 viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -250,6 +250,12 @@
                                             Excercise
                                         </a>
                                     </li>
+                                   
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="text-lg mb-1 uppercase font-semibold leading-6 text-gray-600">Teacher Management</div>
+                                <ul role="list" class="-mx-2 mt-2 space-y-1">
                                     <li>
                                         <a href="#"
                                             class="text-gray-600 hover:text-indigo-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 ">
@@ -259,7 +265,7 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round"
                                                     d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
                                             </svg>
-                                            Documents
+                                            Excercise
                                         </a>
                                     </li>
                                     <li>
@@ -269,41 +275,9 @@
                                                 fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                                 stroke="currentColor" aria-hidden="true">
                                                 <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
+                                                    d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
                                             </svg>
-                                            Reports
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <div class="text-lg mb-1 uppercase font-semibold leading-6 text-gray-600">Teacher Management</div>
-                                <ul role="list" class="-mx-2 mt-2 space-y-1">
-                                    <li>
-                                     
-                                        <a href="#"
-                                            class="text-gray-600 hover:text-indigo-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 ">
-                                            <span
-                                                class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white text-gray-400 border-gray-200 group-hover:border-indigo-600 group-hover:text-indigo-600">H</span>
-                                            <span class="truncate">Heroicons</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                            class="text-gray-600 hover:text-indigo-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 ">
-                                            <span
-                                                class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white text-gray-400 border-gray-200 group-hover:border-indigo-600 group-hover:text-indigo-600">T</span>
-                                            <span class="truncate">Tailwind Labs</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                            class="text-gray-600 hover:text-indigo-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 ">
-                                            <span
-                                                class="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium bg-white text-gray-400 border-gray-200 group-hover:border-indigo-600 group-hover:text-indigo-600">W</span>
-                                            <span class="truncate">Workcation</span>
+                                            Students
                                         </a>
                                     </li>
                                 </ul>
@@ -332,6 +306,8 @@
 
                 <main class="py-10">
                     <div class="px-4 sm:px-6 lg:px-8">
+
+                        {{$slot}}
                         <!-- Your content -->
                     </div>
                 </main>

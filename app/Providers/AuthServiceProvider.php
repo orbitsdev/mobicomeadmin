@@ -6,6 +6,8 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Support\Facades\FilamentColor;
+use Filament\Support\Colors\Color;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -26,5 +28,15 @@ class AuthServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         Model::unguard();
+
+         
+FilamentColor::register([
+    'danger' => Color::Red,
+    'gray' => Color::Zinc,
+    'info' => Color::Blue,
+    'primary' => Color::Amber,
+    'success' => Color::Green,
+    'warning' => Color::Amber,
+]);
     }
 }
