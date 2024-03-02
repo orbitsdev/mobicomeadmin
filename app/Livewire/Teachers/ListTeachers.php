@@ -63,7 +63,8 @@ class ListTeachers extends Component implements HasForms, HasTable
 
                 CreateAction::make()
 
-                    ->icon('heroicon-m-academic-cap')
+                ->icon('heroicon-m-sparkles')
+
                     ->form([
 
 

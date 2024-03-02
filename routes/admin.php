@@ -1,5 +1,7 @@
 <?php
 
+use App\Livewire\Chapters\ChapterDetails;
+use App\Livewire\Chapters\ListChapters;
 use App\Livewire\Students\ListStudents;
 use App\Livewire\Teachers\ListTeachers;
 use App\Livewire\Teachers\ManageSections;
@@ -18,5 +20,7 @@ Route::middleware([
     Route::get("list-teachers", ListTeachers::class )->name('list-teachers'); 
     Route::get("manage-teacher-sections/{record}", ManageSections::class )->name('manage-teacher-sections'); 
     Route::get("list-students", ListStudents::class )->name('list-students'); 
+    Route::get("list-chapters", ListChapters::class )->name('list-chapters'); 
+    // Route::get("view-chapter", ChapterDetails::class )->name('view-chapter'); 
 });
 // Route::get("users-details{record}/", UserDetails::class )->name('users-details'); 

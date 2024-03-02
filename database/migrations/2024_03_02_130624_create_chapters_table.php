@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('chapters', function (Blueprint $table) {
             $table->id();
+            $table->string('title')->nullable();
+            $table->text('description')->nullable();
+            $table->unsignedBigInteger('chapter_number')->unique()->nullable();
+            $table->text('image_path')->nullable();
             $table->timestamps();
         });
     }

@@ -68,7 +68,6 @@ class ListUsers extends Component implements HasForms, HasTable
                 CreateAction::make()
                     ->modalHeading('Create User')
                     ->label('New User')
-                    ->icon('heroicon-m-users')
                     ->form([
 
 

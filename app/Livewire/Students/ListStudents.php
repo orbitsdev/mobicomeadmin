@@ -102,7 +102,8 @@ class ListStudents extends Component implements HasForms, HasTable
 
                 CreateAction::make()
 
-                    ->icon('heroicon-m-plus')
+                ->icon('heroicon-m-sparkles')
+
                     ->form([
 
 

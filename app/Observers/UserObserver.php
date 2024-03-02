@@ -30,8 +30,8 @@ class UserObserver
     {
         if(!empty($user->profile_photo_path)){
 
-            if(Storage::disk('public')->exists($user->image)){
-                Storage::disk('public')->delete($user->image);
+            if(Storage::disk('public')->exists($user->profile_photo_path)){
+                Storage::disk('public')->delete($user->profile_photo_path);
             }
         }
 
