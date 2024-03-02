@@ -31,12 +31,9 @@ class AuthServiceProvider extends ServiceProvider
 
          
 FilamentColor::register([
-    'danger' => Color::Red,
-    'gray' => Color::Zinc,
-    'info' => Color::Blue,
-    'primary' => Color::Amber,
-    'success' => Color::Green,
-    'warning' => Color::Amber,
+
+    'primary' => "#16a34a",
+
 ]);
     }
 }

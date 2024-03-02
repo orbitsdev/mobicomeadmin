@@ -8,3 +8,13 @@
 * {
     font-family: 'Rubik', sans-serif;
 }
+
+
+.system-text-color{
+    color: #16a34a;
+}
+
+.selected-higlight{ 
+    @apply bg-gray-50 system-text-color
+    bg-gray-50 system-text-color font-medium;
+}
