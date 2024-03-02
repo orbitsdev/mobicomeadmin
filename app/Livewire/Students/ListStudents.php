@@ -4,10 +4,14 @@ namespace App\Livewire\Students;
 
 use Filament\Tables;
 use App\Models\Student;
+use Filament\Forms\Get;
 use Livewire\Component;
 use Filament\Tables\Table;
 use Filament\Actions\StaticAction;
+use App\Models\Section as MSection;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Grouping\Group;
 use Illuminate\Contracts\View\View;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Forms\Components\Select;
@@ -19,8 +23,10 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -37,22 +43,60 @@ class ListStudents extends Component implements HasForms, HasTable
             ->query(Student::query())
             ->columns([
                 TextColumn::make('user')->formatStateUsing(function ($state) {
-                    return $state->getFullName(). '-'. $state->email;
+                    return $state->getFullName();
                 })
-                ->label('Name')
-                ->searchable(query: function (Builder $query, string $search): Builder {
-                    return $query->whereHas('user', function ($query) use ($search) {
-                        $query->where('first_name', 'like', "%{$search}%")
-                            ->orWhere('last_name', 'like', "%{$search}%");
-                    });
-                }),
-                TextColumn::make('section.title')
-                ->label('Section')
-                ,
+                    ->label('Student Name')
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        return $query->whereHas('user', function ($query) use ($search) {
+                            $query->where('first_name', 'like', "%{$search}%")
+                                ->orWhere('last_name', 'like', "%{$search}%");
+                        });
+                       }),
+                   TextColumn::make('user.email')->searchable()->label('Email'),
+                  
+                    TextColumn::make('handled_section.teacher.user')
+                    ->formatStateUsing(function($state){
+                        return $state->getFullName();
+                    })
+                    ->label('Teacher')
+                    ->badge(),
+                    TextColumn::make('handled_section.section.title')
+                        ->label('Section')
+                        ->badge()
+                        ->searchable(),
+
+
+                
+                        
+        
             ])
             ->filters([
-                //
-            ])
+                // Filter::make('section')
+                // ->form([
+                //     Select::make('section_id')
+                //         ->options(MSection::whereHas('handled_sections')->pluck('title','id'))
+                //         ->label('Card Availabilty')
+                //         ->selectablePlaceholder(false)
+                // ])
+                // ->query(function (Builder $query, array $data): Builder {
+                //     return $query->whereHas('handled_section',function($query) use($data){
+                //         $query->where('section_id', $data['section_id']);
+                //     });
+                // })
+
+
+                SelectFilter::make('sections')
+                ->options(fn() => MSection::whereHas('handled_sections')->pluck('title', 'id')) //you probably want to limit this in some way?
+                ->modifyQueryUsing(function (Builder $query, $state) {
+                    if (! $state['value']) {
+                        return $query;
+                    }
+                    return $query->whereHas('handled_section', fn($query) => $query->where('section_id', $state['value']));
+                }),
+            
+            ],
+            layout: FiltersLayout::AboveContent
+            )
 
             ->headerActions([
 
@@ -70,48 +114,35 @@ class ListStudents extends Component implements HasForms, HasTable
                             ])
                             ->schema([
 
-
                                 Select::make('user_id')
-                                    ->label('Select Account')
+                                    ->label('Select Student')
                                     ->relationship(
                                         name: 'user',
-                                        titleAttribute: 'last_name',
-                                        modifyQueryUsing: fn (Builder $query) => $query->whereDoesntHave('teacher')->whereDoesntHave('student'),
+                                        titleAttribute: 'first_name',
+                                        modifyQueryUsing: fn ($query) => $query->where('role', 'Student')->whereDoesntHave('student'),
                                     )
-                                    ->required()
-
-                                    ->getOptionLabelFromRecordUsing(fn (Model $record) => $record->getFullName() .' - '.$record->email)
-                                    ->searchable(['first_name', 'last_name','email'])
+                                    ->getOptionLabelFromRecordUsing(fn (Model $record) => $record->getFullName() . ' - ' . $record->email)
                                     ->preload()
-                                    ->searchable()
-                                    ->columnSpanFull(),
+                                    ->required()
+                                    ->columnSpanFull()
+                                    ->searchable(['first_name', 'last_name', 'email']),
 
-                            ]),
-                        Section::make()
-                            ->columns([
-                                'sm' => 3,
-                                'xl' => 6,
-                                '2xl' => 8,
-                            ])
-                            ->schema([
-
-
-                                Select::make('section_id')
+                                Select::make('handled_section_id')
                                     ->label('Select Section')
                                     ->relationship(
-                                        name: 'section',
-                                        titleAttribute: 'title',
+                                        name: 'handled_section',
+                                        titleAttribute: 'created_at',
 
                                     )
-                                    ->required()
-
-                                    ->getOptionLabelFromRecordUsing(fn (Model $record) => $record->title)
-                                    ->searchable(['title'])
+                                    ->getOptionLabelFromRecordUsing(fn (Model $record) => $record->section->title)
                                     ->preload()
-                                    ->searchable()
+                                    ->required()
                                     ->columnSpanFull(),
 
+
+
                             ]),
+
 
 
 
@@ -124,81 +155,81 @@ class ListStudents extends Component implements HasForms, HasTable
             ->actions([
                 ActionGroup::make([
                     Action::make('view')
-                    ->color('primary')
-                    ->icon('heroicon-m-eye')
-                    ->label('View Details')
-                    ->modalContent(function (Student $record) {
-                        return view('livewire.users.user-details', ['record' => $record->user]);
-                    })
-                    ->modalSubmitAction(false)
-                    ->modalCancelAction(fn (StaticAction $action) => $action->label('Close'))
-                    ->disabledForm()
-                    ->slideOver(),
+                        ->color('primary')
+                        ->icon('heroicon-m-eye')
+                        ->label('View Details')
+                        ->modalContent(function (Student $record) {
+                            return view('livewire.users.user-details', ['record' => $record->user]);
+                        })
+                        ->modalSubmitAction(false)
+                        ->modalCancelAction(fn (StaticAction $action) => $action->label('Close'))
+                        ->disabledForm()
+                        ->slideOver(),
 
-                    EditAction::make()
-                    ->modalWidth(MaxWidth::SevenExtraLarge)
-                    ->color('primary')
-                    ->form([
-                      
-                        Section::make()
-                            ->columns([
-                                'sm' => 3,
-                                'xl' => 6,
-                                '2xl' => 8,
-                            ])
-                            ->schema([
+                    // EditAction::make()
+                    //     ->modalWidth(MaxWidth::SevenExtraLarge)
+                    //     ->color('primary')
+                    //     ->form([
+
+                    //         Section::make()
+                    //             ->columns([
+                    //                 'sm' => 3,
+                    //                 'xl' => 6,
+                    //                 '2xl' => 8,
+                    //             ])
+                    //             ->schema([
 
 
-                                Select::make('user_id')
-                                    ->label('Select Account')
-                                    ->relationship(
-                                        name: 'user',
-                                        titleAttribute: 'last_name',
-                                        modifyQueryUsing: fn (Builder $query) => $query->whereDoesntHave('teacher')->whereDoesntHave('student'),
-                                    )
-                                    ->required()
+                    //                 Select::make('user_id')
+                    //                     ->label('Select Account')
+                    //                     ->relationship(
+                    //                         name: 'user',
+                    //                         titleAttribute: 'last_name',
+                    //                         modifyQueryUsing: fn (Builder $query) => $query->whereDoesntHave('teacher')->whereDoesntHave('student'),
+                    //                     )
+                    //                     ->required()
 
-                                    ->getOptionLabelFromRecordUsing(fn ( $record) => $record->getFullName() .' - '.$record->email)
-                                    ->searchable(['first_name', 'last_name','email'])
-                                    ->preload()
-                                    ->searchable()
-                                    ->columnSpanFull(),
+                    //                     ->getOptionLabelFromRecordUsing(fn ($record) => $record->getFullName() . ' - ' . $record->email)
+                    //                     ->searchable(['first_name', 'last_name', 'email'])
+                    //                     ->preload()
+                    //                     ->searchable()
+                    //                     ->columnSpanFull(),
 
-                                    Select::make('section_id')
-                                    ->label('Select Section')
-                                    ->relationship(
-                                        name: 'section',
-                                        titleAttribute: 'title',
+                    //                 Select::make('section_id')
+                    //                     ->label('Select Section')
+                    //                     ->relationship(
+                    //                         name: 'section',
+                    //                         titleAttribute: 'title',
 
-                                    )
-                                    ->required()
+                    //                     )
+                    //                     ->required()
 
-                                    ->getOptionLabelFromRecordUsing(fn ( $record) => $record->title)
-                                    ->searchable(['title'])
-                                    ->preload()
-                                    ->searchable()
-                                    ->columnSpanFull(),
-                                    Select::make('teacher_id')
-                                    ->label('Select Section')
-                                    ->relationship(
-                                        name: 'section',
-                                        titleAttribute: 'title',
+                    //                     ->getOptionLabelFromRecordUsing(fn ($record) => $record->title)
+                    //                     ->searchable(['title'])
+                    //                     ->preload()
+                    //                     ->searchable()
+                    //                     ->columnSpanFull(),
+                    //                 Select::make('teacher_id')
+                    //                     ->label('Select Section')
+                    //                     ->relationship(
+                    //                         name: 'section',
+                    //                         titleAttribute: 'title',
 
-                                    )
-                                    ->required()
+                    //                     )
+                    //                     ->required()
 
-                                    ->getOptionLabelFromRecordUsing(fn ( $record) => $record->title)
-                                    ->searchable(['title'])
-                                    ->preload()
-                                    ->searchable()
-                                    ->columnSpanFull(),
+                    //                     ->getOptionLabelFromRecordUsing(fn ($record) => $record->title)
+                    //                     ->searchable(['title'])
+                    //                     ->preload()
+                    //                     ->searchable()
+                    //                     ->columnSpanFull(),
 
-                            ]),
-                       
-    
-    
-                        // TextInput::make('abbreviation')->maxLength(191)->required()->columnSpanFull(),
-                        ]),
+                    //             ]),
+
+
+
+                    //         // TextInput::make('abbreviation')->maxLength(191)->required()->columnSpanFull(),
+                    //     ]),
                     DeleteAction::make('delete'),
                 ]),
             ])
@@ -210,10 +241,18 @@ class ListStudents extends Component implements HasForms, HasTable
                         ->requiresConfirmation()
                         ->action(fn (Collection $records) => $records->each->delete())
                 ])
-                ->label('Actions')
-                ,
+                    ->label('Actions'),
             ])
-            ->modifyQueryUsing(fn (Builder $query) => $query->whereHas('user')->whereHas('section'));
+            ->groups([
+            
+                    Group::make('handled_section.section.title')
+                        ->label('Section')
+               
+                    ->titlePrefixedWithLabel(false),
+
+            ])
+            ->defaultGroup('handled_section.section.title');
+
             ;
     }
 

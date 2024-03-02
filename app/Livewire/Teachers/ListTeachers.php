@@ -122,16 +122,15 @@ class ListTeachers extends Component implements HasForms, HasTable
                        
                         Select::make('section_id')
                                 
-                        ->label('Select Account')
+                        ->label('Select Section')
                         ->relationship(
                             name: 'section',
                            titleAttribute: 'title',
                         )
                         ->distinct()
                         ->disableOptionsWhenSelectedInSiblingRepeaterItems()
-                        ->columnSpanFull()
-                        
-                        ,
+                        ->columnSpanFull(),
+
                         
                     ])
 

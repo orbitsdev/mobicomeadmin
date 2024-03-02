@@ -14,7 +14,7 @@ class Section extends Model
     use HasFactory;
 
 
-    public function handled_section(){
+    public function handled_sections(){
         return $this->hasMany(HandledSection::class);
     }
 }
