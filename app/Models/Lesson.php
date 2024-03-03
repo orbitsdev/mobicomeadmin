@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Chapter;
+use App\Models\LessonNumber;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
@@ -14,6 +15,10 @@ class Lesson extends Model
 
     public function chapter(){
         return $this->belongsTo(Chapter::class);
+    }
+
+    public function lesson_number(){
+        return $this->belongsTo(LessonNumber::class);
     }
 
     public function videoExists()

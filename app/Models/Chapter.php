@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Lesson;
+use App\Models\ChapterNumber;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,6 +36,13 @@ class Chapter extends Model
     public function getLatestChapterNumber(){
         $latestChapter = $this->latest()->first();
         return $latestChapter ? $latestChapter->chapter_number : 'N';
+    }
+
+    public function chapter_number(){
+        return $this->belongsTo(ChapterNumber::class);
+    }
+    public function number(){
+        return $this->chapter_number->number;
     }
     
 

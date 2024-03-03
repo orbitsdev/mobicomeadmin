@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title')->nullable();
             $table->text('description')->nullable();
-            $table->unsignedBigInteger('chapter_number')->unique()->nullable();
+            // $table->unsignedBigInteger('chapter_number')->unique()->nullable();
+            $table->unsignedBigInteger('chapter_number_id')->unique()->nullable();
             $table->text('image_path')->nullable();
             $table->timestamps();
         });

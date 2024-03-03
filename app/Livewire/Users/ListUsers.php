@@ -18,12 +18,14 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Rawilk\FilamentPasswordInput\Password;
 use Illuminate\Database\Eloquent\Collection;
@@ -45,23 +47,25 @@ class ListUsers extends Component implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('last_name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('role')
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'Admin' => 'success',
-                        'Student' => 'info',
-                        'Teacher' => 'primary',
-                        default => 'gray',
-                    })
+                  
+                  
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
+                    ViewColumn::make('')->view('tables.columns.user-role')
 
                 // Tables\Columns\TextColumn::make('profile_photo_path')
                 //     ->searchable(),
 
             ])
             ->filters([
-                //
+                SelectFilter::make('role')->options(
+                    [
+                        'Admin' => 'Admin',
+                        'Student' => 'Student',
+                        'Teacher' => 'Teacher',
+                    ]
+                )
             ])
             ->headerActions([
 

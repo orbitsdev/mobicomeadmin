@@ -11,6 +11,7 @@ use App\Livewire\Teachers\ListTeachers;
 use App\Livewire\Chapters\LessonDetails;
 use App\Livewire\Chapters\ManageLessons;
 use App\Livewire\Chapters\ChapterDetails;
+use App\Livewire\Lessons\ListLessons as LessonsListLessons;
 use App\Livewire\Teachers\ManageSections;
 
 
@@ -29,5 +30,6 @@ Route::middleware([
     // Route::get("manage-chapter/{record}", ManageChapter::class )->name('manage-chapter'); 
     Route::get("manage-chapter/lessons/{record}", ListLessons::class )->name('manage-chapter-lessons'); 
     Route::get("manage-chapter/view/lesson/{record}", LessonDetails::class)->name('view-lesson-details'); 
+    Route::get("list-lessons", LessonsListLessons::class)->name('list-lessons'); 
 });
 // Route::get("users-details{record}/", UserDetails::class )->name('users-details'); 

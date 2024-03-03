@@ -6,7 +6,7 @@
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
             <div class="mx-auto max-w-2xl lg:mx-0">
                 <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Chapter
-                    {{ $record->chapter_number }}: {{ $record->title }} </h2>
+                    {{ $record->number() }}: {{ $record->title }} </h2>
 
                 <span
                     class="mt-2 inline-flex items-center gap-x-1.5 rounded-full bg-blue-100 px-1.5 py-1 text-xs font-medium text-blue-700">
