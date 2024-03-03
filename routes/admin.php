@@ -1,5 +1,7 @@
 <?php
 
+use App\Livewire\Exercises\ListQuestions;
+use App\Models\Excercise;
 use App\Livewire\ManageChapter;
 use App\Livewire\Users\ListUsers;
 use App\Livewire\Users\UserDetails;
@@ -11,9 +13,12 @@ use App\Livewire\Teachers\ListTeachers;
 use App\Livewire\Chapters\LessonDetails;
 use App\Livewire\Chapters\ManageLessons;
 use App\Livewire\Chapters\ChapterDetails;
-use App\Livewire\Lessons\ListLessons as LessonsListLessons;
-use App\Livewire\Teachers\ManageSections;
 
+use App\Livewire\Teachers\ManageSections;
+use App\Livewire\Excercises\ListExcercises;
+use App\Livewire\Excercises\ExerciseDetails;
+use App\Livewire\Lessons\ListLessons as LessonsListLessons;
+use App\Livewire\Questions\QuestionDetails;
 
 Route::middleware([
     'auth:sanctum',
@@ -29,7 +34,11 @@ Route::middleware([
     Route::get("view-chapter/{record}", ChapterDetails::class )->name('view-chapter'); 
     // Route::get("manage-chapter/{record}", ManageChapter::class )->name('manage-chapter'); 
     Route::get("manage-chapter/lessons/{record}", ListLessons::class )->name('manage-chapter-lessons'); 
-    Route::get("manage-chapter/view/lesson/{record}", LessonDetails::class)->name('view-lesson-details'); 
+    Route::get("view/lesson/{record}", LessonDetails::class)->name('view-lesson-details'); 
     Route::get("list-lessons", LessonsListLessons::class)->name('list-lessons'); 
+    Route::get("list-excercises", ListExcercises::class)->name('list-excercises'); 
+    Route::get("manage-excercise/questions/{record}", ListQuestions::class)->name('manage-excercise-questions'); 
+    Route::get("view-question/{record}", QuestionDetails::class)->name('view-question-details'); 
+    // Route::get("view-excercise/{record}", ExerciseDetails::class)->name('view-excercise'); 
 });
 // Route::get("users-details{record}/", UserDetails::class )->name('users-details'); 

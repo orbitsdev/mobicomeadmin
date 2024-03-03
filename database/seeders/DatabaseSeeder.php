@@ -4,13 +4,14 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-
+use App\Models\QuestionNumber;
 use Illuminate\Database\Seeder;
 use Database\Seeders\UserSeeder;
 use Database\Seeders\NumberSeeder;
 use Database\Seeders\ChapterSeeder;
 use Database\Seeders\LessonNumberSeeder;
 use Database\Seeders\ChapterNumberSeeder;
+use Database\Seeders\QuestionNumberSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -26,6 +27,7 @@ class DatabaseSeeder extends Seeder
             ChapterSeeder::class,
             ChapterNumberSeeder::class,
             LessonNumberSeeder::class,
+            QuestionNumberSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();
 
