@@ -66,6 +66,7 @@ class ListUsers extends Component implements HasForms, HasTable
             ->headerActions([
 
                 CreateAction::make()
+                ->successNotificationTitle('User Created')
                     ->modalHeading('Create User')
                     ->label('New User')
                     ->form([
@@ -140,6 +141,7 @@ class ListUsers extends Component implements HasForms, HasTable
                         ->disabledForm()
                         ->slideOver(),
                     EditAction::make('edit')
+                    ->successNotificationTitle('Updated Save')
                         ->color('primary')
                         ->form([
 

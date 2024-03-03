@@ -34,6 +34,10 @@ class ChapterObserver
                 Storage::disk('public')->delete($chapter->image_path);
             }
         }
+
+        $chapter->lessons->each(function ($lesson) {
+            $lesson->delete();
+        });
     }
 
     /**

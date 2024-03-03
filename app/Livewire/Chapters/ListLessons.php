@@ -3,6 +3,7 @@
 namespace App\Livewire\Chapters;
 
 use Filament\Tables;
+use App\Models\Lesson;
 use App\Models\Chapter;
 use Livewire\Component;
 use Filament\Tables\Table;
@@ -11,11 +12,13 @@ use Filament\Tables\Actions\Action;
 use Illuminate\Contracts\View\View;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Forms\Components\FileUpload;
@@ -24,28 +27,35 @@ use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteAction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Forms\Components\Section as FSection;
 
-class ListChapters extends Component implements HasForms, HasTable
+class ListLessons extends Component implements HasForms, HasTable
 {
     use InteractsWithForms;
     use InteractsWithTable;
 
+
+    public  Chapter $record;
     public function table(Table $table): Table
     {
         return $table
-            ->query(Chapter::query())
+            ->query(Lesson::query())
             ->columns([
-                Tables\Columns\TextColumn::make('title')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('chapter_number')
-                
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('lessons_count')->counts('lessons')
 
+                // TextColumn::make('chapter.title')->searchable(),
+               
+                
+                TextColumn::make('title')
+                    ->searchable(),
+                // Tables\Columns\ImageColumn::make('image_path'),
+                // Tables\Columns\TextColumn::make('video_path')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('lesson_number')    
+                //     ->numeric()
+                //     ->sortable(),
+              
             ])
             ->filters([
                 //
@@ -54,23 +64,39 @@ class ListChapters extends Component implements HasForms, HasTable
             ->headerActions([
 
                 CreateAction::make()
-                ->successNotificationTitle('Chapter Created')
-                    ->label('New Chapter')
+                ->successNotificationTitle('Lesson Created')
+                    ->label('New Lesson')
                     ->icon('heroicon-m-sparkles')
+
+                    ->mutateFormDataUsing(function (array $data): array {
+                        $data['chapter_id'] = $this->record->id;
+
+                        if(!empty($data['image_path'])){
+                            $data['image_type'] = Storage::disk('public')->mimeType($data['image_path']);
+
+                        }
+                        if(!empty($data['video_path'])){
+                            $data['video_type'] = Storage::disk('public')->mimeType($data['video_path']);
+
+                        }
+                 
+                        return $data;
+                    })
 
                     ->form([
 
-                        Section::make()
+                        FSection::make()
                             ->columns([
-                                'sm' => 3,
-                                'xl' => 6,
+                                'sm' => 8,
+                                'md' => 8,
+                                'xl' => 8,
                                 '2xl' => 8,
                             ])
                             ->schema([
 
 
                                 TextInput::make('title')->required()->columnSpan(4),
-                                Select::make('chapter_number')->options([
+                                Select::make('lesson_number')->options([
                                     1 => '1',    2 => '2',    3 => '3',    4 => '4',    5 => '5',
                                     6 => '6',    7 => '7',    8 => '8',    9 => '9',    10 => '10',
                                     11 => '11',  12 => '12',  13 => '13',  14 => '14',  15 => '15',
@@ -97,7 +123,7 @@ class ListChapters extends Component implements HasForms, HasTable
                                 ->unique(ignoreRecord:true)
                                 ->searchable(),
 
-                                RichEditor::make('description')
+                                RichEditor::make('content')
                                 
                                 ->toolbarButtons([
                                   
@@ -115,19 +141,24 @@ class ListChapters extends Component implements HasForms, HasTable
                                     'underline',
                                     'undo',
                                 ])
-                                
                                     ->columnSpanFull()
                                     
                                     ,
-                                FileUpload::make('image_path')
+                                  FileUpload::make('image_path')
                                     ->disk('public')
                                     ->directory('chapters-images')
                                     ->image()
+                                   
                                     // ->required()
                                     ->label('Display Image')
-
-
-                                    ->columnSpanFull()
+                                    ->columnSpan(4),
+                                    FileUpload::make('video_path')
+                                    ->acceptedFileTypes(['video/*'])
+                                    ->disk('public')
+                                    ->directory('lessons-videos')
+                                    ->maxSize(20000)
+                                    ->columnSpan(4)
+                                    ,
 
                             ]),
 
@@ -135,48 +166,60 @@ class ListChapters extends Component implements HasForms, HasTable
 
 
                         // TextInput::make('abbreviation')->maxLength(191)->required()->columnSpanFull(),
-                    ])
+                    ]
+                    )  
+                    ->closeModalByClickingAway(false)
                     ->modalWidth(MaxWidth::SevenExtraLarge)
+                    ->slideOver()
                     ->disableCreateAnother(),
             ])
             ->actions([
-                Action::make('Manage Lessons')
-                ->color('primary')
-                ->icon('heroicon-m-cursor-arrow-rays')
-                ->label('Manage Lessons')
-                ->url(function (Chapter $record) {
-                    // return ('livewire.chapters.manage-lessons', ['record' => $record]);
-                    return route('manage-chapter-lessons',['record'=> $record]);
-                }),
-             
                 ActionGroup::make([
                     Action::make('view')
                         ->color('primary')
                         ->icon('heroicon-m-eye')
-                        ->label('View Details')
-                        ->modalContent(function (Chapter $record) {
-                            return view('livewire.chapters.chapter-details', ['record' => $record]);
+                        ->label('View Lesson')
+                        // ->url(fn (Model $record): string => route('view-lesson-details', ['record' => $record]))
+                        ->modalContent(function (Lesson $record) {
+                            return view('livewire.chapters.lesson-details', ['record' => $record]);
                         })
+                        ->modalWidth(MaxWidth::Full)
                         ->modalSubmitAction(false)
                         ->modalCancelAction(fn (StaticAction $action) => $action->label('Close'))
                         ->disabledForm()
-                        ->slideOver(),
+                        ->slideOver()
+                        ->closeModalByClickingAway(false)
+                        ,
                  
                     EditAction::make('edit')
-                    ->successNotificationTitle('Updated Save')
+                    ->successNotificationTitle('Lesson updated')
                         ->color('primary')
+                        ->mutateRecordDataUsing(function (array $data): array {
+
+                            if(!empty($data['image_path'])){
+                                $data['image_type'] = Storage::disk('public')->mimeType($data['image_path']);
+
+                            }
+                            if(!empty($data['video_path'])){
+                                $data['video_type'] = Storage::disk('public')->mimeType($data['video_path']);
+
+                            }
+                           
+                     
+                            return $data;
+                        })
                         ->form([
-                            Section::make()
+                            FSection::make()
                             ->columns([
                                 'sm' => 3,
-                                'xl' => 6,
+                                'xl' => 8,
                                 '2xl' => 8,
                             ])
                             ->schema([
 
 
                                 TextInput::make('title')->required()->columnSpan(4),
-                                Select::make('chapter_number')->options([
+                                Select::make('lesson_number')->options([
                                     1 => '1',    2 => '2',    3 => '3',    4 => '4',    5 => '5',
                                     6 => '6',    7 => '7',    8 => '8',    9 => '9',    10 => '10',
                                     11 => '11',  12 => '12',  13 => '13',  14 => '14',  15 => '15',
@@ -201,12 +244,10 @@ class ListChapters extends Component implements HasForms, HasTable
                                 ->required()
                                 ->columnSpan(4)
                                 ->unique(ignoreRecord:true)
-                                ->searchable()
-                                ,
+                                ->searchable(),
 
-                               
-                                RichEditor::make('description')
-
+                                RichEditor::make('content')
+                                
                                 ->toolbarButtons([
                                   
                                     'blockquote',
@@ -223,26 +264,32 @@ class ListChapters extends Component implements HasForms, HasTable
                                     'underline',
                                     'undo',
                                 ])
-                                
                                     ->columnSpanFull()
-                                
-                                   
-                                    ->columnSpanFull(),
-                                FileUpload::make('image_path')
+                                    
+                                    ,
+                                  FileUpload::make('image_path')
                                     ->disk('public')
                                     ->directory('chapters-images')
                                     ->image()
+                                  
                                     // ->required()
                                     ->label('Display Image')
+                                    ->columnSpan(4),
+                                    FileUpload::make('video_path')
+                                    ->acceptedFileTypes(['video/*'])
+                                    ->disk('public')
+                                    ->directory('lessons-videos')
+                                    ->maxSize(20000)
+                                    ->columnSpan(4)
+                                    ,
 
-
-                                    ->columnSpanFull()])
+                            ]),
 
                         ])
-                        ->modalWidth(MaxWidth::SevenExtraLarge),
+                        ->modalWidth(MaxWidth::SevenExtraLarge)
+                        ->slideOver(),
                     DeleteAction::make('delete'),
                 ]),
-
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -254,11 +301,13 @@ class ListChapters extends Component implements HasForms, HasTable
                 ])
                 ->label('Actions')
                 ,
-            ]);
+            ])
+            ->modifyQueryUsing(fn (Builder $query) => $query->where('chapter_id', $this->record->id))
+            ;
     }
 
     public function render(): View
     {
-        return view('livewire.chapters.list-chapters');
+        return view('livewire.chapters.list-lessons');
     }
 }

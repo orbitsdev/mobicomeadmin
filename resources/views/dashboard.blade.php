@@ -1,4 +1,4 @@
-<x-main-layout>
+<x-app>
     
 
 
@@ -9,4 +9,4 @@
             </div>
         </div>
     </div>
-</x-main-layout>
+</x-app>

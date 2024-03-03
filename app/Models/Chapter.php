@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Lesson;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,6 +10,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Chapter extends Model
 {
     use HasFactory;
+
+
+    public function lessons(){
+        return $this->hasMany(Lesson::class);
+    }
+
+    public function getTotalLessons(){
+        return $this->lessons()->count();
+    }
+    public function getTitle(){
+        return $this->chapter_number." ".$this->title;
+    }
 
     public function getImage(){
 

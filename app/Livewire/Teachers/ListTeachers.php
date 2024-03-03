@@ -62,7 +62,7 @@ class ListTeachers extends Component implements HasForms, HasTable
             ->headerActions([
 
                 CreateAction::make()
-
+                ->successNotificationTitle('Teacher Created')
                 ->icon('heroicon-m-sparkles')
 
                     ->form([
@@ -105,6 +105,7 @@ class ListTeachers extends Component implements HasForms, HasTable
 
             ->actions([
                 EditAction::make('manage')
+                ->successNotificationTitle('Updated Save')
                 ->color('primary')
                 ->icon('heroicon-m-cursor-arrow-rays')
                 ->label('Manage Sections')
