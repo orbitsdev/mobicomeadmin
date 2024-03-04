@@ -4,10 +4,11 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 
+use Filament\Support\Colors\Color;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Support\Facades\FilamentColor;
-use Filament\Support\Colors\Color;
+use Filament\Support\View\Components\Modal;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -29,11 +30,13 @@ class AuthServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         Model::unguard();
 
-         
-FilamentColor::register([
 
-    'primary' => "#16a34a",
+        FilamentColor::register([
 
-]);
+            'primary' => "#16a34a",
+
+        ]);
+
+        Modal::closedByClickingAway(false);
     }
 }

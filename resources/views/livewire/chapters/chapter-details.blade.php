@@ -2,9 +2,9 @@
 
 
 
-    <div class="white ">
-        <div class="mx-auto max-w-7xl px-6 lg:px-8">
-            <div class="mx-auto max-w-2xl lg:mx-0">
+    <div class="white max-w-7xl mx-auto  ">
+        <div class=" px-6 lg:px-8">
+            <div class="mx-auto  lg:mx-0">
                 <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Chapter
                     {{ $record->number() }}: {{ $record->title }} </h2>
 
@@ -16,12 +16,12 @@
                     {{$record->getTotalLessons()}} Lessons
                 </span>
 
-                
+
                 <div class="mt-8 prose max-w-none ">
                     @markdown($record->description)
                 </div>
-              
-                
+
+
             </div>
 
         </div>

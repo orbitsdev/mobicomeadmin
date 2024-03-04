@@ -115,7 +115,7 @@ class ListChapters extends Component implements HasForms, HasTable
                                 RichEditor::make('description')
 
                                     ->toolbarButtons([
-
+                                        'attachFiles',
                                         'blockquote',
                                         'bold',
                                         'bulletList',
@@ -149,7 +149,8 @@ class ListChapters extends Component implements HasForms, HasTable
 
                         // TextInput::make('abbreviation')->maxLength(191)->required()->columnSpanFull(),
                     ])
-                    ->modalWidth(MaxWidth::SevenExtraLarge)
+                    ->modalWidth(MaxWidth::Full)
+                    ->slideOver()
                     ->disableCreateAnother(),
             ])
             ->actions([
@@ -173,6 +174,7 @@ class ListChapters extends Component implements HasForms, HasTable
                         ->modalSubmitAction(false)
                         ->modalCancelAction(fn (StaticAction $action) => $action->label('Close'))
                         ->disabledForm()
+                        ->modalWidth(MaxWidth::Full)
                         ->slideOver(),
 
                     EditAction::make('edit')
@@ -189,7 +191,7 @@ class ListChapters extends Component implements HasForms, HasTable
 
 
                                     TextInput::make('title')->required()->columnSpan(4)
-                                    
+
                                     ,
                                      Select::make('chapter_number_id')
                                     ->relationship(
@@ -234,7 +236,7 @@ class ListChapters extends Component implements HasForms, HasTable
                                     RichEditor::make('description')
 
                                         ->toolbarButtons([
-
+                                            'attachFiles',
                                             'blockquote',
                                             'bold',
                                             'bulletList',
@@ -266,7 +268,9 @@ class ListChapters extends Component implements HasForms, HasTable
                                 ])
 
                         ])
-                        ->modalWidth(MaxWidth::SevenExtraLarge),
+                        ->modalWidth(MaxWidth::Full)
+                        ->slideOver()
+                        ,
                     DeleteAction::make('delete'),
                 ]),
 
