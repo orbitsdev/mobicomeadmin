@@ -26,19 +26,19 @@ Route::middleware([
     'verified',
 ])->group(function () {
 
-    Route::get("list-users", ListUsers::class )->name('list-users'); 
-    Route::get("list-teachers", ListTeachers::class )->name('list-teachers'); 
-    Route::get("manage-teacher-sections/{record}", ManageSections::class )->name('manage-teacher-sections'); 
-    Route::get("list-students", ListStudents::class )->name('list-students'); 
-    Route::get("list-chapters", ListChapters::class )->name('list-chapters'); 
-    Route::get("view-chapter/{record}", ChapterDetails::class )->name('view-chapter'); 
-    // Route::get("manage-chapter/{record}", ManageChapter::class )->name('manage-chapter'); 
-    Route::get("manage-chapter/lessons/{record}", ListLessons::class )->name('manage-chapter-lessons'); 
-    Route::get("view/lesson/{record}", LessonDetails::class)->name('view-lesson-details'); 
-    Route::get("list-lessons", LessonsListLessons::class)->name('list-lessons'); 
-    Route::get("list-excercises", ListExcercises::class)->name('list-excercises'); 
-    Route::get("manage-excercise/questions/{record}", ListQuestions::class)->name('manage-excercise-questions'); 
-    Route::get("view-question/{record}", QuestionDetails::class)->name('view-question-details'); 
-    // Route::get("view-excercise/{record}", ExerciseDetails::class)->name('view-excercise'); 
+    Route::get("list-users", ListUsers::class )->name('list-users');
+    Route::get("list-teachers", ListTeachers::class )->name('list-teachers');
+    Route::get("manage-teacher-sections/{record}", ManageSections::class )->name('manage-teacher-sections');
+    Route::get("list-students", ListStudents::class )->name('list-students');
+    Route::get("list-chapters", ListChapters::class )->name('list-chapters');
+    Route::get("view-chapter/{record}", ChapterDetails::class )->name('view-chapter');
+    // Route::get("manage-chapter/{record}", ManageChapter::class )->name('manage-chapter');
+    Route::get("manage-chapter/lessons/{record}", ListLessons::class )->name('manage-chapter-lessons');
+    Route::get("view/lesson/{record}", LessonDetails::class)->name('view-lesson-details');
+    Route::get("list-lessons", LessonsListLessons::class)->name('list-lessons');
+    Route::get("list-excercises", ListExcercises::class)->name('list-excercises');
+    Route::get("manage-excercise/questions/{record}", ListQuestions::class)->name('manage-excercise-questions');
+    Route::get("view-question/{record}", QuestionDetails::class)->name('view-question-details');
+    // Route::get("view-excercise/{record}", ExerciseDetails::class)->name('view-excercise');
 });
-// Route::get("users-details{record}/", UserDetails::class )->name('users-details'); 
+// Route::get("users-details{record}/", UserDetails::class )->name('users-details');

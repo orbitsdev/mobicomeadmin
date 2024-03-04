@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Excercise;
 use App\Models\QuestionNumber;
+use App\Models\MultipleChoiceQuestion;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -16,8 +17,12 @@ class Question extends Model
         return $this->belongsTo(Excercise::class);
     }
 
-    
+
     public function question_number(){
         return $this->belongsTo(QuestionNumber::class);
+    }
+
+    public function multiple_choice_question(){
+        return $this->hasOne(MultipleChoiceQuestion::class);
     }
 }

@@ -2,12 +2,19 @@
     <div class="relative">
         <h1 class="text-2xl font-semibold mb-4">{{$record->excercise->title}}</h1>
 
-        <div class="grid grid-cols-2 gap-6">
-            <!-- Add content here if needed -->
-        </div>
+        <p>
+            {{$record->question}}
+        </p>
+        {{-- @dump($record->multiple_choice_question) --}}
+        {{-- @foreach ($record->multiple_choice_question->options as $option)
+        {{$option}}
 
-        <div class="mt-8 prose max-w-none">
-            {!! $record->content !!}
-        </div>
+        @endforeach --}}
+        {{-- {{$record->excercise->type}} --}}
+        {{-- <div class="grid grid-cols-2 gap-6">
+            <!-- Add content here if needed -->
+        </div> --}}
+
+
     </div>
 </div>

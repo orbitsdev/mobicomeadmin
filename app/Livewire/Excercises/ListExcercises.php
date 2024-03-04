@@ -50,10 +50,10 @@ class ListExcercises extends Component implements HasForms, HasTable
               TextColumn::make('type')
                     ->searchable(),
 
-                    // Tables\Columns\TextColumn::make('questions_count')->counts('questions'),
-                    TextColumn::make('questions.content')
-    ->listWithLineBreaks()
-    ->bulleted()
+                    Tables\Columns\TextColumn::make('questions_count')->counts('questions')->label('Number of Questions'),
+    //                 TextColumn::make('questions.content')
+    // ->listWithLineBreaks()
+    // ->bulleted()
                 // Tables\Columns\TextColumn::make('user_id')
                 //     ->numeric()
                 //     ->sortable(),
@@ -130,7 +130,7 @@ class ListExcercises extends Component implements HasForms, HasTable
 
 
 
-
+                                        
 
                                 // FileUpload::make('image_path')
                                 //     ->disk('public')
