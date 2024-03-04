@@ -95,7 +95,8 @@ class ListLessons extends Component implements HasForms, HasTable
                             ->schema([
 
 
-                                TextInput::make('title')->required()->columnSpan(4),
+                                TextInput::make('title')->required()->columnSpan(2),
+
                                 Select::make('lesson_number_id')
                                 ->relationship(
                                     name: 'lesson_number',
@@ -109,6 +110,8 @@ class ListLessons extends Component implements HasForms, HasTable
                                 ->searchable()
                                   ->required()
                                 ,
+                                TextInput::make('title_number')->required()->columnSpan(2)
+                                ->helperText('ex. 1.1'),
 
                                 // Select::make('lesson_number')->options([
                                 //     1 => '1',    2 => '2',    3 => '3',    4 => '4',    5 => '5',
@@ -183,7 +186,7 @@ class ListLessons extends Component implements HasForms, HasTable
                     ]
                     )
                     ->closeModalByClickingAway(false)
-                    ->modalWidth(MaxWidth::SevenExtraLarge)
+                    ->modalWidth(MaxWidth::Full)
                     ->slideOver()
                     ->disableCreateAnother(),
             ])

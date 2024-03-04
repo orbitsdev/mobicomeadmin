@@ -16,6 +16,7 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
@@ -44,12 +45,15 @@ class ListExcercises extends Component implements HasForms, HasTable
                 //     ->sortable(),
                 // Tables\Columns\TextColumn::make('exerciseable_type')
                 //     ->searchable(),
-                Tables\Columns\TextColumn::make('title')
+              TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('type')
+              TextColumn::make('type')
                     ->searchable(),
 
-                    Tables\Columns\TextColumn::make('questions_count')->counts('questions')
+                    // Tables\Columns\TextColumn::make('questions_count')->counts('questions'),
+                    TextColumn::make('questions.content')
+    ->listWithLineBreaks()
+    ->bulleted()
                 // Tables\Columns\TextColumn::make('user_id')
                 //     ->numeric()
                 //     ->sortable(),
@@ -179,9 +183,9 @@ class ListExcercises extends Component implements HasForms, HasTable
                     EditAction::make('edit')
                         ->successNotificationTitle('Lesson updated')
                         ->color('primary')
-                       
+
                         ->form([
-                           
+
 
                         Section::make()
                         ->columns([

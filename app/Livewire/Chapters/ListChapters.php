@@ -167,7 +167,7 @@ class ListChapters extends Component implements HasForms, HasTable
                     Action::make('view')
                         ->color('primary')
                         ->icon('heroicon-m-eye')
-                        ->label('View Details')
+                        ->label('View Chapter ')
                         ->modalContent(function (Chapter $record) {
                             return view('livewire.chapters.chapter-details', ['record' => $record]);
                         })
@@ -178,6 +178,7 @@ class ListChapters extends Component implements HasForms, HasTable
                         ->slideOver(),
 
                     EditAction::make('edit')
+                        ->label('Edit Chapter')
                         ->successNotificationTitle('Updated Save')
                         ->color('primary')
                         ->form([

@@ -5,7 +5,7 @@
     <div class="max-w-7xl mx-auto bg-white p-8 rounded">
         <div class="relative">
             <div class="grid grid-cols-2 gap-6">
-                
+
                 @if ($record->videoExists())
                 <div class="flex justify-center">
                     <div class="aspect-w-16 aspect-h-9 max-w-full">
@@ -18,15 +18,17 @@
                     @else
                     <div></div>
                     @endif
+                    @if ($record->imageExists())
                     <div>
                         <img src="{{ $record->getImage() }}" alt="Lesson image"
                         class="w-full h-96 object-cover rounded-lg shadow-md">
                     </div>
+                    @endif
                 </div>
             </div>
             <div class="mt-8 prose max-w-none ">
                 @markdown($record->content)
             </div>
         </div>
-        
+
     </div>

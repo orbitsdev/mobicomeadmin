@@ -28,6 +28,13 @@ class Lesson extends Model
     }
     return false;
 }
+    public function imageExists()
+{
+    if (!empty($this->image_path) && Storage::disk('public')->exists($this->image_path)) {
+        return true;
+    }
+    return false;
+}
     public function getImage()
 {
     if (!empty($this->image_path) && Storage::disk('public')->exists($this->image_path)) {

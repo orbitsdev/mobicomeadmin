@@ -19,6 +19,7 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteAction;
 use Illuminate\Database\Eloquent\Builder;
@@ -36,7 +37,7 @@ class ListQuestions extends Component implements HasForms, HasTable
         return $table
             ->query(Question::query())
             ->columns([
-                Tables\Columns\TextColumn::make('excercise.title')
+                Tables\Columns\TextColumn::make('content')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('question_number.number')
@@ -99,24 +100,25 @@ class ListQuestions extends Component implements HasForms, HasTable
 
 
 
-                                    RichEditor::make('content')
+                                    TextInput::make('content')
+                                    ->label('Question')
+                                    // ->helperText('Put your question here')
+                                        // ->toolbarButtons([
 
-                                        ->toolbarButtons([
-
-                                            'blockquote',
-                                            'bold',
-                                            'bulletList',
-                                            'codeBlock',
-                                            'h2',
-                                            'h3',
-                                            'italic',
-                                            'link',
-                                            'orderedList',
-                                            'redo',
-                                            'strike',
-                                            'underline',
-                                            'undo',
-                                        ])
+                                        //     'blockquote',
+                                        //     'bold',
+                                        //     'bulletList',
+                                        //     'codeBlock',
+                                        //     'h2',
+                                        //     'h3',
+                                        //     'italic',
+                                        //     'link',
+                                        //     'orderedList',
+                                        //     'redo',
+                                        //     'strike',
+                                        //     'underline',
+                                        //     'undo',
+                                        // ])
                                         ->columnSpanFull(),
 
 
@@ -128,7 +130,7 @@ class ListQuestions extends Component implements HasForms, HasTable
                         ]
                     )
                     ->closeModalByClickingAway(false)
-                    ->modalWidth(MaxWidth::SevenExtraLarge)
+                    ->modalWidth(MaxWidth::Full)
                     ->slideOver()
                     ->disableCreateAnother(),
             ])
@@ -149,15 +151,15 @@ class ListQuestions extends Component implements HasForms, HasTable
                         ->slideOver()
                         ->closeModalByClickingAway(false)
                         ,
-                 
+
                     EditAction::make('edit')
                     ->successNotificationTitle('Question updated')
                         ->color('primary')
                         ->mutateRecordDataUsing(function (array $data): array {
 
-                           
-                           
-                     
+
+
+
                             return $data;
                         })
                         ->form([
@@ -187,31 +189,35 @@ class ListQuestions extends Component implements HasForms, HasTable
 
 
 
-                                RichEditor::make('content')
+                                // RichEditor::make('content')
 
-                                    ->toolbarButtons([
+                                //     ->toolbarButtons([
 
-                                        'blockquote',
-                                        'bold',
-                                        'bulletList',
-                                        'codeBlock',
-                                        'h2',
-                                        'h3',
-                                        'italic',
-                                        'link',
-                                        'orderedList',
-                                        'redo',
-                                        'strike',
-                                        'underline',
-                                        'undo',
-                                    ])
+                                //         'blockquote',
+                                //         'bold',
+                                //         'bulletList',
+                                //         'codeBlock',
+                                //         'h2',
+                                //         'h3',
+                                //         'italic',
+                                //         'link',
+                                //         'orderedList',
+                                //         'redo',
+                                //         'strike',
+                                //         'underline',
+                                //         'undo',
+                                //     ])
+
+                                TextInput::make('content')
+                                ->label('Question')
+                                // ->helperText('Put your question here')
                                     ->columnSpanFull(),
 
 
                             ]),
 
                         ])
-                        ->modalWidth(MaxWidth::SevenExtraLarge)
+                        ->modalWidth(MaxWidth::Full)
                         ->slideOver(),
                     DeleteAction::make('delete'),
                 ]),
@@ -226,7 +232,7 @@ class ListQuestions extends Component implements HasForms, HasTable
                 ])
                     ->label('Actions'),
             ])
-            
+
             ->modifyQueryUsing(fn (Builder $query) => $query->where('excercise_id', $this->record->id)->join('question_numbers', 'questions.question_number_id', '=', 'question_numbers.id')
             ->orderBy('question_numbers.number', 'asc'))
             ;
