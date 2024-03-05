@@ -7,6 +7,7 @@ use Livewire\Component;
 use Filament\Forms\Form;
 use App\Models\Excercise;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Contracts\HasForms;
@@ -98,7 +99,11 @@ class CreateExercise extends Component implements HasForms
 
     public function create()
     {
+        
         $data = $this->form->getState();
+        $user  =Auth::user();
+        $data['user_id']= $user->id;
+        $data['created_by']= $user->role;
 
         $record = Excercise::create($data);
 

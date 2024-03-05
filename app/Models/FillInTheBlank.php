@@ -2,27 +2,18 @@
 
 namespace App\Models;
 
-
 use App\Models\Question;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class TrueOrFalse extends Model
-{
-    use HasFactory;
-
-
-
+class FillInTheBlank extends Model
+{   
 
     public function question(){
         return $this->belongsTo(Question::class);
     }
-
-    public function getTextAnswer(){
-        
-        return $this->correct_answer? 'TRUE': 'FALSE';
-
+    public function getCorrectAnswer(){
+        return $this->correct_answer;
     }
-
-
+    use HasFactory;
 }

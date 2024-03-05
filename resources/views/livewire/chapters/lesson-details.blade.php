@@ -11,20 +11,10 @@
                 </h1>
               </div>
               <div class="ml-4 mt-2 flex-shrink-0">
-                @if(request()->routeIs('chapter-view-lesson'))
-
                 <x-back-button :url="route('chapter-lessons-list',['record'=> $record->chapter])">
                     BACK
                 </x-back-button>
-
-                @endif
-                @if(request()->routeIs('view-lesson'))
-
-                <x-back-button :url="route('list-lessons')">
-                    BACK
-                </x-back-button>
-
-                @endif
+               
 
               </div>
             </div>

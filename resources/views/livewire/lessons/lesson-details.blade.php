@@ -1,6 +1,26 @@
 <div>
     <div class="max-w-7xl mx-auto flex justify-end">
-        {{-- <x-back-button :url="route('manage-chapter-lessons',['record'=> $record->chapter])"/> --}}
+
+        <div class="px-4 py-5 sm:px-6 mb-4 ">
+            <div class="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
+              <div class="ml-4 mt-2">
+                <h1 class="text-xl font-semibold leading-6 text-system-900">
+
+                    {{-- {{$record->title}} --}}
+
+                </h1>
+              </div>
+              <div class="ml-4 mt-2 flex-shrink-0">
+                <x-back-button :url="route('lessons-list')">
+                    BACK
+                </x-back-button>
+               
+
+              </div>
+            </div>
+          </div>
+
+
     </div>
     <div class="max-w-7xl mx-auto bg-white p-8 rounded">
         <div class="relative">

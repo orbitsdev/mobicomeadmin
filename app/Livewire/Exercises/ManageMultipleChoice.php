@@ -94,6 +94,7 @@ class ManageMultipleChoice extends Component implements HasForms
                                     
                             ])
                             ->defaultItems(3)
+                            ->maxItems(50)
                             ->emptyLabel('No question was set in this exercise')
                             ->addActionLabel('Add Question')
                             ->withoutHeader()

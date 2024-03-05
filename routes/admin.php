@@ -16,18 +16,21 @@ use App\Livewire\Chapters\CreateChapter;
 use App\Livewire\Chapters\LessonDetails;
 use App\Livewire\Chapters\ManageLessons;
 use App\Livewire\Chapters\ChapterDetails;
-use App\Livewire\Excercises\CreateExercise;
+use App\Livewire\Chapters\EditChapterLesson;
+use App\Livewire\Exercises\EditExcercise;
 use App\Livewire\Exercises\ListQuestions;
 use App\Livewire\Teachers\ManageSections;
+use App\Livewire\Exercises\ManageExercise;
+use App\Livewire\Excercises\CreateExercise;
 use App\Livewire\Excercises\ListExcercises;
 use App\Livewire\Questions\QuestionDetails;
 use App\Livewire\Excercises\ExerciseDetails;
-use App\Livewire\Exercises\EditExcercise;
-use App\Livewire\Exercises\ManageExercise;
-use App\Livewire\Exercises\ManageMultipleChoice;
 use App\Livewire\Exercises\ManageTrueOrFalse;
-use App\Livewire\Lessons\LessonDetails as LessonsLessonDetails;
+use App\Livewire\Exercises\ManageFillInTheBlank;
+use App\Livewire\Exercises\ManageMultipleChoice;
 use App\Livewire\Lessons\ListLessons as LessonsListLessons;
+use App\Livewire\Lessons\LessonDetails as LessonsLessonDetails;
+use App\Livewire\Users\EditUser;
 
 Route::middleware([
     'auth:sanctum',
@@ -36,6 +39,7 @@ Route::middleware([
 ])->group(function () {
 
     Route::get("list-users", ListUsers::class )->name('list-users');
+    Route::get("edit/profile/{record}", EditUser::class )->name('edit-profile');
     Route::get("list-teachers", ListTeachers::class )->name('list-teachers');
     Route::get("manage-teacher-sections/{record}", ManageSections::class )->name('manage-teacher-sections');
     Route::get("list-students", ListStudents::class )->name('list-students');
@@ -46,7 +50,7 @@ Route::middleware([
 
     Route::get("chapter-lessons-list/{record}", ListLessons::class )->name('chapter-lessons-list');
     Route::get("chapter/{record}lesson/create/", CreateLesson::class )->name('chapter-create-lesson');
-    Route::get("chapter/lesson/edit/{record}", EditLesson::class )->name('chapter-edit-lesson');
+    Route::get("chapter/lesson/edit/{record}", EditChapterLesson::class )->name('chapter-edit-lesson');
     Route::get("chapter/view/lesson/{record}", LessonDetails::class)->name('chapter-view-lesson');
 
     Route::get("view/lesson/{record}", LessonDetails::class)->name('view-lesson');
@@ -61,6 +65,7 @@ Route::middleware([
     Route::get("excercise/edit/{record}", EditExcercise::class)->name('edit-exercise');
     Route::get("excercise/multiple-choice/{record}", ManageMultipleChoice::class)->name('manage-multiple-choice');
     Route::get("excercise/true-or-false/{record}", ManageTrueOrFalse::class)->name('manage-true-or-flase');
+    Route::get("excercise/fill-in-the-blank/{record}", ManageFillInTheBlank::class)->name('manage-fill-in-the-blank');
     Route::get("excercise/view/{record}",  ExerciseDetails::class)->name('view-exercise');
 
     Route::get("manage-excercise/questions/{record}", ListQuestions::class)->name('manage-excercise-questions');

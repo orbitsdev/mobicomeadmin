@@ -32,7 +32,7 @@ class CreateChapter extends Component implements HasForms
     {
         return $form
             ->schema([
-                Section::make()
+                Section::make('Create Chapter')
                             ->columns([
                                 'sm' => 3,
                                 'xl' => 6,
@@ -40,51 +40,54 @@ class CreateChapter extends Component implements HasForms
                             ])
                             ->schema([
 
-
                                 TextInput::make('title')->required()->columnSpan(4),
-                                Select::make('chapter_number_id')
-                                    ->relationship(
-                                        name: 'chapter_number',
-                                        titleAttribute: 'number',
-                                        modifyQueryUsing: fn (Builder $query) => $query->whereDoesntHave('chapter')->orderBy('number'),
-                                    )
-                                    ->unique(ignoreRecord: true)
-                                    ->preload()
-                                       ->columnSpan(4)
-                                    ->searchable()
-                                      ->required()
-                                    ,
-
-
+                                    Select::make('chapter_number_id')
+                                        ->relationship(
+                                            name: 'chapter_number',
+                                            titleAttribute: 'number',
+                                            modifyQueryUsing: fn (Builder $query) => $query->whereDoesntHave('chapter')->orderBy('number'),
+                                        )
+                                        ->unique(ignoreRecord: true)
+                                        ->preload()
+                                           ->columnSpan(4)
+                                        ->searchable()
+                                          ->required()
+                                        ,
+                                
                                 RichEditor::make('description')
 
-                                    ->toolbarButtons([
-                                        'attachFiles',
-                                        'blockquote',
-                                        'bold',
-                                        'bulletList',
-                                        'codeBlock',
-                                        'h2',
-                                        'h3',
-                                        'italic',
-                                        'link',
-                                        'orderedList',
-                                        'redo',
-                                        'strike',
-                                        'underline',
-                                        'undo',
-                                    ])
+                                ->toolbarButtons([
+                                    'attachFiles',
+                                    'blockquote',
+                                    'bold',
+                                    'bulletList',
+                                    'codeBlock',
+                                    'h2',
+                                    'h3',
+                                    'italic',
+                                    'link',
+                                    'orderedList',
+                                    'redo',
+                                    'strike',
+                                    'underline',
+                                    'undo',
+                                ])
 
-                                    ->columnSpanFull(),
-                                FileUpload::make('image_path')
-                                    ->disk('public')
-                                    ->directory('chapters-images')
-                                    ->image()
-                                    // ->required()
-                                    ->label('Display Image')
+                                ->columnSpanFull(),
+
+                            FileUpload::make('image_path')
+                                ->disk('public')
+                                ->directory('chapters-images')
+                                ->image()
+                                // ->required()
+                                ->label('Display Image')
 
 
-                                    ->columnSpanFull()
+                                ->columnSpanFull()
+
+                              
+
+
 
                             ]),
             ])

@@ -7,8 +7,10 @@ use App\Models\Lesson;
 use Livewire\Component;
 use App\Models\Excercise;
 use Filament\Tables\Table;
+use Livewire\Attributes\Layout;
 use Filament\Actions\StaticAction;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Grouping\Group;
 use Illuminate\Contracts\View\View;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Forms\Components\Select;
@@ -21,10 +23,12 @@ use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Enums\FiltersLayout;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -48,6 +52,7 @@ class ListExcercises extends Component implements HasForms, HasTable
               TextColumn::make('title')
                     ->searchable(),
               TextColumn::make('type')
+              ->badge()
                     ->searchable(),
 
                     Tables\Columns\TextColumn::make('questions_count')->counts('questions')->label('Number of Questions'),
@@ -61,9 +66,9 @@ class ListExcercises extends Component implements HasForms, HasTable
                 //     ->searchable(),
                 // Tables\Columns\IconColumn::make('is_lock')
                 //     ->boolean(),
-                // Tables\Columns\TextColumn::make('created_at')
-                //     ->dateTime()
-                //     ->sortable()
+                Tables\Columns\TextColumn::make('created_at')
+                    ->date()
+                    ->sortable()
                 //     ->toggleable(isToggledHiddenByDefault: true),
                 // Tables\Columns\TextColumn::make('updated_at')
                 //     ->dateTime()
@@ -71,8 +76,19 @@ class ListExcercises extends Component implements HasForms, HasTable
                 //     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
-            ])
+                SelectFilter::make('type')
+    ->options([
+        'Multiple Choice' => 'Multiple Choice',
+        'True or False' => 'True or False',
+        'Fill in the Blank' => 'Fill in the Blank',
+    ]),
+
+     SelectFilter::make('created_by')
+    ->options([
+        'Teacher' => 'Teacher',
+        'Admin' => 'Admin',
+    ])
+    ], layout: FiltersLayout::AboveContent)
 
 
             ->headerActions([
@@ -133,7 +149,13 @@ class ListExcercises extends Component implements HasForms, HasTable
                         ->action(fn (Collection $records) => $records->each->delete())
                 ])
                     ->label('Actions'),
-            ]);
+            ])
+            // ->groups([
+            //     Group::make('type')
+            //     ->titlePrefixedWithLabel(false),
+            // ])
+            // ->defaultGroup('type')
+            ;
     }
 
     public function render(): View

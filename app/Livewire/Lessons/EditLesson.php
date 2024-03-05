@@ -34,7 +34,7 @@ class EditLesson extends Component implements HasForms
     {
         return $form
             ->schema([
-                Section::make()
+                Section::make('Lesson')
                 ->columns([
                     'sm' => 3,
                     'xl' => 6,
@@ -108,7 +108,7 @@ class EditLesson extends Component implements HasForms
         ->success()
         ->send();
 
-        return redirect()->route('chapter-lessons-list',['record'=> $this->record->chapter]);
+        return redirect()->route('list-lessons',['record'=> $this->record]);
     }
 
     public function render(): View

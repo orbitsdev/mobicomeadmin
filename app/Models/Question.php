@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Excercise;
 
 use App\Models\TrueOrFalse;
+use App\Models\FillInTheBlank;
 use App\Models\MultipleChoice;
 use App\Models\QuestionNumber;
 use App\Models\MultipleChoiceQuestion;
@@ -35,6 +36,9 @@ class Question extends Model
 
     public function true_or_false(){
         return $this->hasOne(TrueOrFalse::class);
+    }
+    public function fill_in_the_blank(){
+        return $this->hasOne(FillInTheBlank::class);
     }
 
 }

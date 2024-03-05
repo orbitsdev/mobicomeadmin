@@ -3,7 +3,7 @@
 namespace App\Livewire\Chapters;
 
 use Filament\Forms;
-use App\Models\Chapter;
+use App\Models\Lesson;
 use Livewire\Component;
 use Filament\Forms\Form;
 use Illuminate\Contracts\View\View;
@@ -17,13 +17,13 @@ use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Concerns\InteractsWithForms;
 
-class EditChapter extends Component implements HasForms
+class EditChapterLesson extends Component implements HasForms
 {
     use InteractsWithForms;
 
     public ?array $data = [];
 
-    public Chapter $record;
+    public Lesson $record;
 
     public function mount(): void
     {
@@ -34,7 +34,7 @@ class EditChapter extends Component implements HasForms
     {
         return $form
             ->schema([
-                Section::make('Chapter')
+                Section::make('Lesson')
                 ->columns([
                     'sm' => 3,
                     'xl' => 6,
@@ -42,26 +42,23 @@ class EditChapter extends Component implements HasForms
                 ])
                 ->schema([
 
+                    TextInput::make('title')->required()->columnSpan(4),
+                    Select::make('lesson_number_id')
+                        ->relationship(
+                            name: 'lesson_number',
+                            titleAttribute: 'number',
+                            modifyQueryUsing: fn (Builder $query) =>  $query->whereDoesntHave('lessons.chapter', function ($query) {
+                                $query->where('id', $this->record->id);
+                            })
+                        )
 
-                    TextInput::make('title')->required()->columnSpan(4)
-
-                    ,
-                     Select::make('chapter_number_id')
-                    ->relationship(
-                        name: 'chapter_number',
-                        titleAttribute: 'number',
-                        modifyQueryUsing: fn (Builder $query) => $query->whereDoesntHave('chapter')->orderBy('number'),
-                    )
-                    // ->unique(ignoreRecord: true)
-                    ->preload()
-                       ->columnSpan(4)
-                    ->searchable()
-                      ->required()
-                    ,
+                        ->preload()
+                        ->columnSpan(4)
+                        ->searchable()
+                        ->required(),
 
 
-
-                    RichEditor::make('description')
+                    RichEditor::make('content')
 
                         ->toolbarButtons([
                             'attachFiles',
@@ -79,21 +76,21 @@ class EditChapter extends Component implements HasForms
                             'underline',
                             'undo',
                         ])
-
-                        ->columnSpanFull()
-
-
                         ->columnSpanFull(),
                     FileUpload::make('image_path')
                         ->disk('public')
                         ->directory('chapters-images')
                         ->image()
+
                         // ->required()
                         ->label('Display Image')
-
-
-                        ->columnSpanFull()
-                ])
+                        ->columnSpan(4),
+                    FileUpload::make('video_path')
+                        ->acceptedFileTypes(['video/*'])
+                        ->disk('public')
+                        ->directory('lessons-videos')
+                        ->maxSize(20000)
+                        ->columnSpan(4),])
             ])
             ->statePath('data')
             ->model($this->record);
@@ -105,19 +102,16 @@ class EditChapter extends Component implements HasForms
 
         $this->record->update($data);
 
-
-
-
         Notification::make()
         ->title('Saved successfully')
         ->success()
         ->send();
 
-        return redirect()->route('list-chapters');
+        return redirect()->route('chapter-lessons-list',['record'=> $this->record->chapter]);
     }
 
     public function render(): View
     {
-        return view('livewire.chapters.edit-chapter');
+        return view('livewire.chapters.edit-chapter-lesson');
     }
 }

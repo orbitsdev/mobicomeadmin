@@ -35,13 +35,15 @@ class CreateLesson extends Component implements HasForms
     {
         return $form
             ->schema([
-                Section::make()
+                Section::make('Lesson')
                     ->columns([
                         'sm' => 3,
                         'xl' => 6,
                         '2xl' => 8,
                     ])
                     ->schema([
+
+                       
 
                         TextInput::make('title')->required()->columnSpan(4),
                         Select::make('lesson_number_id')

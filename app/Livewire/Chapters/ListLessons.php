@@ -48,7 +48,7 @@ class ListLessons extends Component implements HasForms, HasTable
 
                 TextColumn::make('title')
                 ->searchable(),
-                TextColumn::make('lesson_number.number')->searchable(),
+                TextColumn::make('lesson_number.number')->searchable() ->sortable(true),
                 // Tables\Columns\ImageColumn::make('image_path'),
                 // Tables\Columns\TextColumn::make('video_path')
                 //     ->searchable(),

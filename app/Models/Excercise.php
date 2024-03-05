@@ -31,9 +31,10 @@ class Excercise extends Model
                 break;
                 case 'True or False':
                     $route = route('manage-true-or-flase', ['record' => $this]);
-                break;
-            case 'Fill in the Blank':
-                break;
+                    break;
+                    case 'Fill in the Blank':
+                        $route = route('manage-fill-in-the-blank', ['record' => $this]);
+                        break;
             default:
 
                 break;
