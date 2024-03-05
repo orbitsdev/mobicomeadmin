@@ -77,91 +77,28 @@ class ListExcercises extends Component implements HasForms, HasTable
 
             ->headerActions([
 
-                CreateAction::make()
-                    ->successNotificationTitle('Excercise Created')
-                    ->label('New Excercise')
-                    ->icon('heroicon-m-sparkles')
-
-                    ->form([
-
-                        Section::make()
-                            ->columns([
-                                'sm' => 3,
-                                'xl' => 6,
-                                '2xl' => 8,
-                            ])
-                            ->schema([
+                Action::make('New Excecise')
+                ->color('primary')
+                ->icon('heroicon-m-sparkles')
+                ->label('New Exercise')
+                ->url(function () {
+                    // return ('livewire.chapters.manage-lessons', ['record' => $record]);
+                    return route('create-exercise');
+                }),
 
 
-                                TextInput::make('title')->required()->columnSpan(4),
-                                Select::make('type')
-                                    ->options([
-                                        'Multiple Choice' => 'Multiple Choice',
-                                        'True or False' => 'True or False',
-                                        'Fill in the Blankr' => 'Fill in the Blank',
-                                    ])
-                                    ->required()
-                                    ->columnSpan(4),
-
-
-
-
-                                RichEditor::make('description')
-
-                                    ->toolbarButtons([
-
-                                        'blockquote',
-                                        'bold',
-                                        'bulletList',
-                                        'codeBlock',
-                                        'h2',
-                                        'h3',
-                                        'italic',
-                                        'link',
-                                        'orderedList',
-                                        'redo',
-                                        'strike',
-                                        'underline',
-                                        'undo',
-                                    ])
-                                    ->required()
-                                    ->columnSpanFull(),
-
-
-
-
-                                        
-
-                                // FileUpload::make('image_path')
-                                //     ->disk('public')
-                                //     ->directory('chapters-images')
-                                //     ->image()
-                                //     // ->required()
-                                //     ->label('Display Image')
-
-
-                                //     ->columnSpanFull()
-
-                            ]),
-
-
-
-
-                        // TextInput::make('abbreviation')->maxLength(191)->required()->columnSpanFull(),
-                    ])
-                    ->closeModalByClickingAway(false)
-                    ->modalWidth(MaxWidth::SevenExtraLarge)
-                    ->slideOver()
-                    ->disableCreateAnother(),
             ])
             ->actions([
-                Action::make('Manage Questions')
+                Action::make('Manage Excercise')
                 ->color('primary')
                 ->icon('heroicon-m-cursor-arrow-rays')
                 ->label('Manage Questions')
                 ->url(function (Model $record) {
+
+                    return $record->redirectBaseOnExerciseType();
+
                     // return ('livewire.chapters.manage-lessons', ['record' => $record]);
-                    return route('manage-excercise-questions', ['record' => $record]);
+                    // return route('manage-exercise', ['record' => $record]);
                 }),
 
                 ActionGroup::make([
@@ -169,79 +106,21 @@ class ListExcercises extends Component implements HasForms, HasTable
                         ->color('primary')
                         ->icon('heroicon-m-eye')
                         ->label('View Excercise')
-                        //  ->url(fn (Model $record): string => route('manage-excercise-questions', ['record' => $record])),
-                        ->modalContent(function (Excercise $record) {
-                            return view('livewire.excercises.exercise-details', ['record' => $record]);
-                        })
-                        ->modalWidth(MaxWidth::SevenExtraLarge)
-                        ->modalSubmitAction(false)
-                        ->modalCancelAction(fn (StaticAction $action) => $action->label('Close'))
-                        ->disabledForm()
-                        ->slideOver()
-                        ->closeModalByClickingAway(false),
+                        ->url(function (Model $record) {
+                            // return ('livewire.chapters.manage-lessons', ['record' => $record]);
+                            return route('view-exercise', ['record' => $record]);
+                        }),
 
-                    EditAction::make('edit')
-                        ->successNotificationTitle('Lesson updated')
+                        Action::make('Edit Exercise')
                         ->color('primary')
-
-                        ->form([
-
-
-                        Section::make()
-                        ->columns([
-                            'sm' => 3,
-                            'xl' => 6,
-                            '2xl' => 8,
-                        ])
-                        ->schema([
+                        ->icon('heroicon-m-pencil-square')
+                        ->label('Edit Exercise')
+                        ->url(function (Model $record) {
+                            // return ('livewire.chapters.manage-lessons', ['record' => $record]);
+                            return route('edit-exercise', ['record' => $record]);
+                        }),
 
 
-                            TextInput::make('title')->required()->columnSpan(4),
-                            Select::make('type')
-                                ->options([
-                                    'Multiple Choice' => 'Multiple Choice',
-                                    'True or False' => 'True or False',
-                                    'Fill in the Blankr' => 'Fill in the Blank',
-                                ])
-                                ->required()
-                                ->columnSpan(4),
-
-
-
-
-                            RichEditor::make('description')
-
-                                ->toolbarButtons([
-
-                                    'blockquote',
-                                    'bold',
-                                    'bulletList',
-                                    'codeBlock',
-                                    'h2',
-                                    'h3',
-                                    'italic',
-                                    'link',
-                                    'orderedList',
-                                    'redo',
-                                    'strike',
-                                    'underline',
-                                    'undo',
-                                ])
-                                ->required()
-                                ->columnSpanFull(),
-
-
-
-
-
-
-
-                        ]),
-
-
-                        ])
-                        ->modalWidth(MaxWidth::SevenExtraLarge)
-                        ->slideOver(),
                     DeleteAction::make('delete'),
                 ]),
                 //

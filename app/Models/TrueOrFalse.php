@@ -2,16 +2,20 @@
 
 namespace App\Models;
 
-use App\Models\LessonNumber;
+
+use App\Models\Question;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Number extends Model
+class TrueOrFalse extends Model
 {
     use HasFactory;
 
-    public function lesson_number(){
-        return $this->hasMany(LessonNumber::class);
+
+
+
+    public function question(){
+        return $this->belongsTo(Question::class);
     }
 
 

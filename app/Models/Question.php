@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use App\Models\Excercise;
+
+use App\Models\TrueOrFalse;
+use App\Models\MultipleChoice;
 use App\Models\QuestionNumber;
 use App\Models\MultipleChoiceQuestion;
 use Illuminate\Database\Eloquent\Model;
@@ -21,8 +24,17 @@ class Question extends Model
     public function question_number(){
         return $this->belongsTo(QuestionNumber::class);
     }
-
-    public function multiple_choice_question(){
-        return $this->hasOne(MultipleChoiceQuestion::class);
+    public function getNumber(){
+        return $this->question_number->number;
     }
+
+    public function multiple_choice(){
+        return $this->hasOne(MultipleChoice::class);
+    }
+
+
+    public function true_or_false(){
+        return $this->hasOne(TrueOrFalse::class);
+    }
+
 }

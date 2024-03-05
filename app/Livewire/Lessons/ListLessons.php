@@ -21,9 +21,11 @@ use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Enums\FiltersLayout;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Actions\CreateAction;
@@ -63,8 +65,9 @@ class ListLessons extends Component implements HasForms, HasTable
             ])
             ->filters([
                 SelectFilter::make('chapter')
+                ->label('Filter By Chapter')
                     ->relationship('chapter', 'title')
-            ])
+            ],layout: FiltersLayout::AboveContent)
             ->headerActions([
 
                 // CreateAction::make()
@@ -111,7 +114,7 @@ class ListLessons extends Component implements HasForms, HasTable
                 //                        })
 
 
-                                 
+
 
                 //                         ->preload()
                 //                         ->columnSpanFull()
@@ -128,12 +131,12 @@ class ListLessons extends Component implements HasForms, HasTable
                 //                                 $query->where('id', $get('chapter_id'));
                 //                             })
                 //                         )
-                //                         ->visible(fn (Get $get): bool => !empty($get('chapter_id')))       
+                //                         ->visible(fn (Get $get): bool => !empty($get('chapter_id')))
                 //                         ->preload()
                 //                         ->columnSpanFull()
-                                        
+
                 //                         ->native(false)
-                                      
+
                 //                         ->searchable()
                 //                         ->required(),
 
@@ -186,128 +189,22 @@ class ListLessons extends Component implements HasForms, HasTable
                 //     ->disableCreateAnother(),
             ])
             ->actions([
+
                 ActionGroup::make([
                     Action::make('view')
                         ->color('primary')
                         ->icon('heroicon-m-eye')
                         ->label('View Lesson')
-                        // ->url(fn (Model $record): string => route('view-lesson-details', ['record' => $record]))
-                        ->modalContent(function (Lesson $record) {
-                            return view('livewire.chapters.lesson-details', ['record' => $record]);
-                        })
-                        ->modalWidth(MaxWidth::Full)
-                        ->modalSubmitAction(false)
-                        ->modalCancelAction(fn (StaticAction $action) => $action->label('Close'))
-                        ->disabledForm()
-                        ->slideOver()
-                        ->closeModalByClickingAway(false),
-
-                    // EditAction::make('edit')
-                    //     ->successNotificationTitle('Lesson updated')
-                    //     ->color('primary')
-                    //     ->mutateRecordDataUsing(function (array $data): array {
-
-                    //         if (!empty($data['image_path'])) {
-                    //             $data['image_type'] = Storage::disk('public')->mimeType($data['image_path']);
-                    //         }
-                    //         if (!empty($data['video_path'])) {
-                    //             $data['video_type'] = Storage::disk('public')->mimeType($data['video_path']);
-                    //         }
-
-
-                    //         return $data;
-                    //     })
-                    //     ->form([
-                    //         Section::make()
-                    //         ->columns([
-                    //             'sm' => 8,
-                    //             'md' => 8,
-                    //             'xl' => 8,
-                    //             '2xl' => 8,
-                    //         ])
-                    //         ->schema([
-
-                    //             Select::make('chapter_id')
-                    //             ->label('Select Chapter')
-                    //                 ->relationship(
-                    //                     name: 'chapter',
-                    //                     titleAttribute: 'title',
-                    //                 )
-                    //                 ->live(debounce: 500)
-                    //             //    ->live()
-                    //                ->formatStateUsing(function(Get $get, Set $set){
-                    //                 $set('lesson_number_id', null);
-                    //                     // dd($get('lesson_number_id'));
-                    //                })
-
-
-                             
-
-                    //                 ->preload()
-                    //                 ->columnSpanFull()
-                    //                 ->searchable()
-                    //                 ->required(),
-                    //             TextInput::make('title')->required()
-                    //             ->columnSpanFull()
-                    //             ,
-                    //             Select::make('lesson_number_id')
-                    //                 ->relationship(
-                    //                     name: 'lesson_number',
-                    //                     titleAttribute: 'number',
-                    //                     modifyQueryUsing: fn (Builder $query, Get $get) =>  $query->whereDoesntHave('lessons.chapter', function ($query) use($get){
-                    //                         $query->where('id', $get('chapter_id'));
-                    //                     })
-                    //                 )
-                    //                 ->visible(fn (Get $get): bool => !empty($get('chapter_id')))       
-                    //                 ->preload()
-                    //                 ->columnSpanFull()
-                                    
-                    //                 ->native(false)
-                                  
-                    //                 ->searchable()
-                    //                 ->required(),
+                        ->url(fn (Model $record): string => route('view-lesson', ['record' => $record])),
+                    Action::make('edit')
+                        ->color('primary')
+                        ->icon('heroicon-m-pencil-square')
+                        ->label('Edit Lesson')
+                        ->url(fn (Model $record): string => route('edit-lesson', ['record' => $record])),
 
 
 
-                    //             RichEditor::make('content')
 
-                    //                 ->toolbarButtons([
-
-                    //                     'blockquote',
-                    //                     'bold',
-                    //                     'bulletList',
-                    //                     'codeBlock',
-                    //                     'h2',
-                    //                     'h3',
-                    //                     'italic',
-                    //                     'link',
-                    //                     'orderedList',
-                    //                     'redo',
-                    //                     'strike',
-                    //                     'underline',
-                    //                     'undo',
-                    //                 ])
-                    //                 ->columnSpanFull(),
-                    //             FileUpload::make('image_path')
-                    //                 ->disk('public')
-                    //                 ->directory('chapters-images')
-                    //                 ->image()
-
-                    //                 // ->required()
-                    //                 ->label('Display Image')
-                    //                 ->columnSpan(4),
-                    //             FileUpload::make('video_path')
-                    //                 ->acceptedFileTypes(['video/*'])
-                    //                 ->disk('public')
-                    //                 ->directory('lessons-videos')
-                    //                 ->maxSize(20000)
-                    //                 ->columnSpan(4),
-
-                    //         ]),
-
-                    //     ])
-                    //     ->modalWidth(MaxWidth::SevenExtraLarge)
-                    //     ->slideOver(),
                     DeleteAction::make('delete'),
                 ]),
             ])
@@ -326,9 +223,7 @@ class ListLessons extends Component implements HasForms, HasTable
                 Group::make('chapter.title')
                     ->titlePrefixedWithLabel(false)
                     ->label('Chapter'),
-            ])
-            ->modifyQueryUsing(fn (Builder $query) => $query->leftJoin('lesson_numbers', 'lessons.lesson_number_id', '=', 'lesson_numbers.id')
-                ->orderBy('lesson_numbers.number',));
+            ]);
     }
 
     public function render(): View

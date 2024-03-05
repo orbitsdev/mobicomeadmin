@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-    
+
 
     @filamentStyles
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
@@ -24,23 +24,23 @@
 </head>
 
 <body class="font-sans antialiased">
-   
+
     {{-- <x-banner /> --}}
 
     <div class="min-h-screen bg-gray-100">
         @livewire('navigation-menu')
 
-       
+
         <div>
-         
+
             {{-- <div class="relative z-20 lg:hidden" role="dialog" aria-modal="true">
-              
+
 
                 <div class="fixed inset-0 bg-gray-900/80"></div>
 
                 <div class="fixed inset-0 flex">
                      <div class="relative mr-16 flex w-full max-w-xs flex-1">
-         
+
                         <div class="absolute left-full top-0 flex w-16 justify-center pt-5">
                             <button type="button" class="-m-2.5 p-2.5">
                                 <span class="sr-only">Close sidebar</span>
@@ -51,10 +51,10 @@
                             </button>
                         </div>
 
-                     
+
                         <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4">
                             <div class="flex h-16 shrink-0 items-center">
-                              
+
                                     MOBICOME
                             </div>
                             <nav class="flex flex-1 flex-col">
@@ -192,7 +192,7 @@
                 <!-- Sidebar component, swap this element with another sidebar if you like -->
                 <div class="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
                     <div class="flex h-16 shrink-0 items-center">
-                  
+
                             <span class="font-extrabold text-2xl">
 
                                 MOBICOM
@@ -209,18 +209,18 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
                                               </svg>
-                                              
+
                                             Users
                                         </a>
                                     </li>
-                                   
+
                                     <li>
                                         <a href="{{ route('list-teachers') }}"
                                             class="group flex gap-x-3 rounded-md p-2 text-sm leading-6  {{ request()->routeIs('list-teachers') ? 'selected-higlight ' : 'text-gray-600' }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
                                               </svg>
-                                              
+
                                             Teachers
                                         </a>
                                     </li>
@@ -230,30 +230,29 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
                                               </svg>
-                                              
-                                              
+
+
                                             Students
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{ route('list-chapters') }}"
-                                            class="group flex gap-x-3 rounded-md p-2 text-sm leading-6  {{ (request()->routeIs('list-chapters') || request()->routeIs('manage-chapter-lessons') )? 'selected-higlight ' : 'text-gray-600' }}">
+                                            class="group flex gap-x-3 rounded-md p-2 text-sm leading-6  {{ (request()->routeIs('list-chapters') ||  request()->routeIs('edit-chapter') ||  request()->routeIs('list-chapters')|| request()->routeIs('create-chapter')||request()->routeIs('chapter-lessons-list') || request()->routeIs('view-chapter') || request()->routeIs('chapter-edit-lesson') ||request()->routeIs('chapter-view-lesson') )? 'selected-higlight ' : 'text-gray-600' }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="m7.875 14.25 1.214 1.942a2.25 2.25 0 0 0 1.908 1.058h2.006c.776 0 1.497-.4 1.908-1.058l1.214-1.942M2.41 9h4.636a2.25 2.25 0 0 1 1.872 1.002l.164.246a2.25 2.25 0 0 0 1.872 1.002h2.092a2.25 2.25 0 0 0 1.872-1.002l.164-.246A2.25 2.25 0 0 1 16.954 9h4.636M2.41 9a2.25 2.25 0 0 0-.16.832V12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 12V9.832c0-.287-.055-.57-.16-.832M2.41 9a2.25 2.25 0 0 1 .382-.632l3.285-3.832a2.25 2.25 0 0 1 1.708-.786h8.43c.657 0 1.281.287 1.709.786l3.284 3.832c.163.19.291.404.382.632M4.5 20.25h15A2.25 2.25 0 0 0 21.75 18v-2.625c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125V18a2.25 2.25 0 0 0 2.25 2.25Z" />
                                               </svg>
-                                              
-                                              
+
                                             Chapters
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{ route('list-lessons') }}"
-                                            class="group flex gap-x-3 rounded-md p-2 text-sm leading-6  {{ (request()->routeIs('list-lessons') )? 'selected-higlight ' : 'text-gray-600' }}">
+                                            class="group flex gap-x-3 rounded-md p-2 text-sm leading-6  {{ (request()->routeIs('list-lessons') || request()->routeIs('view-lesson') || request()->routeIs('edit-lesson') )? 'selected-higlight ' : 'text-gray-600' }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
                                               </svg>
-                                              
-                                              
+
+
                                                 Lessons
                                         </a>
                                     </li>
@@ -263,15 +262,15 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
                                               </svg>
-                                              
-                                              
-                                              
+
+
+
                                                 Excercises
                                         </a>
                                     </li>
-                                   
-                                   
-                                   
+
+
+
                                 </ul>
                             </li>
                             <li>
@@ -322,20 +321,14 @@
                 </div>
             </div>
 
-            <div class="lg:pl-72 ">
-              
+            <div class="lg:pl-72 max-w-[1640px] mx-auto p-6">
 
-                <main class="py-10">
-                    <div class="px-4 sm:px-6 lg:px-8">
+                {{$slot}}
 
-                        {{$slot}}
-                        <!-- Your content -->
-                    </div>
-                </main>
             </div>
         </div>
 
-    </div>  
+    </div>
     @livewire('notifications')
     @filamentScripts
     @vite('resources/js/app.js')

@@ -20,6 +20,9 @@ class Lesson extends Model
     public function lesson_number(){
         return $this->belongsTo(LessonNumber::class);
     }
+    public function getNumber(){
+        return $this->lesson_number->number;
+    }
 
     public function videoExists()
 {

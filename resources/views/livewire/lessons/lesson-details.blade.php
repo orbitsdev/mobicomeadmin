@@ -1,36 +1,6 @@
 <div>
     <div class="max-w-7xl mx-auto flex justify-end">
-
-        <div class="px-4 py-5 sm:px-6 mb-4 ">
-            <div class="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
-              <div class="ml-4 mt-2">
-                <h1 class="text-xl font-semibold leading-6 text-system-900">
-
-                    {{-- {{$record->title}} --}}
-
-                </h1>
-              </div>
-              <div class="ml-4 mt-2 flex-shrink-0">
-                @if(request()->routeIs('chapter-view-lesson'))
-
-                <x-back-button :url="route('chapter-lessons-list',['record'=> $record->chapter])">
-                    BACK
-                </x-back-button>
-
-                @endif
-                @if(request()->routeIs('view-lesson'))
-
-                <x-back-button :url="route('list-lessons')">
-                    BACK
-                </x-back-button>
-
-                @endif
-
-              </div>
-            </div>
-          </div>
-
-
+        {{-- <x-back-button :url="route('manage-chapter-lessons',['record'=> $record->chapter])"/> --}}
     </div>
     <div class="max-w-7xl mx-auto bg-white p-8 rounded">
         <div class="relative">

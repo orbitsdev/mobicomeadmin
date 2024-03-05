@@ -1,6 +1,10 @@
 <div>
 
 
+    <div class="flex justify-end items-center mb-4">
+
+        <x-back-button :url="route('list-chapters')">BACK</x-back-button>
+    </div>
 
     <div class="white max-w-7xl mx-auto  ">
         <div class=" px-6 lg:px-8">

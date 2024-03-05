@@ -21,4 +21,25 @@ class Excercise extends Model
     public function getTotalQuestions(){
         return $this->questions()->count();
     }
+
+    public function redirectBaseOnExerciseType(){
+        $route = '';
+
+        switch ($this->type) {
+            case 'Multiple Choice':
+                $route = route('manage-multiple-choice', ['record' => $this]);
+                break;
+                case 'True or False':
+                    $route = route('manage-true-or-flase', ['record' => $this]);
+                break;
+            case 'Fill in the Blank':
+                break;
+            default:
+
+                break;
+        }
+
+        return $route;
+    }
+
 }

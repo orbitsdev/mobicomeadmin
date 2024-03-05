@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('chapter_id')->constrained()->nullable();
             $table->unsignedBigInteger('lesson_number_id')->nullable();
-            $table->string('title');
-            $table->string('title_number');
+            $table->string('title')->nullable();
+            $table->string('title_number')->nullable();
             $table->text('content')->nullable();
             $table->string('image_path')->nullable();
             $table->string('video_path')->nullable();
