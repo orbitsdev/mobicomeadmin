@@ -42,12 +42,10 @@
                                                 @if($question->multiple_choice->getCorrectAnswer() == $option)
                                                 <p class="text-green-500">
                                                     ({{ $option }})
-                                                  
                                                 </p>
                                                 @else
                                                 <p class="text-gray-500">
                                                     {{ $option }}
-                                                  
                                                 </p>
                                                 @endif
                                             </div>
@@ -60,19 +58,13 @@
                                 <div class="text-base">
                                     <p class=" p-2 rounded-lg  text-gray-600">
                                         {{ $question->true_or_false->getTextAnswer() }}
-                                       
                                     </p>
-                                  
                                 </div>
                             @break
                             @case('Fill in the Blank')
-                                <div class="text-base">
-                                    <p class=" p-2 rounded-lg  text-gray-600">
-                                        {{ $question->fill_in_the_blank->getCorrectAnswer() }}
-                                       
-                                    </p>
-                                  
-                                </div>
+                                <span>
+                                    {{ $question->fill_in_the_blank->getCorrectAnswer() }}
+                                </span>
                             @break
 
                             @default
@@ -83,4 +75,6 @@
             </div>
         @endforeach
     </div>
+
 </div>
+

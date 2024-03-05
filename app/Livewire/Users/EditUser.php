@@ -83,7 +83,7 @@ class EditUser extends Component implements HasForms
             ->success()
             ->send();
 
-        return redirect()->route('dashboard');
+        return redirect()->back();
     }
 
     public function render(): View

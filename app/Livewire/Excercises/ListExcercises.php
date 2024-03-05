@@ -56,19 +56,23 @@ class ListExcercises extends Component implements HasForms, HasTable
                     ->searchable(),
 
                     Tables\Columns\TextColumn::make('questions_count')->counts('questions')->label('Number of Questions'),
+
+
     //                 TextColumn::make('questions.content')
     // ->listWithLineBreaks()
     // ->bulleted()
                 // Tables\Columns\TextColumn::make('user_id')
                 //     ->numeric()
                 //     ->sortable(),
-                // Tables\Columns\TextColumn::make('created_by')
-                //     ->searchable(),
+                Tables\Columns\TextColumn::make('created_by')
+                    ->searchable(),
                 // Tables\Columns\IconColumn::make('is_lock')
                 //     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->date()
                     ->sortable()
+
+                    
                 //     ->toggleable(isToggledHiddenByDefault: true),
                 // Tables\Columns\TextColumn::make('updated_at')
                 //     ->dateTime()
