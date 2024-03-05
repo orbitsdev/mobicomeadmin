@@ -2,9 +2,11 @@
 
 use App\Models\Excercise;
 use App\Livewire\ManageChapter;
+use App\Livewire\Users\EditUser;
 use App\Livewire\Users\ListUsers;
 use App\Livewire\Users\UserDetails;
 use App\Livewire\Lessons\EditLesson;
+use App\Livewire\TeacherListQuestion;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Chapters\EditChapter;
 use App\Livewire\Chapters\ListLessons;
@@ -16,21 +18,28 @@ use App\Livewire\Chapters\CreateChapter;
 use App\Livewire\Chapters\LessonDetails;
 use App\Livewire\Chapters\ManageLessons;
 use App\Livewire\Chapters\ChapterDetails;
-use App\Livewire\Chapters\EditChapterLesson;
 use App\Livewire\Exercises\EditExcercise;
 use App\Livewire\Exercises\ListQuestions;
+use App\Livewire\TeacherExcerciseDetails;
 use App\Livewire\Teachers\ManageSections;
 use App\Livewire\Exercises\ManageExercise;
 use App\Livewire\Excercises\CreateExercise;
 use App\Livewire\Excercises\ListExcercises;
 use App\Livewire\Questions\QuestionDetails;
+use App\Livewire\Chapters\EditChapterLesson;
 use App\Livewire\Excercises\ExerciseDetails;
 use App\Livewire\Exercises\ManageTrueOrFalse;
+use App\Livewire\Teacher\TeacherEditExcercise;
+use App\Livewire\Teacher\TeacherListExcercise;
 use App\Livewire\Exercises\ManageFillInTheBlank;
 use App\Livewire\Exercises\ManageMultipleChoice;
+use App\Livewire\Teacher\TeacherCreateExcercise;
+use App\Livewire\Teacher\TeacherManageTrueOrFalse;
+use App\Livewire\Teacher\TeacherManageFillInTheBlank;
+use App\Livewire\Teacher\TeacherManageMultipleChoice;
 use App\Livewire\Lessons\ListLessons as LessonsListLessons;
 use App\Livewire\Lessons\LessonDetails as LessonsLessonDetails;
-use App\Livewire\Users\EditUser;
+use App\Livewire\TeacherQuestionDetails;
 
 Route::middleware([
     'auth:sanctum',
@@ -64,13 +73,27 @@ Route::middleware([
     Route::get("excercise/create", CreateExercise::class)->name('create-exercise');
     Route::get("excercise/edit/{record}", EditExcercise::class)->name('edit-exercise');
     Route::get("excercise/multiple-choice/{record}", ManageMultipleChoice::class)->name('manage-multiple-choice');
-    Route::get("excercise/true-or-false/{record}", ManageTrueOrFalse::class)->name('manage-true-or-flase');
+    Route::get("excercise/true-or-false/{record}", ManageTrueOrFalse::class)->name('manage-true-or-false');
     Route::get("excercise/fill-in-the-blank/{record}", ManageFillInTheBlank::class)->name('manage-fill-in-the-blank');
     Route::get("excercise/view/{record}",  ExerciseDetails::class)->name('view-exercise');
-
-    Route::get("manage-excercise/questions/{record}", ListQuestions::class)->name('manage-excercise-questions');
-    Route::get("manage-excercise/questions/{record}", ListQuestions::class)->name('manage-excercise-questions');
+    // Route::get("manage-excercise/questions/{record}", ListQuestions::class)->name('manage-excercise-questions');
     Route::get("view-question/{record}", QuestionDetails::class)->name('view-question-details');
+
+
+    //TEACHER
+    Route::get("teacher-list-excercises", TeacherListExcercise::class)->name('teacher-list-excercises');
+    Route::get("teacher-excercise/create", TeacherCreateExcercise::class)->name('teacher-create-exercise');
+    Route::get("teacher-excercise/edit/{record}", TeacherEditExcercise::class)->name('teacher-edit-exercise');
+    Route::get("teacher-excercise/multiple-choice/{record}", TeacherManageMultipleChoice::class)->name('teacher-manage-multiple-choice');
+    Route::get("teacher-excercise/true-or-false/{record}", TeacherManageTrueOrFalse::class)->name('teacher-manage-true-or-false');
+    Route::get("teacher-excercise/fill-in-the-blank/{record}", TeacherManageFillInTheBlank::class)->name('teacher-manage-fill-in-the-blank');
+    Route::get("teacher-excercise/view/{record}",  TeacherExcerciseDetails::class)->name('teacher-view-exercise');
+    
+    // Route::get("teacher-manage-excercise/questions/{record}", TeacherListQuestion::class)->name('teacher-manage-excercise-questions');
+    // Route::get("teacher-manage-excercise/questions/{record}", ListQuestions::class)->name('teacher-manage-excercise-questions');
+    Route::get("teacher-view-question/{record}", TeacherQuestionDetails::class)->name('teacher-view-question-details');
+
+    
     // Route::get("view-excercise/{record}", ExerciseDetails::class)->name('view-excercise');
 });
 // Route::get("users-details{record}/", UserDetails::class )->name('users-details');

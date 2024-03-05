@@ -1,7 +1,7 @@
 <div>
 
     <div class="mb-4 flex justify-end">
-        <x-back-button :url="route('list-excercises')">
+        <x-back-button :url="route('teacher-list-excercises')">
             BACK
         </x-back-button>
 

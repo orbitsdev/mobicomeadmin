@@ -49,18 +49,18 @@ class ListExcercises extends Component implements HasForms, HasTable
                 //     ->sortable(),
                 // Tables\Columns\TextColumn::make('exerciseable_type')
                 //     ->searchable(),
-              TextColumn::make('title')
+                TextColumn::make('title')
                     ->searchable(),
-              TextColumn::make('type')
-              ->badge()
+                TextColumn::make('type')
+                    ->badge()
                     ->searchable(),
 
-                    Tables\Columns\TextColumn::make('questions_count')->counts('questions')->label('Number of Questions'),
+                Tables\Columns\TextColumn::make('questions_count')->counts('questions')->label('Number of Questions'),
 
 
-    //                 TextColumn::make('questions.content')
-    // ->listWithLineBreaks()
-    // ->bulleted()
+                //                 TextColumn::make('questions.content')
+                // ->listWithLineBreaks()
+                // ->bulleted()
                 // Tables\Columns\TextColumn::make('user_id')
                 //     ->numeric()
                 //     ->sortable(),
@@ -72,7 +72,7 @@ class ListExcercises extends Component implements HasForms, HasTable
                     ->date()
                     ->sortable()
 
-                    
+
                 //     ->toggleable(isToggledHiddenByDefault: true),
                 // Tables\Columns\TextColumn::make('updated_at')
                 //     ->dateTime()
@@ -81,45 +81,45 @@ class ListExcercises extends Component implements HasForms, HasTable
             ])
             ->filters([
                 SelectFilter::make('type')
-    ->options([
-        'Multiple Choice' => 'Multiple Choice',
-        'True or False' => 'True or False',
-        'Fill in the Blank' => 'Fill in the Blank',
-    ]),
+                    ->options([
+                        'Multiple Choice' => 'Multiple Choice',
+                        'True or False' => 'True or False',
+                        'Fill in the Blank' => 'Fill in the Blank',
+                    ]),
 
-     SelectFilter::make('created_by')
-    ->options([
-        'Teacher' => 'Teacher',
-        'Admin' => 'Admin',
-    ])
-    ], layout: FiltersLayout::AboveContent)
+                SelectFilter::make('created_by')
+                    ->options([
+                        'Teacher' => 'Teacher',
+                        'Admin' => 'Admin',
+                    ])
+            ], layout: FiltersLayout::AboveContent)
 
 
             ->headerActions([
 
                 Action::make('New Excecise')
-                ->color('primary')
-                ->icon('heroicon-m-sparkles')
-                ->label('New Exercise')
-                ->url(function () {
-                    // return ('livewire.chapters.manage-lessons', ['record' => $record]);
-                    return route('create-exercise');
-                }),
+                    ->color('primary')
+                    ->icon('heroicon-m-sparkles')
+                    ->label('New Exercise')
+                    ->url(function () {
+                        // return ('livewire.chapters.manage-lessons', ['record' => $record]);
+                        return route('create-exercise');
+                    }),
 
 
             ])
             ->actions([
                 Action::make('Manage Excercise')
-                ->color('primary')
-                ->icon('heroicon-m-cursor-arrow-rays')
-                ->label('Manage Questions')
-                ->url(function (Model $record) {
+                    ->color('primary')
+                    ->icon('heroicon-m-cursor-arrow-rays')
+                    ->label('Manage Questions')
+                    ->url(function (Model $record) {
 
-                    return $record->redirectBaseOnExerciseType();
+                        return $record->redirectBaseOnExerciseType();
 
-                    // return ('livewire.chapters.manage-lessons', ['record' => $record]);
-                    // return route('manage-exercise', ['record' => $record]);
-                }),
+                        // return ('livewire.chapters.manage-lessons', ['record' => $record]);
+                        // return route('manage-exercise', ['record' => $record]);
+                    }),
 
                 ActionGroup::make([
                     Action::make('view')
@@ -131,7 +131,7 @@ class ListExcercises extends Component implements HasForms, HasTable
                             return route('view-exercise', ['record' => $record]);
                         }),
 
-                        Action::make('Edit Exercise')
+                    Action::make('Edit Exercise')
                         ->color('primary')
                         ->icon('heroicon-m-pencil-square')
                         ->label('Edit Exercise')
@@ -159,7 +159,7 @@ class ListExcercises extends Component implements HasForms, HasTable
             //     ->titlePrefixedWithLabel(false),
             // ])
             // ->defaultGroup('type')
-            ;
+        ;
     }
 
     public function render(): View
