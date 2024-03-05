@@ -19,8 +19,13 @@ class Teacher extends Model
     }
 
 
-    public function handled_sections(){
-        return $this->hasMany(HandledSection::class);
+    public function sections(){
+        return $this->belongsToMany(Section::class,'handled_sections','teacher_id','section_id');
     }
-
+   public function handled_sections(){
+    return $this->hasMany(HandledSection::class);
+   }
+   public function handled_section(){
+    return $this->hasOne(HandledSection::class);
+   }
 }

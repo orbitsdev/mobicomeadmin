@@ -39,6 +39,7 @@ use App\Livewire\Teacher\TeacherManageFillInTheBlank;
 use App\Livewire\Teacher\TeacherManageMultipleChoice;
 use App\Livewire\Lessons\ListLessons as LessonsListLessons;
 use App\Livewire\Lessons\LessonDetails as LessonsLessonDetails;
+use App\Livewire\Sections\ListSections;
 use App\Livewire\TeacherQuestionDetails;
 
 Route::middleware([
@@ -92,6 +93,7 @@ Route::middleware([
     // Route::get("teacher-manage-excercise/questions/{record}", TeacherListQuestion::class)->name('teacher-manage-excercise-questions');
     // Route::get("teacher-manage-excercise/questions/{record}", ListQuestions::class)->name('teacher-manage-excercise-questions');
     Route::get("teacher-view-question/{record}", TeacherQuestionDetails::class)->name('teacher-view-question-details');
+    Route::get("teacher-list-sections", ListSections::class)->name('teacher-list-sections');
 
     
     // Route::get("view-excercise/{record}", ExerciseDetails::class)->name('view-excercise');
