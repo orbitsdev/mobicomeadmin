@@ -53,22 +53,22 @@ class ListStudents extends Component implements HasForms, HasTable
                         });
                        }),
                    TextColumn::make('user.email')->searchable()->label('Email'),
-                  
-                    TextColumn::make('handled_section.teacher.user')
+
+                    TextColumn::make('enrolled_section.teacher.user')
                     ->formatStateUsing(function($state){
                         return $state->getFullName();
                     })
                     ->label('Teacher')
                     ->badge(),
-                    TextColumn::make('handled_section.section.title')
+                    TextColumn::make('enrolled_section.section.title')
                         ->label('Section')
                         ->badge()
                         ->searchable(),
 
 
-                
-                        
-        
+
+
+
             ])
             ->filters([
                 // Filter::make('section')
@@ -86,14 +86,14 @@ class ListStudents extends Component implements HasForms, HasTable
 
 
                 SelectFilter::make('sections')
-                ->options(fn() => MSection::whereHas('handled_sections')->pluck('title', 'id')) //you probably want to limit this in some way?
+                ->options(fn() => MSection::whereHas('enrolled_sections')->pluck('title', 'id')) //you probably want to limit this in some way?
                 ->modifyQueryUsing(function (Builder $query, $state) {
                     if (! $state['value']) {
                         return $query;
                     }
-                    return $query->whereHas('handled_section', fn($query) => $query->where('section_id', $state['value']));
+                    return $query->whereHas('enrolled_section', fn($query) => $query->where('section_id', $state['value']));
                 }),
-            
+
             ],
             layout: FiltersLayout::AboveContent
             )
@@ -128,10 +128,10 @@ class ListStudents extends Component implements HasForms, HasTable
                                     ->columnSpanFull()
                                     ->searchable(['first_name', 'last_name', 'email']),
 
-                                Select::make('handled_section_id')
+                                Select::make('enrolled_section_id')
                                     ->label('Select Section')
                                     ->relationship(
-                                        name: 'handled_section',
+                                        name: 'enrolled_section',
                                         titleAttribute: 'created_at',
 
                                     )
@@ -245,14 +245,14 @@ class ListStudents extends Component implements HasForms, HasTable
                     ->label('Actions'),
             ])
             ->groups([
-            
-                    Group::make('handled_section.section.title')
+
+                    Group::make('enrolled_section.section.title')
                         ->label('Section')
-               
+
                     ->titlePrefixedWithLabel(false),
 
             ])
-            ->defaultGroup('handled_section.section.title');
+            ->defaultGroup('enrolled_section.section.title');
 
             ;
     }

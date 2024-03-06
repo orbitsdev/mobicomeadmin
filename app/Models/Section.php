@@ -14,17 +14,17 @@ class Section extends Model
     use HasFactory;
 
 
-   
+
 
     public function teachers(){
-        return $this->belongsToMany(Teacher::class,'handled_sections','section_id','teacher_id');
+        return $this->belongsToMany(Teacher::class,'enrolled_sections','section_id','teacher_id');
     }
 
-    public function handled_sections(){
-        return $this->hasMany(HandledSection::class);
+    public function enrolled_sections(){
+        return $this->hasMany(EnrolledSection::class);
        }
-       public function handled_section(){
-        return $this->hasOne(HandledSection::class);
+       public function enrolled_section(){
+        return $this->hasOne(EnrolledSection::class);
        }
 
 }

@@ -6,6 +6,7 @@ use App\Models\Section;
 use App\Models\Student;
 
 use App\Models\HandledSection;
+use App\Models\EnrolledSection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -20,12 +21,12 @@ class Teacher extends Model
 
 
     public function sections(){
-        return $this->belongsToMany(Section::class,'handled_sections','teacher_id','section_id');
+        return $this->belongsToMany(Section::class,'enrolled_sections','teacher_id','section_id');
     }
-   public function handled_sections(){
-    return $this->hasMany(HandledSection::class);
-   }
-   public function handled_section(){
-    return $this->hasOne(HandledSection::class);
-   }
+    public function enrolled_sections(){
+        return $this->hasMany(EnrolledSection::class);
+       }
+       public function enrolled_section(){
+        return $this->hasOne(EnrolledSection::class);
+       }
 }

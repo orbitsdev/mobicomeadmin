@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Admin\Teacher\ListStudent;
 use App\Models\Excercise;
 use App\Livewire\ManageChapter;
 use App\Livewire\Users\EditUser;
@@ -40,6 +41,7 @@ use App\Livewire\Teacher\TeacherManageMultipleChoice;
 use App\Livewire\Lessons\ListLessons as LessonsListLessons;
 use App\Livewire\Lessons\LessonDetails as LessonsLessonDetails;
 use App\Livewire\Sections\ListSections;
+use App\Livewire\Teacher\ListSection;
 use App\Livewire\TeacherQuestionDetails;
 
 Route::middleware([
@@ -52,6 +54,8 @@ Route::middleware([
     Route::get("edit/profile/{record}", EditUser::class )->name('edit-profile');
     Route::get("list-teachers", ListTeachers::class )->name('list-teachers');
     Route::get("manage-teacher-sections/{record}", ManageSections::class )->name('manage-teacher-sections');
+    Route::get("list-teacher-sections/{record}", ListSection::class )->name('list-teacher-sections');
+    Route::get("list-teacher-section/students{record}", ListStudent::class )->name('list-teacher-section-students');
     Route::get("list-students", ListStudents::class )->name('list-students');
     Route::get("list-chapters", ListChapters::class )->name('list-chapters');
     Route::get("create-chapter", CreateChapter::class)->name('create-chapter');
@@ -89,13 +93,13 @@ Route::middleware([
     Route::get("teacher-excercise/true-or-false/{record}", TeacherManageTrueOrFalse::class)->name('teacher-manage-true-or-false');
     Route::get("teacher-excercise/fill-in-the-blank/{record}", TeacherManageFillInTheBlank::class)->name('teacher-manage-fill-in-the-blank');
     Route::get("teacher-excercise/view/{record}",  TeacherExcerciseDetails::class)->name('teacher-view-exercise');
-    
+
     // Route::get("teacher-manage-excercise/questions/{record}", TeacherListQuestion::class)->name('teacher-manage-excercise-questions');
     // Route::get("teacher-manage-excercise/questions/{record}", ListQuestions::class)->name('teacher-manage-excercise-questions');
     Route::get("teacher-view-question/{record}", TeacherQuestionDetails::class)->name('teacher-view-question-details');
     Route::get("teacher-list-sections", ListSections::class)->name('teacher-list-sections');
 
-    
+
     // Route::get("view-excercise/{record}", ExerciseDetails::class)->name('view-excercise');
 });
 // Route::get("users-details{record}/", UserDetails::class )->name('users-details');

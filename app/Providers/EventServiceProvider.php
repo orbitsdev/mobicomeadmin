@@ -3,12 +3,16 @@
 namespace App\Providers;
 
 use App\Models\Chapter;
+use App\Models\EnrolledSection;
 use App\Models\Excercise;
 use App\Models\Lesson;
+use App\Models\Teacher;
 use App\Models\User;
 use App\Observers\ChapterObserver;
+use App\Observers\EnrolledSectionObserver;
 use App\Observers\ExcerciseObserver;
 use App\Observers\LessonOberver;
+use App\Observers\TeacherObserver;
 use App\Observers\UserObserver;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
@@ -37,6 +41,9 @@ class EventServiceProvider extends ServiceProvider
         Chapter::observe(ChapterObserver::class);
         Lesson::observe(LessonOberver::class);
         Excercise::observe(ExcerciseObserver::class);
+        Teacher::observe(TeacherObserver::class);
+        EnrolledSection::observe(EnrolledSectionObserver::class);
+
     }
 
     /**

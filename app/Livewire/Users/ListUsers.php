@@ -47,12 +47,12 @@ class ListUsers extends Component implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('last_name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('role')
-                  
-                  
+
+
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
-                    ViewColumn::make('e')->view('tables.columns.user-role')
+                    ViewColumn::make('_')->view('tables.columns.user-role')
 
                 // Tables\Columns\TextColumn::make('profile_photo_path')
                 //     ->searchable(),
