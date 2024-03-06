@@ -14,8 +14,10 @@ use Filament\Support\Enums\MaxWidth;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Notifications\Notification;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Columns\ToggleColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -46,6 +48,25 @@ class ListStudent extends Component implements HasForms, HasTable
                        TextColumn::make('user.email')
                        ->label('Email')
                        ->searchable(),
+
+                       ToggleColumn::make('is_approved')
+                       ->onColor('success')
+                       ->offColor('danger')
+
+                    ->afterStateUpdated(function ($record, $state) {
+                        $message  = "Rejected";
+                        if($state){
+                            $message  = "Approved";
+                        }else{
+                            $message  = "Rejected";
+                        }
+                        Notification::make()
+                        ->title($message)
+                        ->success()
+                        ->send();
+                        // Runs after the state is saved to the database.
+                    })
+
             //    TextColumn::make('enrolled_section.section.title')
             //         ->numeric()
             //         ->sortable(),

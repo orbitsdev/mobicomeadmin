@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->nullable();
             $table->foreignId('enrolled_section_id')->constrained()->nullable();
+            $table->boolean('is_approved')->default(false)->nullable();
 
             $table->timestamps();
         });
