@@ -82,6 +82,40 @@ class User extends Authenticatable
         return $this->hasOne(Student::class,);
     }
 
+    public function isAdmin(){
+        return $this->role == 'Admin';
+    }
+    public function isTeacher(){
+        return $this->role == 'Teacher';
+    }
+
+    public function isStudent(){
+        return $this->role == 'Student';
+    }
+
+    public function redirectBasedOnRole()
+    {
+        switch ($this->role) {
+            case 'Admin':
+                return redirect()->route('list-users');
+                break;
+            case 'Teacher':
+                if($this->teacher){
+
+                    return redirect()->route('teacher-list-excercises');
+                }else{
+                    return redirect()->route('no-page');
+                }
+
+                break;
+            case 'Student':
+                return redirect()->route('no-page');
+                break;
+            default:
+                return redirect()->route('no-page');
+        }
+    }
+
     // {{
     //     $routeName = \Route::currentRouteName();
 

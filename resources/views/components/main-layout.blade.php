@@ -199,7 +199,12 @@
                             </span>
                     </div>
                     <nav class="flex flex-1 flex-col">
+
                         <ul role="list" class="flex flex-1 flex-col gap-y-7">
+
+                            @can('is-admin')
+
+
                             <li>
                                 <div class="text-lg mb-1 uppercase font-semibold leading-6 text-gray-600">Admin Management</div>
                                 <ul role="list" class="-mx-2 space-y-1">
@@ -273,6 +278,8 @@
 
                                 </ul>
                             </li>
+                            @endcan
+                            @can('is-teacher')
                             <li>
                                 <div class="text-lg mb-1 uppercase font-semibold leading-6 text-gray-600">Teacher Management</div>
                                 <ul role="list" class="-mx-2 mt-2 space-y-1">
@@ -301,6 +308,7 @@
                                     </li>
                                 </ul>
                             </li>
+                            @endcan
                             {{-- <li class="mt-auto">
                                 <a href="#"
                                     class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-600 hover:bg-gray-50 hover:text-indigo-600">

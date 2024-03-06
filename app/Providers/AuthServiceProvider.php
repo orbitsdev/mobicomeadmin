@@ -5,6 +5,8 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 
 use Filament\Support\Colors\Color;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Support\Facades\FilamentColor;
@@ -27,16 +29,25 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Schema::defaultStringLength(191);
-        Model::unguard();
 
 
-        FilamentColor::register([
+        Gate::define('is-admin', function () {
 
-            'primary' => "#16a34a",
+            return Auth::user()->isAdmin();
+        });
 
-        ]);
+        Gate::define('is-teacher', function () {
+            return (Auth::user()->isTeacher() || Auth::user()->teacher);
+        });
 
-        Modal::closedByClickingAway(false);
+
+
+        Gate::define('is-student', function () {
+
+            return Auth::user()->isStudent();
+        });
+
+
+
     }
 }

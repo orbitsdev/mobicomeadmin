@@ -50,6 +50,9 @@ Route::middleware([
     'verified',
 ])->group(function () {
 
+
+    Route::middleware(['can:is-admin'])->group(function(){
+
     Route::get("list-users", ListUsers::class )->name('list-users');
     Route::get("edit/profile/{record}", EditUser::class )->name('edit-profile');
     Route::get("list-teachers", ListTeachers::class )->name('list-teachers');
@@ -83,6 +86,9 @@ Route::middleware([
     Route::get("excercise/view/{record}",  ExerciseDetails::class)->name('view-exercise');
     // Route::get("manage-excercise/questions/{record}", ListQuestions::class)->name('manage-excercise-questions');
     Route::get("view-question/{record}", QuestionDetails::class)->name('view-question-details');
+
+    });
+
 
 
     //TEACHER
