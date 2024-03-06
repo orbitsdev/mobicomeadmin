@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\User;
+use Exception;
 
+use App\Models\User;
+use App\Models\TakedExams;
 use App\Models\HandledSection;
 use App\Models\EnrolledSection;
 use Illuminate\Database\Eloquent\Model;
@@ -23,6 +25,14 @@ class Student extends Model
     public function enrolled_section(){
         return $this->belongsTo(EnrolledSection::class);
     }
+
+
+
+    public function taked_exams(){
+        return $this->hasMany(TakedExams::class);
+    }
+
+
 
 
 }

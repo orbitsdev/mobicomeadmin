@@ -67,4 +67,10 @@ class Excercise extends Model
 
         return $route;
     }
+
+
+    public function students()
+    {
+        return $this->belongsToMany(Student::class, 'taked_exams', 'excercise_id', 'student_id');
+    }
 }
