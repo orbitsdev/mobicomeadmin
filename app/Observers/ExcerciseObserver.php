@@ -27,9 +27,10 @@ class ExcerciseObserver
      */
     public function deleted(Excercise $excercise): void
     {
-        $excercise->questions->each(function ($lesson) {
-            $lesson->delete();
-        });
+        $excercise->questions()->delete();
+        $excercise->taked_exams()->delete();
+           
+       
     }
 
     /**

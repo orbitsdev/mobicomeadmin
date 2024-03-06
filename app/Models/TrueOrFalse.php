@@ -20,7 +20,7 @@ class TrueOrFalse extends Model
 
     public function getTextAnswer(){
         
-        return $this->correct_answer? 'TRUE': 'FALSE';
+        return $this->correct_answer? 'True': 'False';
 
     }
 

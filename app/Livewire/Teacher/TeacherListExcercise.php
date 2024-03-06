@@ -89,7 +89,7 @@ class TeacherListExcercise extends Component implements HasForms, HasTable
                     ->label('New Exercise')
                     ->url(function () {
                         // return ('livewire.chapters.manage-lessons', ['record' => $record]);
-                        return route('create-exercise');
+                        return route('teacher-create-exercise');
                     }),
 
 

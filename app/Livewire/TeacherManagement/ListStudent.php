@@ -130,21 +130,33 @@ class ListStudent extends Component implements HasForms, HasTable
                     ->disableCreateAnother(),
             ])
             ->actions([
-
-
+                
+            
+                Action::make('view')
+                ->color('primary')
+                ->label('View Profile')
+                
+                ->button()
+                ->outlined()
+                ->url(function(Student $record){
+                    return route('view-student',['record'=> $record]);
+                })
                 // ActionGroup::make([
                 //     Action::make('view')
-                //         ->color('primary')
-                //         ->icon('heroicon-m-eye')
-                //         ->label('View Details')
-                //         ->modalContent(function (Student $record) {
-                //             return view('livewire.users.user-details', ['record' => $record->user]);
-                //         })
-                //         ->modalSubmitAction(false)
-                //         ->modalCancelAction(fn (StaticAction $action) => $action->label('Close'))
-                //         ->disabledForm()
-                //         ->slideOver()
-                //         ->modalWidth(MaxWidth::SevenExtraLarge),
+                //     ->color('primary')
+    
+                //     ->label('View Profile')
+                //     ->url(function(Student $record){
+                //         return route('view-student',['record'=> $record]);
+                //     })
+                //         // ->modalContent(function (Student $record) {
+                //         //     return view('livewire.users.user-details', ['record' => $record->user]);
+                //         // })
+                //         // ->modalSubmitAction(false)
+                //         // ->modalCancelAction(fn (StaticAction $action) => $action->label('Close'))
+                //         // ->disabledForm()
+                //         // ->slideOver()
+                //         // ->modalWidth(MaxWidth::SevenExtraLarge),
 
 
 
@@ -153,10 +165,10 @@ class ListStudent extends Component implements HasForms, HasTable
                 //             // TextInput::make('abbreviation')->maxLength(191)->required()->columnSpanFull(),
 
 
-                //     DeleteAction::make('delete'),
+                //     // DeleteAction::make('delete'),
                 //     ])
 
-                //
+                
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

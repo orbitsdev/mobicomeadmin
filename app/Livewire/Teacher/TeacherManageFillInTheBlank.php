@@ -105,7 +105,8 @@ class TeacherManageFillInTheBlank extends Component implements HasForms
         ->success()
         ->send();
 
-     return redirect()->route('list-excercises');
+        return redirect()->route('teacher-list-excercises');
+
     }
 
     public function render(): View

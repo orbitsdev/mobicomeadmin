@@ -1,29 +1,34 @@
 <?php
 
-use App\Livewire\Admin\Teacher\ListStudent;
+use App\Models\Student;
 use App\Models\Excercise;
 use App\Livewire\ManageChapter;
+use App\Livewire\StudentDetails;
 use App\Livewire\Users\EditUser;
 use App\Livewire\Users\ListUsers;
 use App\Livewire\Users\UserDetails;
 use App\Livewire\Lessons\EditLesson;
+use App\Livewire\Teacher\ListSection;
 use App\Livewire\TeacherListQuestion;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Chapters\EditChapter;
 use App\Livewire\Chapters\ListLessons;
 use App\Livewire\Lessons\CreateLesson;
 use App\Livewire\Chapters\ListChapters;
+use App\Livewire\Sections\ListSections;
 use App\Livewire\Students\ListStudents;
 use App\Livewire\Teachers\ListTeachers;
 use App\Livewire\Chapters\CreateChapter;
 use App\Livewire\Chapters\LessonDetails;
 use App\Livewire\Chapters\ManageLessons;
+use App\Livewire\TeacherQuestionDetails;
 use App\Livewire\Chapters\ChapterDetails;
 use App\Livewire\Exercises\EditExcercise;
 use App\Livewire\Exercises\ListQuestions;
 use App\Livewire\TeacherExcerciseDetails;
 use App\Livewire\Teachers\ManageSections;
 use App\Livewire\Exercises\ManageExercise;
+use App\Livewire\Admin\Teacher\ListStudent;
 use App\Livewire\Excercises\CreateExercise;
 use App\Livewire\Excercises\ListExcercises;
 use App\Livewire\Questions\QuestionDetails;
@@ -34,16 +39,14 @@ use App\Livewire\Teacher\TeacherEditExcercise;
 use App\Livewire\Teacher\TeacherListExcercise;
 use App\Livewire\Exercises\ManageFillInTheBlank;
 use App\Livewire\Exercises\ManageMultipleChoice;
+use App\Livewire\ExerciseScoreDetails;
 use App\Livewire\Teacher\TeacherCreateExcercise;
 use App\Livewire\Teacher\TeacherManageTrueOrFalse;
 use App\Livewire\Teacher\TeacherManageFillInTheBlank;
 use App\Livewire\Teacher\TeacherManageMultipleChoice;
 use App\Livewire\Lessons\ListLessons as LessonsListLessons;
 use App\Livewire\Lessons\LessonDetails as LessonsLessonDetails;
-use App\Livewire\Sections\ListSections;
-use App\Livewire\Teacher\ListSection;
 use App\Livewire\TeacherManagement\ListStudent as TeacherManagementListStudent;
-use App\Livewire\TeacherQuestionDetails;
 
 Route::middleware([
     'auth:sanctum',
@@ -51,44 +54,90 @@ Route::middleware([
     'verified',
 ])->group(function () {
 
+    // SAMPLES
+    Route::get('create-exam', function(){
+        
+        $student = Student::find(1);
+        $exercise = Excercise::find(1); // Assuming you have the Exercise model
+    
+        // Create a new TakedExam for the student
+        $taked_exam = $student->taked_exam()->create([
+            'excercise_id' => $exercise->id,
+        ]);
+        
+     
+// Static data for answers (question_id, user_answer, status)
+$answersData = [
+    ['taked_exam_id' => $taked_exam->id, 'question_id' => 1, 'answer' => 'Answer to question 1', 'status' => true],
+    ['taked_exam_id' => $taked_exam->id, 'question_id' => 2, 'answer' => 'Answer to question 2', 'status' => false],
+    // Add more answers for each question submitted by the student
+];
 
-    Route::middleware(['can:is-admin'])->group(function(){
+// $takedExam->answers()->createMany($answersData);
 
-    Route::get("list-users", ListUsers::class )->name('list-users');
-    Route::get("edit/profile/{record}", EditUser::class )->name('edit-profile');
-    Route::get("list-teachers", ListTeachers::class )->name('list-teachers');
-    Route::get("manage-teacher-sections/{record}", ManageSections::class )->name('manage-teacher-sections');
-    Route::get("list-teacher-sections/{record}", ListSection::class )->name('list-teacher-sections');
-    Route::get("list-teacher-section/students{record}", ListStudent::class )->name('list-teacher-section-students');
-    Route::get("list-students", ListStudents::class )->name('list-students');
-    Route::get("list-chapters", ListChapters::class )->name('list-chapters');
-    Route::get("create-chapter", CreateChapter::class)->name('create-chapter');
-    Route::get("edit-chapter/{record}", EditChapter::class)->name('edit-chapter');
-    Route::get("view-chapter/{record}", ChapterDetails::class )->name('view-chapter');
+// Create answers for the taked exam
+foreach ($answersData as $answerData) {
+    $taked_exam->answers()->create($answerData);
+}
 
-    Route::get("chapter-lessons-list/{record}", ListLessons::class )->name('chapter-lessons-list');
-    Route::get("chapter/{record}lesson/create/", CreateLesson::class )->name('chapter-create-lesson');
-    Route::get("chapter/lesson/edit/{record}", EditChapterLesson::class )->name('chapter-edit-lesson');
-    Route::get("chapter/view/lesson/{record}", LessonDetails::class)->name('chapter-view-lesson');
-
-    Route::get("view/lesson/{record}", LessonDetails::class)->name('view-lesson');
-
-    Route::get("lesson/edit/{record}", EditLesson::class )->name('edit-lesson');
-    Route::get("list-lessons", LessonsListLessons::class)->name('list-lessons');
-    Route::get("lessons/view/lesson/{record}", LessonsLessonDetails::class)->name('lessons-lessonn-details');
-
-
-    Route::get("list-excercises", ListExcercises::class)->name('list-excercises');
-    Route::get("excercise/create", CreateExercise::class)->name('create-exercise');
-    Route::get("excercise/edit/{record}", EditExcercise::class)->name('edit-exercise');
-    Route::get("excercise/multiple-choice/{record}", ManageMultipleChoice::class)->name('manage-multiple-choice');
-    Route::get("excercise/true-or-false/{record}", ManageTrueOrFalse::class)->name('manage-true-or-false');
-    Route::get("excercise/fill-in-the-blank/{record}", ManageFillInTheBlank::class)->name('manage-fill-in-the-blank');
-    Route::get("excercise/view/{record}",  ExerciseDetails::class)->name('view-exercise');
-    // Route::get("manage-excercise/questions/{record}", ListQuestions::class)->name('manage-excercise-questions');
-    Route::get("view-question/{record}", QuestionDetails::class)->name('view-question-details');
+        
+        return 'success';
 
     });
+
+    Route::get("student/{record}", StudentDetails::class )->name('view-student');
+    Route::get("student/exercise/score/{record}", ExerciseScoreDetails::class)->name('teacher-view-exercise-score');
+
+    Route::get("profile/{record}", UserDetails::class )->name('view-profile');
+    Route::get("edit/profile/{record}", EditUser::class )->name('edit-profile');
+    // Route::middleware(['can:admin-and-teacher'])->group(function(){
+
+        Route::middleware(['can:is-admin'])->group(function(){
+
+            Route::get("list-users", ListUsers::class )->name('list-users');
+
+            Route::get("list-teachers", ListTeachers::class )->name('list-teachers');
+
+            Route::get("manage-teacher-sections/{record}", ManageSections::class )->name('manage-teacher-sections');
+            Route::get("list-teacher-sections/{record}", ListSection::class )->name('list-teacher-sections');
+            Route::get("list-teacher-section/students{record}", ListStudent::class )->name('list-teacher-section-students');
+
+            Route::get("list-students", ListStudents::class )->name('list-students');
+            Route::get("list-chapters", ListChapters::class )->name('list-chapters');
+
+            Route::get("create-chapter", CreateChapter::class)->name('create-chapter');
+            Route::get("edit-chapter/{record}", EditChapter::class)->name('edit-chapter');
+            Route::get("view-chapter/{record}", ChapterDetails::class )->name('view-chapter');
+            Route::get("chapter-lessons-list/{record}", ListLessons::class )->name('chapter-lessons-list');
+            Route::get("chapter/{record}lesson/create/", CreateLesson::class )->name('chapter-create-lesson');
+            Route::get("chapter/lesson/edit/{record}", EditChapterLesson::class )->name('chapter-edit-lesson');
+
+            Route::get("chapter/view/lesson/{record}", LessonDetails::class)->name('chapter-view-lesson');
+            Route::get("view/lesson/{record}", LessonDetails::class)->name('view-lesson');
+            Route::get("lesson/edit/{record}", EditLesson::class )->name('edit-lesson');
+            Route::get("list-lessons", LessonsListLessons::class)->name('list-lessons');
+            Route::get("lessons/view/lesson/{record}", LessonsLessonDetails::class)->name('lessons-lessonn-details');
+
+            Route::get("list-excercises", ListExcercises::class)->name('list-excercises');
+            Route::get("excercise/multiple-choice/{record}", ManageMultipleChoice::class)->name('manage-multiple-choice');
+            Route::get("excercise/true-or-false/{record}", ManageTrueOrFalse::class)->name('manage-true-or-false');
+            Route::get("excercise/fill-in-the-blank/{record}", ManageFillInTheBlank::class)->name('manage-fill-in-the-blank');
+            Route::get("excercise/view/{record}",  ExerciseDetails::class)->name('view-exercise');
+            // Route::get("manage-excercise/questions/{record}", ListQuestions::class)->name('manage-excercise-questions');
+            Route::get("view-question/{record}", QuestionDetails::class)->name('view-question-details');            
+            Route::get("excercise/create", CreateExercise::class)->name('create-exercise');
+            Route::get("excercise/edit/{record}", EditExcercise::class)->name('edit-exercise');
+        });
+
+        // make it available to admin and  teacher
+        
+
+    
+
+
+  
+
+    // });
 
 
     //TEACHER
@@ -105,6 +154,9 @@ Route::middleware([
     Route::get("teacher-view-question/{record}", TeacherQuestionDetails::class)->name('teacher-view-question-details');
     Route::get("teacher-list-sections", ListSections::class)->name('teacher-list-sections');
     Route::get("teacher-list-sections-users/{record}", TeacherManagementListStudent::class)->name('teacher-list-sections-users');
+    
+    
+ 
 
 
     // Route::get("view-excercise/{record}", ExerciseDetails::class)->name('view-excercise');

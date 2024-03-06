@@ -5,6 +5,7 @@ namespace App\Models;
 use Exception;
 
 use App\Models\User;
+use App\Models\TakedExam;
 use App\Models\TakedExams;
 use App\Models\HandledSection;
 use App\Models\EnrolledSection;
@@ -29,10 +30,17 @@ class Student extends Model
 
 
     public function taked_exams(){
-        return $this->hasMany(TakedExams::class);
+        return $this->hasMany(TakedExam::class);
+    }
+
+    public function taked_exam(){
+        return $this->hasOne(TakedExam::class);
     }
 
 
 
-
+    // public function getTotalScore(){
+    //     return $this->taked_exam
+    // }
+   
 }

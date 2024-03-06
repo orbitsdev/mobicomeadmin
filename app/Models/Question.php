@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Excercise;
+use App\Models\Answer;
 
+use App\Models\Excercise;
 use App\Models\TrueOrFalse;
 use App\Models\FillInTheBlank;
 use App\Models\MultipleChoice;
@@ -40,5 +41,12 @@ class Question extends Model
     public function fill_in_the_blank(){
         return $this->hasOne(FillInTheBlank::class);
     }
+
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
+    }
+    
 
 }

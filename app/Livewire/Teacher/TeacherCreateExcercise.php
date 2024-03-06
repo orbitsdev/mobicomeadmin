@@ -110,6 +110,7 @@ class TeacherCreateExcercise extends Component implements HasForms
         ->title('Saved successfully')
         ->success()
         ->send();
+     
 
         return redirect()->route('teacher-list-excercises');
     }

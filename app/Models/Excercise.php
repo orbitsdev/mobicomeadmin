@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Question;
+use App\Models\TakedExam;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -73,4 +74,15 @@ class Excercise extends Model
     {
         return $this->belongsToMany(Student::class, 'taked_exams', 'excercise_id', 'student_id');
     }
+
+    public function taked_exams(){
+        return $this->hasMany(TakedExam::class);
+    }
+
+  
+
+    
+// $totalScore = $exercise->takedExams->sum(function ($takedExam) {
+//     return $takedExam->answers->where('status', true)->count();
+// });
 }
