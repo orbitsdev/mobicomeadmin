@@ -42,6 +42,7 @@ use App\Livewire\Lessons\ListLessons as LessonsListLessons;
 use App\Livewire\Lessons\LessonDetails as LessonsLessonDetails;
 use App\Livewire\Sections\ListSections;
 use App\Livewire\Teacher\ListSection;
+use App\Livewire\TeacherManagement\ListStudent as TeacherManagementListStudent;
 use App\Livewire\TeacherQuestionDetails;
 
 Route::middleware([
@@ -90,7 +91,6 @@ Route::middleware([
     });
 
 
-
     //TEACHER
     Route::get("teacher-list-excercises", TeacherListExcercise::class)->name('teacher-list-excercises');
     Route::get("teacher-excercise/create", TeacherCreateExcercise::class)->name('teacher-create-exercise');
@@ -104,6 +104,7 @@ Route::middleware([
     // Route::get("teacher-manage-excercise/questions/{record}", ListQuestions::class)->name('teacher-manage-excercise-questions');
     Route::get("teacher-view-question/{record}", TeacherQuestionDetails::class)->name('teacher-view-question-details');
     Route::get("teacher-list-sections", ListSections::class)->name('teacher-list-sections');
+    Route::get("teacher-list-sections-users/{record}", TeacherManagementListStudent::class)->name('teacher-list-sections-users');
 
 
     // Route::get("view-excercise/{record}", ExerciseDetails::class)->name('view-excercise');

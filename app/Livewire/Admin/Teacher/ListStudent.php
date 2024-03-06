@@ -76,6 +76,7 @@ class ListStudent extends Component implements HasForms, HasTable
                 //
             ])
             ->actions([
+                
                 ActionGroup::make([
                     Action::make('view')
                         ->color('primary')
