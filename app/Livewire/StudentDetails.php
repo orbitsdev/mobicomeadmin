@@ -50,10 +50,10 @@ class StudentDetails extends Component implements HasForms, HasInfolists
 
             ]),
 
-        Tabs\Tab::make('Feed Back')
-            ->schema([
-                // ...
-            ]),
+        // Tabs\Tab::make('Feed Back')
+        //     ->schema([
+        //         // ...
+        //     ]),
         ])
         ->activeTab(1)
 

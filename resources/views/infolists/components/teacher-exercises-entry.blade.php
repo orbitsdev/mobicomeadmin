@@ -26,13 +26,13 @@
                 <tr>
                  
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900"> {{$exercise->title}}</div>
+                    <div class="text-sm text-gray-500"> {{$exercise->title}}</div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900"> {{$exercise->type}}</div>
+                    <div class="text-sm text-gray-500"> {{$exercise->type}}</div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-center">
-                    <div class="text-sm text-gray-900"> {{$exercise->getTotalQuestions()}}</div>
+                    <div class="text-sm text-gray-500"> {{$exercise->getTotalQuestions()}}</div>
                   </td>
                 </tr>
                 @endforeach
