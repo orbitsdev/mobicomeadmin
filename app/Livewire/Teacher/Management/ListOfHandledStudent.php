@@ -12,11 +12,12 @@ use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Notifications\Notification;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\SelectFilter;
+
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Notification;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
 
@@ -49,22 +50,26 @@ class ListOfHandledStudent extends Component implements HasForms, HasTable
                        ->searchable(),
 
                        ToggleColumn::make('is_approved')
-                       ->onColor('success')
-                       ->offColor('danger')
+                       ->label('Status')
+                           ->onColor('success')
+                           ->offColor('danger')
+                           ->afterStateUpdated(function ($record, $state) {
+       
+                               $message  = "Not Active";
+                               if ($state) {
+                                   $message  = "Was set to Active";
+                               } else {
+                                   $message  = "Was Set to Not Active";
+                               }
+                               Notification::make()
+                                   ->title($message)
+                                   ->success()
+                                   ->send();
+                               // Runs after the state is saved to the database.
+                           })
 
-                    ->afterStateUpdated(function ($record, $state) {
-                        $message  = "Rejected";
-                        if($state){
-                            $message  = "Approved";
-                        }else{
-                            $message  = "Rejected";
-                        }
-                        Notification::make()
-                        ->title($message)
-                        ->success()
-                        ->send();
                         // Runs after the state is saved to the database.
-                    })
+                    
             ])
             ->filters([
                 SelectFilter::make('enrolled_section')
