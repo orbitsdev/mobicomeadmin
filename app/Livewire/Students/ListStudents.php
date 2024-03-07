@@ -4,6 +4,7 @@ namespace App\Livewire\Students;
 
 use Filament\Tables;
 use App\Models\Student;
+use App\Models\Teacher;
 use Filament\Forms\Get;
 use Livewire\Component;
 use Filament\Tables\Table;
@@ -53,37 +54,37 @@ class ListStudents extends Component implements HasForms, HasTable
                             $query->where('first_name', 'like', "%{$search}%")
                                 ->orWhere('last_name', 'like', "%{$search}%");
                         });
-                       }),
-                   TextColumn::make('user.email')->searchable()->label('Email'),
+                    }),
+                TextColumn::make('user.email')->searchable()->label('Email'),
 
-                    TextColumn::make('enrolled_section.teacher.user')
-                    ->formatStateUsing(function($state){
+                TextColumn::make('enrolled_section.teacher.user')
+                    ->formatStateUsing(function ($state) {
                         return $state->getFullName();
                     })
                     ->label('Teacher')
                     ->badge(),
-                    TextColumn::make('enrolled_section.section.title')
-                        ->label('Section')
-                        ->badge()
-                        ->searchable(),
+                TextColumn::make('enrolled_section.section.title')
+                    ->label('Section')
+                    ->badge()
+                    ->searchable(),
 
-                        ToggleColumn::make('is_approved')
-                        ->onColor('success')
-                        ->offColor('danger')
-                        ->afterStateUpdated(function ($record, $state) {
+                ToggleColumn::make('is_approved')
+                    ->onColor('success')
+                    ->offColor('danger')
+                    ->afterStateUpdated(function ($record, $state) {
 
+                        $message  = "Rejected";
+                        if ($state) {
+                            $message  = "Approved";
+                        } else {
                             $message  = "Rejected";
-                            if($state){
-                                $message  = "Approved";
-                            }else{
-                                $message  = "Rejected";
-                            }
-                            Notification::make()
+                        }
+                        Notification::make()
                             ->title($message)
                             ->success()
                             ->send();
-                            // Runs after the state is saved to the database.
-                        })
+                        // Runs after the state is saved to the database.
+                    })
 
 
 
@@ -91,39 +92,57 @@ class ListStudents extends Component implements HasForms, HasTable
 
 
             ])
-            ->filters([
-                // Filter::make('section')
-                // ->form([
-                //     Select::make('section_id')
-                //         ->options(MSection::whereHas('handled_sections')->pluck('title','id'))
-                //         ->label('Card Availabilty')
-                //         ->selectablePlaceholder(false)
-                // ])
-                // ->query(function (Builder $query, array $data): Builder {
-                //     return $query->whereHas('handled_section',function($query) use($data){
-                //         $query->where('section_id', $data['section_id']);
-                //     });
-                // })
+            ->filters(
+                [
+                    // Filter::make('section')
+                    // ->form([
+                    //     Select::make('section_id')
+                    //         ->options(MSection::whereHas('handled_sections')->pluck('title','id'))
+                    //         ->label('Card Availabilty')
+                    //         ->selectablePlaceholder(false)
+                    // ])
+                    // ->query(function (Builder $query, array $data): Builder {
+                    //     return $query->whereHas('handled_section',function($query) use($data){
+                    //         $query->where('section_id', $data['section_id']);
+                    //     });
+                    // })
 
 
-                SelectFilter::make('sections')
-                ->options(fn() => MSection::whereHas('enrolled_sections')->pluck('title', 'id')) //you probably want to limit this in some way?
-                ->modifyQueryUsing(function (Builder $query, $state) {
-                    if (! $state['value']) {
-                        return $query;
-                    }
-                    return $query->whereHas('enrolled_section', fn($query) => $query->where('section_id', $state['value']));
-                }),
+                    SelectFilter::make('sections')
+                        ->options(fn () => MSection::whereHas('enrolled_sections')->pluck('title', 'id')) //you probably want to limit this in some way?
+                        ->modifyQueryUsing(function (Builder $query, $state) {
+                            if (!$state['value']) {
+                                return $query;
+                            }
+                            return $query->whereHas('enrolled_section', fn ($query) => $query->where('section_id', $state['value']));
+                        }),
+                    SelectFilter::make('teacher')
+                        ->options(fn () => Teacher::whereHas('enrolled_sections.teacher')->get()->map(function($item){
+                            return [
 
-            ],
-            layout: FiltersLayout::AboveContent
+                                'full_name'=> $item->user->getFullName(),
+                                'id'=> $item->id,
+
+
+                            ];
+                        })->pluck('full_name', 'id')) //you probably want to limit this in some way?
+                        ->modifyQueryUsing(function (Builder $query, $state) {
+                            if (!$state['value']) {
+                                return $query;  
+                            }
+                            return $query->whereHas('enrolled_section', fn ($query) => $query->where('teacher_id', $state['value']));
+                        }),
+
+
+                ],
+                layout: FiltersLayout::AboveContent
             )
 
             ->headerActions([
 
                 CreateAction::make()
-                ->successNotificationTitle('Student Created')
-                ->icon('heroicon-m-sparkles')
+                    ->successNotificationTitle('Student Created')
+                    ->icon('heroicon-m-sparkles')
 
                     ->form([
 
@@ -157,7 +176,7 @@ class ListStudents extends Component implements HasForms, HasTable
 
                                     )
                                     ->searchable()
-                                    ->getOptionLabelFromRecordUsing(fn (Model $record) => $record->section->title .' - ('. $record->teacher->user->getFullName().')')
+                                    ->getOptionLabelFromRecordUsing(fn (Model $record) => $record->section->title . ' - (' . $record->teacher->user->getFullName() . ')')
                                     ->preload()
                                     ->required()
                                     ->columnSpanFull(),
@@ -179,23 +198,23 @@ class ListStudents extends Component implements HasForms, HasTable
             ->actions([
 
                 Action::make('view')
-                ->color('primary')
-                ->label('View Profile')
+                    ->color('primary')
+                    ->label('View Profile')
 
-                ->button()
-                ->outlined()
-                ->url(function(Student $record){
-                    return route('student-profile',['record'=> $record]);
-                }),
+                    ->button()
+                    ->outlined()
+                    ->url(function (Student $record) {
+                        return route('student-profile', ['record' => $record]);
+                    }),
                 ActionGroup::make([
 
-                        // ->modalContent(function (Student $record) {
-                        //     return view('livewire.users.user-details', ['record' => $record->user]);
-                        // })
-                        // ->modalSubmitAction(false)
-                        // ->modalCancelAction(fn (StaticAction $action) => $action->label('Close'))
-                        // ->disabledForm()
-                        // ->slideOver(),
+                    // ->modalContent(function (Student $record) {
+                    //     return view('livewire.users.user-details', ['record' => $record->user]);
+                    // })
+                    // ->modalSubmitAction(false)
+                    // ->modalCancelAction(fn (StaticAction $action) => $action->label('Close'))
+                    // ->disabledForm()
+                    // ->slideOver(),
 
                     // EditAction::make()
                     //     ->modalWidth(MaxWidth::SevenExtraLarge)
@@ -276,15 +295,19 @@ class ListStudents extends Component implements HasForms, HasTable
             ])
             ->groups([
 
-                    Group::make('enrolled_section.section.title')
-                        ->label('Section')
+                Group::make('enrolled_section.section.title')
+                    ->label('Section')
+
+                    ->titlePrefixedWithLabel(false),
+                Group::make('enrolled_section.teacher.user.first_name')
+                    ->label('Teacher')
 
                     ->titlePrefixedWithLabel(false),
 
-            ])
-            ->defaultGroup('enrolled_section.section.title');
+                    
 
-            ;
+            ])
+            ->defaultGroup('enrolled_section.section.title');;
     }
 
     public function render(): View

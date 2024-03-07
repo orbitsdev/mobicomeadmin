@@ -49,6 +49,7 @@ use App\Livewire\Lessons\ListLessons as LessonsListLessons;
 use App\Livewire\Lessons\LessonDetails as LessonsLessonDetails;
 use App\Livewire\Teacher\Management\EnrolledStudentDetails;
 use App\Livewire\Teacher\Management\ListOfHandledStudent;
+use App\Livewire\Teacher\Management\ListTakedExcercise;
 use App\Livewire\Teacher\TeacherDetails;
 use App\Livewire\TeacherManagement\ListStudent as TeacherManagementListStudent;
 
@@ -165,6 +166,7 @@ foreach ($answersData as $answerData) {
     Route::get("teacher-enrolled-student-view/{record}", EnrolledStudentDetails::class )->name('enrolled-view-student');
 
     Route::get("teacher/enrolled/student/exercise/score/{record}", EnrolledExcerciseScoreDetails::class)->name('enrolled-teacher-view-exercise-score');
+    Route::get("teacher/student/taked/exercises", ListTakedExcercise::class)->name('teacher-list-taked-exercises');
 
 
 
