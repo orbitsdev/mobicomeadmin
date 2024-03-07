@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Feed;
 use App\Models\Answer;
 use App\Models\Student;
 use App\Models\Excercise;
@@ -12,7 +13,7 @@ class TakedExam extends Model
 {
     use HasFactory;
 
-    
+
     public function excercise(){
         return $this->belongsTo(Excercise::class);
     }
@@ -33,6 +34,10 @@ class TakedExam extends Model
         return $this->excercise->questions()->count();
     }
 
-   
+
+
+    public function feed(){
+        return $this->hasOne(Feed::class);
+    }
 
 }

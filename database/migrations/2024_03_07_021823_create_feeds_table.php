@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('taked_exam_id')->constrained()->nullable();
             $table->unsignedBigInteger('rate')->unique()->nullable();
-            $table->string('Message')->unique()->nullable();
-            $table->boolean('is_read')->defaultFalse()->nullable();
+            $table->string('message')->unique()->nullable();
+            $table->boolean('is_read')->default(false)->nullable();
             $table->timestamps();
         });
     }

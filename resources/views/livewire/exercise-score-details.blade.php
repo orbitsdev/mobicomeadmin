@@ -32,7 +32,7 @@
 
                         @switch($record->excercise->type)
                         @case('Multiple Choice')
-{{-- 
+{{--
                             @foreach ($answer->questions->multiple_choice->getShuffledOptionsAttribute() as  $option)
                                     <p>
 
@@ -73,5 +73,6 @@
                 <p><strong>Total Questions:</strong> {{ $record->getTotalExerciseQuestions() }}</p>
             </div>
         </div>
+
     </div>
 </div>

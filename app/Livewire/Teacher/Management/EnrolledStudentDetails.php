@@ -46,12 +46,9 @@ class EnrolledStudentDetails extends Component implements HasForms, HasInfolists
 
                 ]),
 
-            Tabs\Tab::make('Feed Back')
-                ->schema([
-                    // ...
-                ]),
+
             ])
-            ->activeTab(1)
+            ->activeTab(2)
 
             ,
 
