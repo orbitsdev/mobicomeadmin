@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('taked_exam_id')->constrained()->nullable();
             $table->foreignId('question_id')->constrained()->nullable();
-            $table->string('answer');
-            $table->boolean('status')->defalt(); 
+            $table->string('answer')->nullable();
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }

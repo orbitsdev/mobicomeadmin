@@ -130,12 +130,12 @@ class ListStudent extends Component implements HasForms, HasTable
                     ->disableCreateAnother(),
             ])
             ->actions([
-                
-            
+
+
                 Action::make('view')
                 ->color('primary')
                 ->label('View Profile')
-                
+
                 ->button()
                 ->outlined()
                 ->url(function(Student $record){
@@ -144,7 +144,7 @@ class ListStudent extends Component implements HasForms, HasTable
                 // ActionGroup::make([
                 //     Action::make('view')
                 //     ->color('primary')
-    
+
                 //     ->label('View Profile')
                 //     ->url(function(Student $record){
                 //         return route('view-student',['record'=> $record]);
@@ -168,7 +168,7 @@ class ListStudent extends Component implements HasForms, HasTable
                 //     // DeleteAction::make('delete'),
                 //     ])
 
-                
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

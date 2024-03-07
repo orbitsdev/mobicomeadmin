@@ -37,7 +37,7 @@ class ListSections extends Component implements HasForms, HasTable
             ])
             ->headerActions([
 
-              
+
                     // ->slideOver()
 
             ])
@@ -56,7 +56,8 @@ class ListSections extends Component implements HasForms, HasTable
             ])
             ->modifyQueryUsing(fn (Builder $query) => $query->whereHas('enrolled_section.teacher.user', function ($query) {
                 $query->where('id', auth()->user()->id);
-            }));;
+            }))
+            ;
     }
 
     public function render(): View

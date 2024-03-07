@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('teachers', function (Blueprint $table) {
+        Schema::create('feeds', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->nullable();
-            $table->boolean('is_approved')->default(false)->nullable();
+            $table->foreignId('taked_exam_id')->constrained()->nullable();
+            $table->unsignedBigInteger('rate')->unique()->nullable();
+            $table->string('Message')->unique()->nullable();
+            $table->boolean('is_read')->defaultFalse()->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('teachers');
+        Schema::dropIfExists('feeds');
     }
 };

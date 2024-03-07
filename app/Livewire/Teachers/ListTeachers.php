@@ -19,9 +19,11 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Columns\ToggleColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\CheckboxList;
 use Illuminate\Database\Eloquent\Collection;
@@ -50,8 +52,27 @@ class ListTeachers extends Component implements HasForms, HasTable
                         });
                     }),
 
-                    TextColumn::make('sections_count')->counts('sections')
+                    TextColumn::make('sections_count')->counts('sections'),
 
+                    ToggleColumn::make('is_approved')
+                    ->label('Is Aprroved')
+                    ->onColor('success')
+                    ->offColor('danger')
+
+                 ->afterStateUpdated(function ($record, $state) {
+                     $message  = "Rejected";
+                     if($state){
+                         $message  = "Approved";
+                     }else{
+                         $message  = "Rejected";
+                     }
+                     Notification::make()
+                     ->title($message)
+                     ->success()
+                     ->send();
+                     // Runs after the state is saved to the database.
+                 })
+                 ,    TextColumn::make('created_at')->date(),
 
 
             ])

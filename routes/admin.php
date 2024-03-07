@@ -33,6 +33,7 @@ use App\Livewire\Excercises\CreateExercise;
 use App\Livewire\Excercises\ListExcercises;
 use App\Livewire\Questions\QuestionDetails;
 use App\Livewire\Chapters\EditChapterLesson;
+use App\Livewire\EnrolledExcerciseScoreDetails;
 use App\Livewire\Excercises\ExerciseDetails;
 use App\Livewire\Exercises\ManageTrueOrFalse;
 use App\Livewire\Teacher\TeacherEditExcercise;
@@ -46,6 +47,8 @@ use App\Livewire\Teacher\TeacherManageFillInTheBlank;
 use App\Livewire\Teacher\TeacherManageMultipleChoice;
 use App\Livewire\Lessons\ListLessons as LessonsListLessons;
 use App\Livewire\Lessons\LessonDetails as LessonsLessonDetails;
+use App\Livewire\Teacher\Management\EnrolledStudentDetails;
+use App\Livewire\Teacher\Management\ListOfHandledStudent;
 use App\Livewire\TeacherManagement\ListStudent as TeacherManagementListStudent;
 
 Route::middleware([
@@ -56,16 +59,16 @@ Route::middleware([
 
     // SAMPLES
     Route::get('create-exam', function(){
-        
+
         $student = Student::find(1);
         $exercise = Excercise::find(1); // Assuming you have the Exercise model
-    
+
         // Create a new TakedExam for the student
         $taked_exam = $student->taked_exam()->create([
             'excercise_id' => $exercise->id,
         ]);
-        
-     
+
+
 // Static data for answers (question_id, user_answer, status)
 $answersData = [
     ['taked_exam_id' => $taked_exam->id, 'question_id' => 1, 'answer' => 'Answer to question 1', 'status' => true],
@@ -80,7 +83,7 @@ foreach ($answersData as $answerData) {
     $taked_exam->answers()->create($answerData);
 }
 
-        
+
         return 'success';
 
     });
@@ -96,6 +99,7 @@ foreach ($answersData as $answerData) {
 
             Route::get("list-users", ListUsers::class )->name('list-users');
 
+
             Route::get("list-teachers", ListTeachers::class )->name('list-teachers');
 
             Route::get("manage-teacher-sections/{record}", ManageSections::class )->name('manage-teacher-sections');
@@ -104,6 +108,7 @@ foreach ($answersData as $answerData) {
 
             Route::get("list-students", ListStudents::class )->name('list-students');
             Route::get("list-chapters", ListChapters::class )->name('list-chapters');
+              Route::get("student-profile/{record}", StudentDetails::class )->name('student-profile');
 
             Route::get("create-chapter", CreateChapter::class)->name('create-chapter');
             Route::get("edit-chapter/{record}", EditChapter::class)->name('edit-chapter');
@@ -124,18 +129,18 @@ foreach ($answersData as $answerData) {
             Route::get("excercise/fill-in-the-blank/{record}", ManageFillInTheBlank::class)->name('manage-fill-in-the-blank');
             Route::get("excercise/view/{record}",  ExerciseDetails::class)->name('view-exercise');
             // Route::get("manage-excercise/questions/{record}", ListQuestions::class)->name('manage-excercise-questions');
-            Route::get("view-question/{record}", QuestionDetails::class)->name('view-question-details');            
+            Route::get("view-question/{record}", QuestionDetails::class)->name('view-question-details');
             Route::get("excercise/create", CreateExercise::class)->name('create-exercise');
             Route::get("excercise/edit/{record}", EditExcercise::class)->name('edit-exercise');
         });
 
         // make it available to admin and  teacher
-        
-
-    
 
 
-  
+
+
+
+
 
     // });
 
@@ -154,9 +159,13 @@ foreach ($answersData as $answerData) {
     Route::get("teacher-view-question/{record}", TeacherQuestionDetails::class)->name('teacher-view-question-details');
     Route::get("teacher-list-sections", ListSections::class)->name('teacher-list-sections');
     Route::get("teacher-list-sections-users/{record}", TeacherManagementListStudent::class)->name('teacher-list-sections-users');
-    
-    
- 
+    Route::get("teacher-list-of-enrolled-students", ListOfHandledStudent::class)->name('teacher-list-of-enrolled-students');
+    Route::get("teacher-enrolled-student-view/{record}", EnrolledStudentDetails::class )->name('enrolled-view-student');
+
+    Route::get("teacher/enrolled/student/exercise/score/{record}", EnrolledExcerciseScoreDetails::class)->name('enrolled-teacher-view-exercise-score');
+
+
+
 
 
     // Route::get("view-excercise/{record}", ExerciseDetails::class)->name('view-excercise');

@@ -1,5 +1,5 @@
 <x-dynamic-component :component="$getEntryWrapperView()" :entry="$entry">
-    
+
     <div>
 
         <div class="grid grid-cols-3">
@@ -21,13 +21,13 @@
             </div>
             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt class="text-sm font-medium leading-6 text-gray-900">Email</dt>
-            
+
               <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                 {{$getRecord()->user->email ?? ''}}
               </dd>
 
             </div>
-            
+
             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt class="text-sm font-medium leading-6 text-gray-900">Role</dt>
               <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
@@ -36,18 +36,18 @@
             </div>
             @if($getRecord()->user->student)
             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt class="text-sm font-medium leading-6 text-gray-900">Role</dt>
+              <dt class="text-sm font-medium leading-6 text-gray-900">Section</dt>
               <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                 {{$getRecord()->user->student->enrolled_section->section->title ?? ''}}
               </dd>
             </div>
             @endif
 
-         
-          
+
+
 
           </dl>
         </div>
       </div>
-       
+
 </x-dynamic-component>

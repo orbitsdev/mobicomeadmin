@@ -19,14 +19,14 @@ use Illuminate\Support\Carbon;
 
 
 class StudentDetails extends Component implements HasForms, HasInfolists
-{   
+{
 
     use InteractsWithInfolists;
     use InteractsWithForms;
     public Student $record;
 
 
-    
+
     public function userInfolist(Infolist $infolist): Infolist
 {
     return $infolist
@@ -40,14 +40,14 @@ class StudentDetails extends Component implements HasForms, HasInfolists
 
                 ViewEntry::make('_')
                 ->view('infolists.components.info-list-student-details'),
-            
-                
+
+
             ]),
         Tabs\Tab::make('Exercises')
             ->schema([
                 ViewEntry::make('__')
                 ->view('infolists.components.student-exercises-details'),
-            
+
             ]),
 
         Tabs\Tab::make('Feed Back')
@@ -55,11 +55,11 @@ class StudentDetails extends Component implements HasForms, HasInfolists
                 // ...
             ]),
         ])
-        ->activeTab(2)
-        
+        ->activeTab(1)
+
         ,
 
-        
+
             // TextEntry::make('email'),
 
         ]);

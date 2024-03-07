@@ -175,18 +175,25 @@ class ListStudents extends Component implements HasForms, HasTable
                     ->disableCreateAnother(),
             ])
             ->actions([
+
+                Action::make('view')
+                ->color('primary')
+                ->label('View Profile')
+
+                ->button()
+                ->outlined()
+                ->url(function(Student $record){
+                    return route('student-profile',['record'=> $record]);
+                }),
                 ActionGroup::make([
-                    Action::make('view')
-                        ->color('primary')
-                        ->icon('heroicon-m-eye')
-                        ->label('View Details')
-                        ->modalContent(function (Student $record) {
-                            return view('livewire.users.user-details', ['record' => $record->user]);
-                        })
-                        ->modalSubmitAction(false)
-                        ->modalCancelAction(fn (StaticAction $action) => $action->label('Close'))
-                        ->disabledForm()
-                        ->slideOver(),
+
+                        // ->modalContent(function (Student $record) {
+                        //     return view('livewire.users.user-details', ['record' => $record->user]);
+                        // })
+                        // ->modalSubmitAction(false)
+                        // ->modalCancelAction(fn (StaticAction $action) => $action->label('Close'))
+                        // ->disabledForm()
+                        // ->slideOver(),
 
                     // EditAction::make()
                     //     ->modalWidth(MaxWidth::SevenExtraLarge)

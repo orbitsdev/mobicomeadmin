@@ -132,18 +132,28 @@ class ListUsers extends Component implements HasForms, HasTable
                     ->disableCreateAnother(),
             ])
             ->actions([
+
+                Action::make('view')
+                ->color('primary')
+                ->label('View Profile')
+
+                ->button()
+                ->outlined()
+                ->url(function(User $record){
+                    return route('view-profile',['record'=> $record]);
+                }),
                 ActionGroup::make([
-                    Action::make('view')
-                        ->color('primary')
-                        ->icon('heroicon-m-eye')
-                        ->label('View Details')
-                        ->modalContent(function (User $record) {
-                            return view('livewire.users.user-details', ['record' => $record]);
-                        })
-                        ->modalSubmitAction(false)
-                        ->modalCancelAction(fn (StaticAction $action) => $action->label('Close'))
-                        ->disabledForm()
-                        ->slideOver(),
+                    // Action::make('view')
+                    //     ->color('primary')
+                    //     ->icon('heroicon-m-eye')
+                    //     ->label('View Details')
+                    //     ->modalContent(function (User $record) {
+                    //         return view('livewire.users.user-details', ['record' => $record]);
+                    //     })
+                    //     ->modalSubmitAction(false)
+                    //     ->modalCancelAction(fn (StaticAction $action) => $action->label('Close'))
+                    //     ->disabledForm()
+                    //     ->slideOver(),
                     EditAction::make('edit')
                     ->successNotificationTitle('Updated Save')
                         ->color('primary')
