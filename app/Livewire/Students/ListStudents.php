@@ -69,15 +69,16 @@ class ListStudents extends Component implements HasForms, HasTable
                     ->searchable(),
 
                 ToggleColumn::make('is_approved')
+                ->label('Status')
                     ->onColor('success')
                     ->offColor('danger')
                     ->afterStateUpdated(function ($record, $state) {
 
-                        $message  = "Rejected";
+                        $message  = "Not Active";
                         if ($state) {
-                            $message  = "Approved";
+                            $message  = "Was set to Active";
                         } else {
-                            $message  = "Rejected";
+                            $message  = "Was Set to Not Active";
                         }
                         Notification::make()
                             ->title($message)
