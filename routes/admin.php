@@ -108,7 +108,7 @@ foreach ($answersData as $answerData) {
 
             Route::get("list-students", ListStudents::class )->name('list-students');
             Route::get("list-chapters", ListChapters::class )->name('list-chapters');
-              Route::get("student-profile/{record}", StudentDetails::class )->name('student-profile');
+            Route::get("student-profile/{record}", StudentDetails::class )->name('student-profile');
 
             Route::get("create-chapter", CreateChapter::class)->name('create-chapter');
             Route::get("edit-chapter/{record}", EditChapter::class)->name('edit-chapter');

@@ -29,42 +29,40 @@ class EnrolledExcerciseScoreDetails extends Component implements HasForms, HasIn
 
 
     public function userInfolist(Infolist $infolist): Infolist
-{
-    return $infolist
-        ->record($this->record)
-        ->schema([
-
-        Tabs::make('Student Details')
-    ->tabs([
-        Tabs\Tab::make('Student Details')
+    {
+        return $infolist
+            ->record($this->record)
             ->schema([
 
-                ViewEntry::make('_')
-                ->view('infolists.components.info-list-student-details'),
+                Tabs::make('Student Details')
+                    ->tabs([
+                        Tabs\Tab::make('Student Details')
+                            ->schema([
+
+                                ViewEntry::make('_')
+                                    ->view('infolists.components.info-list-student-details'),
 
 
-            ]),
-        Tabs\Tab::make('Exercises')
-            ->schema([
-                ViewEntry::make('__')
-                ->view('infolists.components.enrolled-student-exercise-details'),
+                            ]),
+                        Tabs\Tab::make('Exercises')
+                            ->schema([
+                                ViewEntry::make('__')
+                                    ->view('infolists.components.enrolled-student-exercise-details'),
 
-            ]),
+                            ]),
 
-        Tabs\Tab::make('Feed Back')
-            ->schema([
-                // ...
-            ]),
-        ])
-        ->activeTab(1)
-
-        ,
+                        Tabs\Tab::make('Feed Back')
+                            ->schema([
+                                // ...
+                            ]),
+                    ])
+                    ->activeTab(1),
 
 
-            // TextEntry::make('email'),
+                // TextEntry::make('email'),
 
-        ]);
-}
+            ]);
+    }
 
     public function render()
     {

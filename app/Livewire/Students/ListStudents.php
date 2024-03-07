@@ -156,7 +156,8 @@ class ListStudents extends Component implements HasForms, HasTable
                                         titleAttribute: 'created_at',
 
                                     )
-                                    ->getOptionLabelFromRecordUsing(fn (Model $record) => $record->section->title)
+                                    ->searchable()
+                                    ->getOptionLabelFromRecordUsing(fn (Model $record) => $record->section->title .' - ('. $record->teacher->user->getFullName().')')
                                     ->preload()
                                     ->required()
                                     ->columnSpanFull(),
@@ -171,6 +172,7 @@ class ListStudents extends Component implements HasForms, HasTable
 
                         // TextInput::make('abbreviation')->maxLength(191)->required()->columnSpanFull(),
                     ])
+                    ->modalWidth(MaxWidth::SixExtraLarge)
                     // ->slideOver()
                     ->disableCreateAnother(),
             ])

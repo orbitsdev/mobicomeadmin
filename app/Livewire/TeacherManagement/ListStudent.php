@@ -20,9 +20,11 @@ use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Notifications\Notification;
 use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -50,45 +52,48 @@ class ListStudent extends Component implements HasForms, HasTable
                             $query->where('first_name', 'like', "%{$search}%")
                                 ->orWhere('last_name', 'like', "%{$search}%");
                         });
-                       }),
+                    }),
 
-                       TextColumn::make('user.email')
-                       ->label('Email')
-                       ->searchable(),
+                TextColumn::make('user.email')
+                    ->label('Email')
+                    ->searchable(),
 
-                       ToggleColumn::make('is_approved')
-                       ->onColor('success')
-                       ->offColor('danger')
+                ToggleColumn::make('is_approved')
+                    ->onColor('success')
+                    ->offColor('danger')
 
                     ->afterStateUpdated(function ($record, $state) {
                         $message  = "Rejected";
-                        if($state){
+                        if ($state) {
                             $message  = "Approved";
-                        }else{
+                        } else {
                             $message  = "Rejected";
                         }
                         Notification::make()
-                        ->title($message)
-                        ->success()
-                        ->send();
+                            ->title($message)
+                            ->success()
+                            ->send();
                         // Runs after the state is saved to the database.
                     })
             ])
             ->filters([
-                //
-            ])
+
+          
+            ], layout: FiltersLayout::AboveContent
+            )
+
 
             ->headerActions([
 
                 CreateAction::make()
-                ->successNotificationTitle('Student Created')
-                ->mutateFormDataUsing(function (array $data): array {
-                    $data['enrolled_section_id'] = $this->record->enrolled_section->id;
+                    ->successNotificationTitle('Student Created')
+                    ->mutateFormDataUsing(function (array $data): array {
+                        $data['enrolled_section_id'] = $this->record->enrolled_section->id;
 
 
-                    return $data;
-                })
-                ->icon('heroicon-m-sparkles')
+                        return $data;
+                    })
+                    ->icon('heroicon-m-sparkles')
 
                     ->form([
 
@@ -133,14 +138,14 @@ class ListStudent extends Component implements HasForms, HasTable
 
 
                 Action::make('view')
-                ->color('primary')
-                ->label('View Profile')
+                    ->color('primary')
+                    ->label('View Profile')
 
-                ->button()
-                ->outlined()
-                ->url(function(Student $record){
-                    return route('view-student',['record'=> $record]);
-                })
+                    ->button()
+                    ->outlined()
+                    ->url(function (Student $record) {
+                        return route('view-student', ['record' => $record]);
+                    })
                 // ActionGroup::make([
                 //     Action::make('view')
                 //     ->color('primary')

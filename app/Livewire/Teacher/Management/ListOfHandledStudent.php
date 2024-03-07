@@ -8,10 +8,13 @@ use Livewire\Component;
 use Filament\Tables\Table;
 use Filament\Tables\Actions\Action;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Notification;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -42,6 +45,8 @@ class ListOfHandledStudent extends Component implements HasForms, HasTable
                        TextColumn::make('user.email')
                        ->label('Email')
                        ->searchable(),
+                       TextColumn::make('enrolled_section.section.title')
+                       ->searchable(),
 
                        ToggleColumn::make('is_approved')
                        ->onColor('success')
@@ -62,8 +67,17 @@ class ListOfHandledStudent extends Component implements HasForms, HasTable
                     })
             ])
             ->filters([
-                //
-            ])
+                SelectFilter::make('enrolled_section')
+                ->relationship('enrolled_section.section', 'title', fn (Builder $query) => $query->whereHas('enrolled_section.teacher.user', function($query){
+                    $query->where('id', Auth::user()->id);
+                }))
+
+            // SelectFilter::make('created_by')
+            //     ->options([
+            //         'Teacher' => 'Teacher',
+            //         'Admin' => 'Admin',
+            //     ])
+            ], layout: FiltersLayout::AboveContent )
             ->actions([
                 Action::make('view')
                 ->color('primary')
