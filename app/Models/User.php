@@ -116,6 +116,10 @@ class User extends Authenticatable
         }
     }
 
+    public function excercises(){
+        return $this->hasMany(Excercise::class);
+    }
+
     // {{
     //     $routeName = \Route::currentRouteName();
 

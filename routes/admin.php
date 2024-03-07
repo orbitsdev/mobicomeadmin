@@ -49,6 +49,7 @@ use App\Livewire\Lessons\ListLessons as LessonsListLessons;
 use App\Livewire\Lessons\LessonDetails as LessonsLessonDetails;
 use App\Livewire\Teacher\Management\EnrolledStudentDetails;
 use App\Livewire\Teacher\Management\ListOfHandledStudent;
+use App\Livewire\Teacher\TeacherDetails;
 use App\Livewire\TeacherManagement\ListStudent as TeacherManagementListStudent;
 
 Route::middleware([
@@ -101,6 +102,7 @@ foreach ($answersData as $answerData) {
 
 
             Route::get("list-teachers", ListTeachers::class )->name('list-teachers');
+            Route::get("view-teacher-profile/{record}", TeacherDetails::class )->name('view-teacher-profile');
 
             Route::get("manage-teacher-sections/{record}", ManageSections::class )->name('manage-teacher-sections');
             Route::get("list-teacher-sections/{record}", ListSection::class )->name('list-teacher-sections');

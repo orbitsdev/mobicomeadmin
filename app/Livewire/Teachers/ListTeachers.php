@@ -52,27 +52,28 @@ class ListTeachers extends Component implements HasForms, HasTable
                         });
                     }),
 
-                    TextColumn::make('sections_count')->counts('sections'),
+                    TextColumn::make('user.email')->label('Email')->searchable(),
 
-                    ToggleColumn::make('is_approved')
-                    ->label('Is Aprroved')
+                TextColumn::make('sections_count')->counts('sections'),
+
+                ToggleColumn::make('is_approved')
+                    ->label('Status')
                     ->onColor('success')
                     ->offColor('danger')
 
-                 ->afterStateUpdated(function ($record, $state) {
-                     $message  = "Rejected";
-                     if($state){
-                         $message  = "Approved";
-                     }else{
-                         $message  = "Rejected";
-                     }
-                     Notification::make()
-                     ->title($message)
-                     ->success()
-                     ->send();
-                     // Runs after the state is saved to the database.
-                 })
-                 ,    TextColumn::make('created_at')->date(),
+                    ->afterStateUpdated(function ($record, $state) {
+                        $message  = "Not Active";
+                        if ($state) {
+                            $message  = "Active";
+                        } else {
+                            $message  = "Not Active";
+                        }
+                        Notification::make()
+                            ->title($message)
+                            ->success()
+                            ->send();
+                        // Runs after the state is saved to the database.
+                    }),    TextColumn::make('created_at')->date(),
 
 
             ])
@@ -126,21 +127,27 @@ class ListTeachers extends Component implements HasForms, HasTable
 
             ->actions([
 
+                Action::make('view')
+                    ->color('primary')
+                    ->icon('heroicon-m-eye')
+                    ->label('View Profile')
+                    ->url(function (Model $record) {
+                        return route('view-teacher-profile', ['record' => $record]);
+                    })
+                    ->button()
+                    ->outlined(),
 
+                // ->modalContent(function (Teacher $record) {
+                //     return view('livewire.users.user-details', ['record' => $record->user]);
+                // })
+                // ->modalSubmitAction(false)
+                // ->modalCancelAction(fn (StaticAction $action) => $action->label('Close'))
+                // ->disabledForm()
+                // ->slideOver(),
                 ActionGroup::make([
-                    Action::make('view')
-                        ->color('primary')
-                        ->icon('heroicon-m-eye')
-                        ->label('View Details')
-                        ->modalContent(function (Teacher $record) {
-                            return view('livewire.users.user-details', ['record' => $record->user]);
-                        })
-                        ->modalSubmitAction(false)
-                        ->modalCancelAction(fn (StaticAction $action) => $action->label('Close'))
-                        ->disabledForm()
-                        ->slideOver(),
 
-                        EditAction::make('manage')
+
+                    EditAction::make('manage')
                         ->successNotificationTitle('Updated Save')
                         ->color('primary')
                         ->icon('heroicon-m-inbox-stack')
@@ -150,28 +157,24 @@ class ListTeachers extends Component implements HasForms, HasTable
                         ->slideOver()
                         ->form([
 
-                    CheckboxList::make('sections')
-                    ->relationship(
-                        name: 'sections',
-                        titleAttribute: 'title')
-                        ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->title}")
-                        ->bulkToggleable()
-                        ->columns(3)
-                        ->gridDirection('row')
-                        ->searchable()
-                        ->label('Select Handles Sections')
-                        ,
+                            CheckboxList::make('sections')
+                                ->relationship(
+                                    name: 'sections',
+                                    titleAttribute: 'title'
+                                )
+                                ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->title}")
+                                ->bulkToggleable()
+                                ->columns(3)
+                                ->gridDirection('row')
+                                ->searchable()
+                                ->label('Select Handles Sections'),
 
 
 
 
 
                         ]),
-                        Action::make('manage-section-student')
-                            ->color('primary')
-                            ->icon('heroicon-m-users')
-                            ->label('Students')
-                            ->url(fn(Model $record)=> route('list-teacher-sections',['record'=> $record])),
+
 
                     // EditAction::make()
                     //     ->modalWidth(MaxWidth::SevenExtraLarge)

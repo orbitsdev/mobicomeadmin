@@ -25,4 +25,8 @@ class EnrolledSection extends Model
     public function getTotalStudent(){
         return $this->students()->count();
     }
+
+    
+
+
 }

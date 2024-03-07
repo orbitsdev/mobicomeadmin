@@ -5,6 +5,7 @@ namespace App\Models;
 use Exception;
 
 use App\Models\User;
+use App\Models\Section;
 use App\Models\TakedExam;
 use App\Models\TakedExams;
 use App\Models\HandledSection;
@@ -38,9 +39,12 @@ class Student extends Model
     }
 
 
+    public function section()
+    {
 
-    // public function getTotalScore(){
-    //     return $this->taked_exam
-    // }
-   
+        // firt parameter ang  econnectahan mo while an g second ang agyan
+        return $this->enrolled_section->section;
+    }
+
+
 }

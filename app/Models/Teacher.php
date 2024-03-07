@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Section;
 use App\Models\Student;
 
+use App\Models\Excercise;
 use App\Models\HandledSection;
 use App\Models\EnrolledSection;
 use Illuminate\Database\Eloquent\Model;
@@ -28,5 +29,19 @@ class Teacher extends Model
        }
        public function enrolled_section(){
         return $this->hasOne(EnrolledSection::class);
+       }
+
+       public function getIsApprovedString(){
+        return $this->is_approved ? 'Active' : 'Not Active';
+       }
+
+
+       public function students()
+       {
+           return $this->hasManyThrough(Student::class, EnrolledSection::class);
+       }
+       public function excercises()
+       {
+           return $this->user->excercises;
        }
 }
