@@ -7,6 +7,7 @@ use App\Models\User;
 use Livewire\Component;
 use Filament\Forms\Form;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Contracts\HasForms;
@@ -83,7 +84,7 @@ class EditUser extends Component implements HasForms
             ->success()
             ->send();
 
-        return redirect()->back();
+        return redirect()->route('edit-profile', ['record'=>Auth::user()->id]);
     }
 
     public function render(): View
