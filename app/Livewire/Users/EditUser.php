@@ -63,7 +63,7 @@ class EditUser extends Component implements HasForms
                         ->disk('public')
                         ->directory('users-profiles')
                         ->image()
-                            ->required()
+                            // ->required()
                             ->columnSpanFull(),
                     ]),
 
