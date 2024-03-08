@@ -18,7 +18,7 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Infolists\Concerns\InteractsWithInfolists;
 
 class TeacherDetails extends Component implements HasForms, HasInfolists
-{   
+{
     use InteractsWithInfolists;
     use InteractsWithForms;
     public Teacher $record;
@@ -41,13 +41,13 @@ class TeacherDetails extends Component implements HasForms, HasInfolists
                 ]),
             // Tabs\Tab::make('Sections')
             //     ->schema([
-                
+
             //         ViewEntry::make('__')
             //         ->view('infolists.components.teacher-section-entry'),
             //     ]),
             Tabs\Tab::make('Sections')
                 ->schema([
-                    
+
 
                     ViewEntry::make('__')
                     ->view('infolists.components.list-studen-entry'),
@@ -62,13 +62,13 @@ class TeacherDetails extends Component implements HasForms, HasInfolists
 
 
             ])
-            ->activeTab(3)
-        
-
-            
+            ->activeTab(1)
 
 
-                
+
+
+
+
 
             ]);
     }
