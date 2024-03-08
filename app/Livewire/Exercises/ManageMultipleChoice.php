@@ -91,7 +91,7 @@ class ManageMultipleChoice extends Component implements HasForms
                                             ->required(),
 
                                     ])->columnSpanFull(),
-                                    
+
                             ])
                             ->defaultItems(3)
                             ->maxItems(50)
