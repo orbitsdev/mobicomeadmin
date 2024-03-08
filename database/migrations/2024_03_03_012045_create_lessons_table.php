@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('chapter_id')->constrained()->nullable();
+            $table->foreignId('chapter_id')->nullable();
             $table->unsignedBigInteger('lesson_number_id')->nullable();
             $table->string('title')->nullable();
             $table->string('title_number')->nullable();

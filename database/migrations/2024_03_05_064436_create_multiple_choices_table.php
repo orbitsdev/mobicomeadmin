@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('multiple_choices', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('question_id')->constrained()->onDelete('cascade');
+            $table->foreignId('question_id')->nullable();
             $table->json('options')->nullable();
             $table->string('correct_answer')->nullable();
             $table->timestamps();

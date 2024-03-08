@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('taked_exam_id')->constrained()->nullable();
-            $table->foreignId('question_id')->constrained()->nullable();
+            $table->foreignId('taked_exam_id')->nullable();
+            $table->foreignId('question_id')->nullable();
             $table->string('answer')->nullable();
             $table->boolean('status')->default(false);
             $table->timestamps();

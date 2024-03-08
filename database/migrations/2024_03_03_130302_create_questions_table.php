@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('excercise_id')->constrained()->onDelete('cascade');
+            $table->foreignId('excercise_id')->nullable();
             $table->text('question')->nullable();
             $table->text('description')->nullable();
             $table->unsignedBigInteger('question_number_id')->nullable();

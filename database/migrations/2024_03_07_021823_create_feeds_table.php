@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('feeds', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('taked_exam_id')->constrained()->nullable();
+            $table->foreignId('taked_exam_id')->nullable();
             $table->unsignedBigInteger('rate')->unique()->nullable();
             $table->string('message')->unique()->nullable();
             $table->boolean('is_read')->default(false)->nullable();

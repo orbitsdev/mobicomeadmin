@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('taked_exams', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained()->nullable();
-            $table->foreignId('excercise_id')->constrained()->nullable();
+            $table->foreignId('student_id')->nullable();
+            $table->foreignId('excercise_id')->nullable();
             $table->timestamps();
         });
     }
