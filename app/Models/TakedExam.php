@@ -29,11 +29,32 @@ class TakedExam extends Model
     {
         return $this->answers->where('status', true)->count();
     }
+    public function getTotalWrongScore()
+    {
+        return $this->answers->where('status', false)->count();
+    }
+    public function getQuestionThatHasWrongAnswers()
+    {
+        return $this->excercise->questions()
+            ->whereHas('answers', function ($query) {
+                $query->where('status', false);
+            })
+            ->get();
+    }
+    
+    public function getQuestionThatHasCorrectAnswers()
+    {
+        return $this->excercise->questions()
+            ->whereHas('answers', function ($query) {
+                $query->where('status', true);
+            })
+            ->get();
+    }
+    
     public function getTotalExerciseQuestions()
     {
         return $this->excercise->questions()->count();
     }
-
 
 
     public function feed(){

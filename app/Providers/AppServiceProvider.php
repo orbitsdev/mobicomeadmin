@@ -8,6 +8,7 @@ use Illuminate\Support\ServiceProvider;
 use Filament\Support\Facades\FilamentColor;
 use Filament\Support\View\Components\Modal;
 
+use Illuminate\Support\Facades\Response;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -33,5 +34,14 @@ class AppServiceProvider extends ServiceProvider
         ]);
 
         Modal::closedByClickingAway(false);
+
+        Response::macro('apiResponse', function ($data = null, $status = 200, $success = true) {
+            if ($success) {
+                return response()->json(['data' => $data, 'success' => $success, 'status' => $status]);
+            } else {
+                return response()->json(['error' => $data, 'success'=> $success, 'status' => $status], $status);
+            }
+        });
+        
     }
 }
