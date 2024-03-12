@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Resources\TakedExamResource;
 use App\Models\User;
+use App\Models\Section;
 use App\Models\Student;
 use App\Models\Excercise;
 use Illuminate\Http\Request;
@@ -9,6 +9,8 @@ use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use App\Http\Resources\UserCollection;
+use App\Http\Resources\SectionResource;
+use App\Http\Resources\TakedExamResource;
 use Illuminate\Validation\ValidationException;
 /*
 |--------------------------------------------------------------------------
@@ -148,3 +150,21 @@ Route::post('/take/exercise', function (Request $request) {
         return response()->apiResponse($e->errors(), 200, false);
     }
 })->name('app.take-exercise');
+
+
+
+
+Route::get('/sections', function () {
+    try {
+        
+  
+    
+        return response()->apiResponse(['data' =>  SectionResource::collection(Section::all()) ]);
+
+
+
+        
+    } catch (ValidationException $e) {
+        return response()->apiResponse($e->errors(), 200, false);
+    }
+})->name('all-sections');
