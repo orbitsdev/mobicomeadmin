@@ -58,7 +58,6 @@ Route::post('/register', function (Request $request) {
         $validated_data = $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
-            'section_id' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6',
             'enrolled_section_id' => 'required',
