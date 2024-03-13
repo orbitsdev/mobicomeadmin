@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\SectionResource;
 use App\Http\Resources\TakedExamResource;
+use App\Models\EnrolledSection;
 use Illuminate\Validation\ValidationException;
 /*
 |--------------------------------------------------------------------------
@@ -57,32 +58,40 @@ Route::post('/register', function (Request $request) {
         $validated_data = $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
+            'section_id' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6',
-            // 'entolled_section' => 'required',
-            // 'course' => 'required',
-
+            'enrolled_section_id' => 'required',
         ]);
 
-        // Create user
-        $user = User::create([
+        $enrolled_section = EnrolledSection::find($request->enrolled_section_id);
 
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'Student',
-        ]);
+        if ($enrolled_section) {
+            $user = User::create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => 'Student',
+            ]);
 
-        // Generate token for the newly registered user
-        $token = $user->createToken('device_name')->plainTextToken;
+            $user->student()->create([
+                'enrolled_section_id' => $enrolled_section->id,
+                'is_approved' => false,
+            ]);
 
+            // Generate token for the newly registered user
+            $token = $user->createToken('device_name')->plainTextToken;
 
-        return response()->apiResponse(['data' => new UserResource($user), 'token' => $token]);
+            return response()->apiResponse(['data' => new UserResource($user), 'token' => $token]);
+        } else {
+            return response()->apiResponse('Section Not Found', 200, false);
+        }
     } catch (ValidationException $e) {
         return response()->apiResponse($e->errors(), 200, false);
     }
 })->name('app.register');
+
 
 Route::post('/take/exercise', function (Request $request) {
     try {
@@ -138,10 +147,10 @@ Route::get('/sections', function () {
         return response()->apiResponse(
             [
                 'data' =>  SectionResource::collection(
-                    Section::whereHas('enrolled_section')->get()->map(function ($item) {
+                    EnrolledSection::whereHas('teacher')->get()->map(function ($item) {
                         return [
                             'id' => $item->id,
-                            'title' => $item->title. ' ('.$item->enrolled_section->teacher->user->getFullName().')',
+                            'title' => $item->section->title . ' (' . $item->teacher->user->getFullName() . ')',
                         ];
                     })
                 )
