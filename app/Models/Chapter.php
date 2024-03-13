@@ -30,7 +30,7 @@ class Chapter extends Model
             return Storage::disk('public')->url($this->image_path);
 
         }else{
-            return asset('images/noimage.jpg');
+            return "https://images.unsplash.com/photo-1612177241462-d254edf4e823?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTcxMDMyNzU3Ng&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1900";
         }
     }
     public function getLatestChapterNumber(){

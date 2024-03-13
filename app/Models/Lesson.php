@@ -13,42 +13,68 @@ class Lesson extends Model
 {
     use HasFactory;
 
-    public function chapter(){
+    public function chapter()
+    {
         return $this->belongsTo(Chapter::class);
     }
 
-    public function lesson_number(){
+    public function lesson_number()
+    {
         return $this->belongsTo(LessonNumber::class);
     }
-    public function getNumber(){
+    public function getNumber()
+    {
         return $this->lesson_number->number;
     }
 
     public function videoExists()
-{
-    if (!empty($this->video_path) && Storage::disk('public')->exists($this->video_path)) {
-        return true;
+    {
+        if (!empty($this->video_path) && Storage::disk('public')->exists($this->video_path)) {
+            return true;
+        }
+        return false;
     }
-    return false;
-}
     public function imageExists()
-{
-    if (!empty($this->image_path) && Storage::disk('public')->exists($this->image_path)) {
-        return true;
+    {
+        if (!empty($this->image_path) && Storage::disk('public')->exists($this->image_path)) {
+            return true;
+        }
+        return false;
     }
-    return false;
-}
     public function getImage()
-{
-    if (!empty($this->image_path) && Storage::disk('public')->exists($this->image_path)) {
-        return Storage::disk('public')->url($this->image_path);
+    {
+        if (!empty($this->image_path) && Storage::disk('public')->exists($this->image_path)) {
+            return Storage::disk('public')->url($this->image_path);
+        }
+        return asset('images/noimage.jpg');
     }
-    return asset('images/noimage.jpg');
-}
 
-public function getVideo(){
-    return Storage::disk('public')->url($this->video_path);
-}
+    public function getVideo()
+    {
+        return Storage::disk('public')->url($this->video_path);
+    }
+    public function getActualVideo()
+    {
+        // Check if the file exists at the given path
+        if (Storage::disk('public')->exists($this->video_path)) {
+            // File exists, return its URL
+            return Storage::disk('public')->url($this->video_path);
+        } else {
+            // File does not exist, return null or handle the scenario accordingly
+            return null; // or handle the scenario as per your application's requirements
+        }
+    }
+    public function getActualImage()
+    {
+        // Check if the file exists at the given path
+        if (Storage::disk('public')->exists($this->image_path)) {
+            // File exists, return its URL
+            return Storage::disk('public')->url($this->image_path);
+        } else {
+            // File does not exist, return null or handle the scenario accordingly
+            return null; // or handle the scenario as per your application's requirements
+        }
+    }
 
 
 
