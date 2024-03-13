@@ -50,7 +50,6 @@ Route::post('/login', function (Request $request) {
         // Validation failed, return validation errors
         return response()->apiResponse($e->errors(), 200, false);
     }
-
 })->name('app.login');
 
 Route::post('/register', function (Request $request) {
@@ -92,60 +91,37 @@ Route::post('/take/exercise', function (Request $request) {
             'student_id' => 'required',
 
         ]);
-        
-  
-    
+
+
+
         $student = Student::find($request->student_id);
         $exercise = Excercise::find($request->excercise_id);
 
         if ($exercise) {
 
-            if($exercise->getTotalQuestions() ==count($request->answers) || $exercise->getTotalAnswers() == 0) {
+            if ($exercise->getTotalQuestions() == count($request->answers) || $exercise->getTotalAnswers() == 0) {
 
                 $taked_exam = $student->taked_exam()->create([
                     'excercise_id' => $exercise->id,
                 ]);
 
-                if($taked_exam){
+                if ($taked_exam) {
                     foreach ($request->answers as $answer_data) {
                         $taked_exam->answers()->create($answer_data);
                     }
-                    return response()->apiResponse(['data' => new TakedExamResource($taked_exam) ]);
-
-                }else{
+                    return response()->apiResponse(['data' => new TakedExamResource($taked_exam)]);
+                } else {
 
                     return response()->apiResponse("failed to create taked exam", 200, false);
                 }
 
                 // return response()->apiResponse(['data' => $exercise ]);
-            }else{
+            } else {
                 return response()->apiResponse("answers did not match to the total exercise questions", 200, false);
-
             }
-    
-
-                
-
-            // if(){
-
-            // }else{
-            //     return response()->apiResponse("Answers did not match to total exercise total questions", 200, false);
-            // }
-            
-            // $taked_exam = $student->taked_exam()->create([
-            //     'excercise_id' => $exercise->id,
-            // ]);
-
-
-
-        }else{
+        } else {
             return response()->apiResponse("Exercise Did not exist", 200, false);
         }
-        
-
-
-
-        
     } catch (ValidationException $e) {
         return response()->apiResponse($e->errors(), 200, false);
     }
@@ -156,14 +132,21 @@ Route::post('/take/exercise', function (Request $request) {
 
 Route::get('/sections', function () {
     try {
-        
-  
-    
-        return response()->apiResponse(['data' =>  SectionResource::collection(Section::all()) ]);
 
 
 
-        
+        return response()->apiResponse(
+            [
+                'data' =>  SectionResource::collection(
+                    Section::whereHas('enrolled_section')->get()->map(function ($item) {
+                        return [
+                            'id' => $item->id,
+                            'title' => $item->title. ' ('.$item->enrolled_section->teacher->user->getFullName().')',
+                        ];
+                    })
+                )
+            ]
+        );
     } catch (ValidationException $e) {
         return response()->apiResponse($e->errors(), 200, false);
     }

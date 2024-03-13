@@ -27,4 +27,9 @@ class Section extends Model
         return $this->hasOne(EnrolledSection::class);
        }
 
+
+    //    public function sectionWithTeacher(){
+    //     return $this->all()->map(function($item){});
+    //    }
+
 }
