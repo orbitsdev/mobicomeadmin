@@ -38,4 +38,5 @@ Route::post('/register', [ApiAuthController::class, 'register'])->name('app.regi
 Route::post('/take/exercise', [Exercisecontroller::class, 'takeExercises'])->name('app.take-exercise');
 Route::get('/sections', [SectionController::class, 'getSections'])->name('all-sections');
 Route::get('/chapters', [ChapterController::class, 'getChapters'])->name('all-chapters');
+Route::get('/chapter/lessons', [ChapterController::class, 'getChapterLessons'])->name('get-chapter-lessons');
     
