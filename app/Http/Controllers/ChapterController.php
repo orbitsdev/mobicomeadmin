@@ -24,7 +24,7 @@ class ChapterController extends Controller
                         'id'=> $item->id,
                         'title'=>$item->title,
                         'description'=>$item->description,
-                        'image_path'=>$item->getImage(),
+                        'image_path'=>$item->getLocalImage(),
                         'created_at' => Carbon::parse($item->created_at)->format('F j, Y g:i A'),
                         'updated_at' => Carbon::parse($item->updated_at)->format('F j, Y g:i A'),
                         'number'=>$item->number(),

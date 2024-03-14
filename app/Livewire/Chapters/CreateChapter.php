@@ -79,7 +79,7 @@ class CreateChapter extends Component implements HasForms
                                 ->disk('public')
                                 ->directory('chapters-images')
                                 ->image()
-                                // ->required()
+                                 ->required()
                                 ->label('Display Image')
 
 
