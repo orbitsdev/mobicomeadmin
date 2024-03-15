@@ -69,7 +69,8 @@ class ChapterController extends Controller
                     "chapter_id" => $lesson->chapter_id,
                     "lesson_number_id" => $lesson->lesson_number_id,
                     "title" => $lesson->title,
-                    "title_number" => $lesson->title_number,
+                    "full_title" => $lesson->fullTitle(),
+
                     "content" => $lesson->content,
                     "image_path" =>  $lesson->getActualImage(), // Handle null value for image path
                     "video_path" =>$lesson->getActualVideo(), // Handle null value for video path

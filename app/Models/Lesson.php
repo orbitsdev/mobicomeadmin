@@ -26,6 +26,10 @@ class Lesson extends Model
     {
         return $this->lesson_number->number;
     }
+    public function fullTitle()
+    {
+        return $this->lesson_number->number.' '.$this->title;
+    }
 
     public function videoExists()
     {
