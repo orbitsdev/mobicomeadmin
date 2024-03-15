@@ -32,6 +32,6 @@
   @apply mt-2 text-sm text-center text-gray-500 dark:text-gray-400;
 }
 
-/* .prose p {
-  @apply my-2;
-} */
+ .prose .attachment__caption {
+  @apply hidden;
+} 
