@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApiAuthController;
 use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\Exercisecontroller;
+use App\Http\Controllers\ExercisesController;
 use App\Http\Controllers\SectionController;
 use App\Models\User;
 use App\Models\Section;
@@ -39,4 +40,5 @@ Route::post('/take/exercise', [Exercisecontroller::class, 'takeExercises'])->nam
 Route::get('/sections', [SectionController::class, 'getSections'])->name('all-sections');
 Route::get('/chapters', [ChapterController::class, 'getChapters'])->name('all-chapters');
 Route::get('/chapter/lessons', [ChapterController::class, 'getChapterLessons'])->name('get-chapter-lessons');
+Route::get('/exercises', [ExercisesController::class, 'getExercises'])->name('get-exercises');
     

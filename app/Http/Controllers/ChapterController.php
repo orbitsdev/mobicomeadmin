@@ -58,6 +58,7 @@ class ChapterController extends Controller
     public function getChapterLessons(Request $request)
     {
         try {
+            
             $chapterId = $request->chapter_id;
     
             $lessons = Lesson::where('chapter_id', $chapterId)
