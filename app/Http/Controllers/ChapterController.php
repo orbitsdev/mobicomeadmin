@@ -75,7 +75,7 @@ class ChapterController extends Controller
                     "video_path" =>$lesson->getActualVideo(), // Handle null value for video path
                     "image_type" => $lesson->image_type,
                     "video_type" => $lesson->video_type,
-                    "lesson_number" => $lesson->lesson_number,
+                    "lesson_number" => $lesson->getNumber(),
                     'created_at' => Carbon::parse($lesson->created_at)->format('F j, Y g:i A'),
                     'updated_at' => Carbon::parse($lesson->updated_at)->format('F j, Y g:i A'),
                 ];
