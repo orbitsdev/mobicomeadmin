@@ -58,10 +58,12 @@ class ChapterController extends Controller
     public function getChapterLessons(Request $request)
     {
         try {
-           
-           
-            $lessons = Lesson::where('chapter_id', $request->chapter_id)->get();
-
+            $chapterId = $request->chapter_id;
+    
+            $lessons = Lesson::where('chapter_id', $chapterId)
+                            ->orderBy('lesson_number_id') // Order by lesson number
+                            ->get();
+    
             // Map lessons to desired format
             $lessonData = $lessons->map(function($lesson) {
                 return [
@@ -70,22 +72,20 @@ class ChapterController extends Controller
                     "lesson_number_id" => $lesson->lesson_number_id,
                     "title" => $lesson->title,
                     "full_title" => $lesson->fullTitle(),
-
                     "content" => $lesson->content,
-                    "image_path" =>  $lesson->getActualImage(), // Handle null value for image path
-                    "video_path" =>$lesson->getActualVideo(), // Handle null value for video path
+                    "image_path" => $lesson->getActualImage(), // Handle null value for image path
+                    "video_path" => $lesson->getActualVideo(), // Handle null value for video path
                     "image_type" => $lesson->image_type,
                     "video_type" => $lesson->video_type,
                     "lesson_number" => $lesson->getNumber(),
-                    'created_at' => Carbon::parse($lesson->created_at)->format('F j, Y g:i A'),
-                    'updated_at' => Carbon::parse($lesson->updated_at)->format('F j, Y g:i A'),
+                    'created_at' => $lesson->created_at->format('F j, Y g:i A'),
+                    'updated_at' => $lesson->updated_at->format('F j, Y g:i A'),
                 ];
             });
-            
+    
             return response()->apiResponse([
                 'data' => ModelResource::collection($lessonData),
             ]);
-            
         } catch (ValidationException $e) {
             return response()->apiResponse($e->errors(), 200, false);
         }
