@@ -55,17 +55,19 @@ class Lesson extends Model
     }
     public function getActualVideo()
     {
-        // Check if the file exists at the given path
+        if(!$this->video_path) return null;
+
         if (Storage::disk('public')->exists($this->video_path)) {
-            // File exists, return its URL
+            
             return Storage::disk('public')->url($this->video_path);
         } else {
-            // File does not exist, return null or handle the scenario accordingly
-            return null; // or handle the scenario as per your application's requirements
+            
+            return null; 
         }
     }
     public function getActualImage()
     {
+        if(!$this->image_path) return null;
         // Check if the file exists at the given path
         if (Storage::disk('public')->exists($this->image_path)) {
             // File exists, return its URL
