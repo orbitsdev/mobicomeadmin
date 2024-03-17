@@ -19,6 +19,10 @@ class UserResource extends JsonResource
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'full_name' => $this->getFullName(),
+            'student_id' =>$this->student? $this->student->id : null,
+            'section' => $this->student  ?  $this->student->enrolled_section->section->title : null,
+            'teacher_full_name' =>$this->student?  $this->student->enrolled_section->teacher->user->getFullName() : null,
+          
             'role' => $this->role,
             'image'=> $this->getImage(),
             'email' => $this->email,

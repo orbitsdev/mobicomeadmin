@@ -29,6 +29,7 @@ class Question extends Model
     public function getNumber(){
         return $this->question_number->number;
     }
+    
 
     public function multiple_choice(){
         return $this->hasOne(MultipleChoice::class);
