@@ -28,7 +28,6 @@ class ApiAuthController extends Controller
             }
     
             $token = $user->createToken('device_name')->plainTextToken;
-    
             return response()->apiResponse(['data' => new UserResource($user), 'token' => $token]);
         } catch (ValidationException $e) {
             // Validation failed, return validation errors
@@ -37,8 +36,17 @@ class ApiAuthController extends Controller
     }
 
     public function logout(Request $request){
+        try {
+            // Revoke the current user's token
+            $request->user()->tokens()->delete();
 
+            return response()->apiResponse('User logged out successfully');
+        } catch (ValidationException $e) {
+            // Handle any exceptions that might occur
+            return response()->apiResponse($e->getMessage(), 500, false);
+        }
     }
+    
 
     public function register(Request $request){
         try {
