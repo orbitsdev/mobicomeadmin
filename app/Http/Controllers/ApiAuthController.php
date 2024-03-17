@@ -51,6 +51,7 @@ class ApiAuthController extends Controller
 
             return response()->apiResponse('User logged out successfully');
         } catch (ValidationException $e) {
+            
             // Handle any exceptions that might occur
             return response()->apiResponse($e->getMessage(), 500, false);
         }
