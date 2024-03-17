@@ -33,9 +33,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/logout', [ApiAuthController::class, 'logout'])->name('app.logout');
 
 Route::post('/login', [ApiAuthController::class, 'login'])->name('app.login');
-Route::post('/logout', [ApiAuthController::class, 'logout'])->name('app.logout');
 Route::post('/register', [ApiAuthController::class, 'register'])->name('app.register');
 Route::post('/take/exercise', [Exercisecontroller::class, 'takeExercises'])->name('app.take-exercise');
 Route::get('/sections', [SectionController::class, 'getSections'])->name('all-sections');
