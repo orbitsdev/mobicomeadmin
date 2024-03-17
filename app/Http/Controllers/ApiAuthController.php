@@ -12,8 +12,7 @@ use Illuminate\Validation\ValidationException;
 
 class ApiAuthController extends Controller
 {
-    
-
+ 
     public function login(Request $request){
         try {
             $request->validate([

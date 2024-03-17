@@ -33,7 +33,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:sanctum')->post('/logout', [ApiAuthController::class, 'logout'])->name('app.logout');
+Route::middleware(['auth:sanctum'])->group(function () {
+    // Route::post('/user-details', [ApiAuthController::class, 'userDetails'])->name('app.user-details');
+    Route::post('/logout', [ApiAuthController::class, 'logout'])->name('app.logout');
+
+});
+
 
 Route::post('/login', [ApiAuthController::class, 'login'])->name('app.login');
 Route::post('/register', [ApiAuthController::class, 'register'])->name('app.register');
