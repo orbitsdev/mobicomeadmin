@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\EnrolledSection;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\PersonalAccessToken;
 use Illuminate\Validation\ValidationException;
+
 class ApiAuthController extends Controller
 {
     
@@ -38,7 +40,14 @@ class ApiAuthController extends Controller
     public function logout(Request $request){
         try {
             // Revoke the current user's token
-            $request->user()->tokens()->delete();
+        
+            $accessToken = $request->bearerToken();
+            if ($accessToken) {
+    
+                $token = PersonalAccessToken::findToken($accessToken);
+                $token->delete();
+                // $request->user()->tokens()->delete();
+            }
 
             return response()->apiResponse('User logged out successfully');
         } catch (ValidationException $e) {
