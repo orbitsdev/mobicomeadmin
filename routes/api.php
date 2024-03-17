@@ -41,4 +41,9 @@ Route::get('/sections', [SectionController::class, 'getSections'])->name('all-se
 Route::get('/chapters', [ChapterController::class, 'getChapters'])->name('all-chapters');
 Route::get('/chapter/lessons', [ChapterController::class, 'getChapterLessons'])->name('get-chapter-lessons');
 Route::get('/exercises', [ExercisesController::class, 'getExercises'])->name('get-exercises');
+
+
+Route::post('/exercise/take', [ExercisesController::class,'take'])->name('take-exercise');
+   
+   Route::post('/exercises/questions', [ExercisesController::class, 'getQuestions'])->name('get-exercises-questions');
     

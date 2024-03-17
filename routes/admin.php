@@ -60,35 +60,35 @@ Route::middleware([
 ])->group(function () {
 
     // SAMPLES
-    Route::get('create-exam', function(){
+//     Route::get('create-exam', function(){
 
-        $student = Student::find(1);
-        $exercise = Excercise::find(1); // Assuming you have the Exercise model
+//         $student = Student::find(1);
+//         $exercise = Excercise::find(1); // Assuming you have the Exercise model
 
-        // Create a new TakedExam for the student
-        $taked_exam = $student->taked_exam()->create([
-            'excercise_id' => $exercise->id,
-        ]);
-
-
-// Static data for answers (question_id, user_answer, status)
-$answersData = [
-    ['taked_exam_id' => $taked_exam->id, 'question_id' => 1, 'answer' => 'Answer to question 1', 'status' => true],
-    ['taked_exam_id' => $taked_exam->id, 'question_id' => 2, 'answer' => 'Answer to question 2', 'status' => false],
-    // Add more answers for each question submitted by the student
-];
-
-// $takedExam->answers()->createMany($answersData);
-
-// Create answers for the taked exam
-foreach ($answersData as $answerData) {
-    $taked_exam->answers()->create($answerData);
-}
+//         // Create a new TakedExam for the student
+//         $taked_exam = $student->taked_exam()->create([
+//             'excercise_id' => $exercise->id,
+//         ]);
 
 
-        return 'success';
+// // Static data for answers (question_id, user_answer, status)
+// $answersData = [
+//     ['taked_exam_id' => $taked_exam->id, 'question_id' => 1, 'answer' => 'Answer to question 1', 'status' => true],
+//     ['taked_exam_id' => $taked_exam->id, 'question_id' => 2, 'answer' => 'Answer to question 2', 'status' => false],
+//     // Add more answers for each question submitted by the student
+// ];
 
-    });
+// // $takedExam->answers()->createMany($answersData);
+
+// // Create answers for the taked exam
+// foreach ($answersData as $answerData) {
+//     $taked_exam->answers()->create($answerData);
+// }
+
+
+//         return 'success';
+
+//     });
 
     Route::get("student/{record}", StudentDetails::class )->name('view-student');
     Route::get("student/exercise/score/{record}", ExerciseScoreDetails::class)->name('teacher-view-exercise-score');
