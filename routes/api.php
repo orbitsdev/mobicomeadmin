@@ -37,6 +37,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Route::post('/user-details', [ApiAuthController::class, 'userDetails'])->name('app.user-details');
     Route::post('/logout', [ApiAuthController::class, 'logout'])->name('app.logout');
     Route::post('/exercise/take', [ExercisesController::class,'take'])->name('take-exercise');
+    Route::post('/api/upload-profile-image', [ApiAuthController::class,'uploadProfileImage']);
+
 
 });
 
@@ -48,8 +50,4 @@ Route::get('/sections', [SectionController::class, 'getSections'])->name('all-se
 Route::get('/chapters', [ChapterController::class, 'getChapters'])->name('all-chapters');
 Route::get('/chapter/lessons', [ChapterController::class, 'getChapterLessons'])->name('get-chapter-lessons');
 Route::get('/exercises', [ExercisesController::class, 'getExercises'])->name('get-exercises');
-
-
-   
-   Route::post('/exercises/questions', [ExercisesController::class, 'getQuestions'])->name('get-exercises-questions');  
-    
+Route::post('/exercises/questions', [ExercisesController::class, 'getQuestions'])->name('get-exercises-questions');
