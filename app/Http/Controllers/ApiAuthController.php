@@ -45,7 +45,7 @@ public function uploadProfileImage(Request $request)
     $user->save();
 
     // Return API response using custom macro
-    return response()->apiResponse(['message' => 'Profile image uploaded successfully', 'image_path' => $user->profile_photo_path]);
+    return response()->apiResponse(['message' => 'Profile image uploaded successfully', 'image_path' => $user->getImage()]);
 }
 
     public function login(Request $request){
