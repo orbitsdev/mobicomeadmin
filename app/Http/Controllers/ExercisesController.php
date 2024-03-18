@@ -7,11 +7,46 @@ use App\Models\Excercise;
 use Illuminate\Http\Request;
 use Mockery\CountValidator\Exact;
 use App\Http\Resources\ModelResource;
+use App\Models\Question;
 use Illuminate\Validation\ValidationException;
 
 class ExercisesController extends Controller
 {
 
+
+    public function getExerciseQuestions(Request $request){
+
+        $exercise = Excercise::find($request->exercise_id);
+
+
+        $questions = Question::where('exercise_id', $request->exercise_id);
+
+
+
+
+        switch($exercise->type){
+            case 'Multiple Choice':
+            break;
+            case 'Fill in the Blank':
+            break;
+            case 'True or False':
+            break;
+
+        }
+
+        return response()->apiResponse([
+            'data' => [
+                "id" => $exercise->id,
+                "title" => $exercise->title,
+                "description" => $exercise->description,
+                "type" => $exercise->type,
+                "total_questions" => $exercise->getTotalQuestions(),
+                'created_at' => $exercise->created_at->format('F j, Y g:i A'),
+                'updated_at' => $exercise->updated_at->format('F j, Y g:i A'),
+            ],
+        ]);
+
+    }
 
     public function take(Request $request)
 {
@@ -42,14 +77,17 @@ class ExercisesController extends Controller
 }
 
 
+
+
     public function getExercises(Request $request)
     {
         try {
-            
-         
-    
+
+
+
+
             $collection = Excercise::all();
-    
+
             // Map lessons to desired format
             $new_collection = $collection->map(function($item) {
                 return [
@@ -60,10 +98,10 @@ class ExercisesController extends Controller
                     "total_questions" => $item->getTotalQuestions(),
                     'created_at' => $item->created_at->format('F j, Y g:i A'),
                     'updated_at' => $item->updated_at->format('F j, Y g:i A'),
-                    
+
                 ];
             });
-    
+
             return response()->apiResponse([
                 'data' => ModelResource::collection($new_collection),
             ]);
@@ -75,11 +113,11 @@ class ExercisesController extends Controller
     public function getQuestions(Request $request)
     {
         try {
-            
-         
-    
+
+
+
             // $collection = Excercise::all();
-    
+
             // // Map lessons to desired format
             // $new_collection = $collection->map(function($item) {
             //     return [
@@ -90,10 +128,10 @@ class ExercisesController extends Controller
             //         "total_questions" => $item->getTotalQuestions(),
             //         'created_at' => $item->created_at->format('F j, Y g:i A'),
             //         'updated_at' => $item->updated_at->format('F j, Y g:i A'),
-                    
+
             //     ];
             // });
-    
+
             return response()->apiResponse([
                 'data' => ModelResource::collection($request->all()),
             ]);
@@ -103,5 +141,5 @@ class ExercisesController extends Controller
     }
 
 
-    
+
 }

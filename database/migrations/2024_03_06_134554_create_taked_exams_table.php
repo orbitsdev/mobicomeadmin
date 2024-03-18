@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('student_id')->nullable();
             $table->foreignId('excercise_id')->nullable();
+            $table->boolean('completed')->default(false)->nullable();
             $table->timestamps();
         });
     }
