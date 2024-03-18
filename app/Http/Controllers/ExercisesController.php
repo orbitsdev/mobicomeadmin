@@ -16,37 +16,71 @@ class ExercisesController extends Controller
 
     public function getExerciseQuestions(Request $request){
 
-        $exercise = Excercise::find($request->exercise_id);
-
-
-        $questions = Question::where('exercise_id', $request->exercise_id);
-
-
-
-
-        switch($exercise->type){
-            case 'Multiple Choice':
-            break;
-            case 'Fill in the Blank':
-            break;
-            case 'True or False':
-            break;
-
+        try {
+            // Find the exercise
+            $exercise = Excercise::find($request->exercise_id);
+            if (!$exercise) {
+                return response()->apiResponse('Exercise not found', 200, false);
+            }
+    
+            $formmated_questions = [];
+            switch($exercise->type){
+                case "Multiple Choice":
+                    $formmated_questions= $exercise->questions->map(function($question){
+                        return [
+                            "id"=> $question->id,
+                            "question"=> $question->question,
+                            "question_number" => $question->getNumber(),
+                            "correct_answer" => $question->multiple_choice->getCorrectAnswer(),
+                            "options" => $question->multiple_choice->getShuffledOptionsAttribute(),
+                            
+                        ];
+                    });
+                    break;
+                case "True or False":
+                    
+                    $formmated_questions= $exercise->questions->map(function($question){
+                        return [
+                            "id"=> $question->id,
+                            "question"=> $question->question,
+                            "question_number" => $question->getNumber(),
+                            "correct_answer" => $question->true_or_false->getCorrectAnswer(),
+                        ];
+                    });
+    
+                    break;
+                case "Fill in the Blank":
+                    $formmated_questions= $exercise->questions->map(function($question){
+                        return [
+                            "id"=> $question->id,
+                            "question"=> $question->question,
+                            "question_number" => $question->getNumber(),
+                            "correct_answer" => $question->fill_in_the_blank->getCorrectAnswer(),
+                        ];
+                    });
+                    break;
+            }
+    
+            return response()->apiResponse([
+                'data' => [
+                    "id" => $exercise->id,
+                    "title" => $exercise->title,
+                    "description" => $exercise->description,
+                    "type" => $exercise->type,
+                    "total_questions" => $exercise->getTotalQuestions(),
+                    'created_at' => $exercise->created_at->format('F j, Y g:i A'),
+                    'updated_at' => $exercise->updated_at->format('F j, Y g:i A'),
+                    'questions' => $formmated_questions,
+                ],
+            ]);
+    
+        } catch (ValidationException $e) {
+            return response()->apiResponse($e->errors(), 200, false);
         }
-
-        return response()->apiResponse([
-            'data' => [
-                "id" => $exercise->id,
-                "title" => $exercise->title,
-                "description" => $exercise->description,
-                "type" => $exercise->type,
-                "total_questions" => $exercise->getTotalQuestions(),
-                'created_at' => $exercise->created_at->format('F j, Y g:i A'),
-                'updated_at' => $exercise->updated_at->format('F j, Y g:i A'),
-            ],
-        ]);
-
     }
+    
+
+
 
     public function take(Request $request)
 {
@@ -54,13 +88,13 @@ class ExercisesController extends Controller
         // Find the student
         $student = Student::find($request->student_id);
         if (!$student) {
-            return response()->apiResponse('Student not found', 404, false);
+            return response()->apiResponse('Student not found', 200, false);
         }
 
         // Find the exercise
         $exercise = Excercise::find($request->exercise_id);
         if (!$exercise) {
-            return response()->apiResponse('Exercise not found', 404, false);
+            return response()->apiResponse('Exercise not found', 200, false);
         }
 
         // Create a new TakedExam for the student

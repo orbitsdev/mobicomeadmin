@@ -89,7 +89,7 @@ class ApiAuthController extends Controller
         } catch (ValidationException $e) {
 
             // Handle any exceptions that might occur
-            return response()->apiResponse($e->getMessage(), 500, false);
+            return response()->apiResponse($e->getMessage(), 200, false);
         }
     }
 

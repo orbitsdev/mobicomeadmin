@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ModelResource;
 use App\Models\Student;
 use App\Models\Excercise;
 use Illuminate\Http\Request;
@@ -9,6 +10,17 @@ use App\Http\Resources\TakedExamResource;
 use Illuminate\Validation\ValidationException;
 class Exercisecontroller extends Controller
 {
+
+
+    public function getExerciseQuestions(Request $request){
+
+        // $exercise = 
+
+        // return response()->apiResponse(['data' => ]);
+        
+
+    }
+
     public function takeExercises(Request $request){
         try {
             $validated_data = $request->validate([

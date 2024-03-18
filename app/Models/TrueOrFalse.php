@@ -18,6 +18,12 @@ class TrueOrFalse extends Model
         return $this->belongsTo(Question::class);
     }
 
+    public function getCorrectAnswer()
+    {
+        return $this->correct_answer;
+
+    }
+
     public function getTextAnswer(){
         
         return $this->correct_answer? 'True': 'False';
