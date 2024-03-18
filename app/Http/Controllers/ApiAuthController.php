@@ -14,39 +14,41 @@ class ApiAuthController extends Controller
 {
 
 
-public function uploadProfileImage(Request $request)
-{
-    $request->validate([
-        'user_id' => 'required|exists:users,id',
-        'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:20480', // Max file size 20MB
-    ]);
+    public function uploadProfileImage(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:20480', // Max file size 20MB
+        ]);
 
-    $userId = $request->input('user_id');
+        $userId = $request->input('user_id');
 
-    // Check if the user ID is provided and exists
-    if (!$userId) {
-        return response()->apiResponse('User ID is required', 200, false);
+        // Check if the user ID is provided and exists
+        if (!$userId) {
+            return response()->apiResponse('User ID is required', 200, false);
+        }
+
+        $user = User::find($userId);
+
+        // Check if the user exists
+        if (!$user) {
+            return response()->apiResponse('User Not Found', 200, false);
+        }
+
+        $image = $request->file('image');
+        $imageName = time().'.'.$image->extension();
+
+        // Store the image in the specified directory within the public disk
+        $image->storeAs('users-profiles', $imageName, 'public');
+
+        $user->profile_photo_path = 'users-profiles/'.$imageName;
+        $user->save();
+
+        // Return API response using custom macro
+
+        return response()->apiResponse(['data' => $user->getImage()]);
+
     }
-
-    $user = User::find($userId);
-
-    // Check if the user exists
-    if (!$user) {
-        return response()->apiResponse('User Not Found', 200, false);
-    }
-
-    $image = $request->file('image');
-    $imageName = time().'.'.$image->extension();
-
-    // Store the image in the specified directory within the public disk
-    $image->storeAs('users-profiles', $imageName, 'public');
-
-    $user->profile_photo_path = 'users-profiles/'.$imageName;
-    $user->save();
-
-    // Return API response using custom macro
-    return response()->apiResponse(['message' => 'Profile image uploaded successfully', 'image_path' => $user->getImage()]);
-}
 
     public function login(Request $request){
         try {
