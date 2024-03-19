@@ -56,13 +56,13 @@ class Question extends Model
 
         switch ($exerciseType) {
             case "Multiple Choice":
-                return $this->multipleChoice->getCorrectAnswer();
+                return $this->multiple_choice->getCorrectAnswer();
                 break;
             case "True or False":
-                return $this->trueOrFalse->getTextAnswer();
+                return $this->true_or_false->getTextAnswer();
                 break;
             case "Fill in the Blank":
-                return $this->fillInTheBlank->getCorrectAnswer();
+                return $this->fill_in_the_blank->getCorrectAnswer();
                 break;
             default:
                 return null; // Handle unrecognized exercise type
