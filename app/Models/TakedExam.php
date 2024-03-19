@@ -49,7 +49,7 @@ class TakedExam extends Model
                     "question_number_id"=> $item->question_number_id,
                     'created_at' => Carbon::parse($this->created_at)->format('F j, Y g:i A'),
                     'updated_at' => Carbon::parse($this->updated_at)->format('F j, Y g:i A'),
-                    'answer' => $item->getAnswerBaseOnType(),
+                    // 'answer' => $item->getAnswerBaseOnType(),
                     // 'correct_answer'=> $item->getCorrectAnswer(),
                     
                 ];
