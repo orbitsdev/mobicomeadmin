@@ -84,8 +84,7 @@ public function getListOfWrongQuestions()
             case "Fill in the Blank":
                 $question_answer = $answer->question->fill_in_the_blank->correct_answer;
                 break;
-            default:
-                continue; // Skip if exercise type is unknown
+            
         }
 
         // Check if the answer is wrong
