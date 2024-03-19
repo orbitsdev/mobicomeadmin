@@ -33,7 +33,7 @@ class TakedExamResource extends JsonResource
                         "answer"=> $answer->answer,
                         'created_at' => Carbon::parse($this->created_at)->format('F j, Y g:i A'),
                         'updated_at' => Carbon::parse($this->updated_at)->format('F j, Y g:i A'),
-                        'question'=> $answer->questions
+                        'question'=> $answer->question
     
                     ];
                 }
@@ -46,7 +46,7 @@ class TakedExamResource extends JsonResource
                         "answer"=> $answer->answer,
                         'created_at' => Carbon::parse($this->created_at)->format('F j, Y g:i A'),
                         'updated_at' => Carbon::parse($this->updated_at)->format('F j, Y g:i A'),
-                        'question'=> $answer->questions
+                        'question'=> $answer->question
     
                     ];
                 }
@@ -60,7 +60,7 @@ class TakedExamResource extends JsonResource
                         "answer"=> $answer->answer,
                         'created_at' => Carbon::parse($this->created_at)->format('F j, Y g:i A'),
                         'updated_at' => Carbon::parse($this->updated_at)->format('F j, Y g:i A'),
-                        'question'=> $answer->questions
+                        'question'=> $answer->question
     
                     ];
                 }else{
