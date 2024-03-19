@@ -24,7 +24,7 @@ class ViewScoreResource extends JsonResource
             'total_score' => $this->getRealScore(),
             'total_mistake' => $this->getTotalWrongAnswer(),
             'answers'=> $this->answers,
-            // 'questions_that_has_wrong_answers' =>   $this->getQuestionThatHasWrongAnswers(),
+             'questions_that_has_wrong_answers' =>   $this->getListOfWrongQuestions(),
             // 'questions_that_has_correct_answers' => $this->getQuestionThatHasCorrectAnswers(),
             'created_at' => Carbon::parse($this->created_at)->format('F j, Y g:i A'),
             'updated_at' => Carbon::parse($this->updated_at)->format('F j, Y g:i A'),
