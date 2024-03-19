@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\Question;
 use App\Models\Excercise;
+use App\Models\TakedExam;
 use Illuminate\Http\Request;
 use Mockery\CountValidator\Exact;
 use App\Http\Resources\ModelResource;
-use App\Models\Question;
-use App\Models\TakedExam;
+use App\Http\Resources\TakedExamResource;
 use Illuminate\Validation\ValidationException;
 
 class ExercisesController extends Controller
@@ -19,15 +20,16 @@ class ExercisesController extends Controller
     {
         try {
             $studentId = $request->input('student_id');
-
+    
             // Fetch exercises for the given student
             $exercises = TakedExam::where('student_id', $studentId)->get();
-
-            return response()->apiResponse(['data'=>$exercises]);
+    
+            return response()->apiResponse(TakedExamResource::collection($exercises));
         } catch (\Exception $e) {
             return response()->apiResponse([], $e->getMessage(), false, 500);
         }
     }
+    
 
 
     public function getExerciseQuestions(Request $request)
