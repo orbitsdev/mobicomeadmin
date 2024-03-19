@@ -14,7 +14,8 @@ class ExercisesController extends Controller
 {
 
 
-    public function getExerciseQuestions(Request $request){
+    public function getExerciseQuestions(Request $request)
+    {
 
         try {
             // Find the exercise
@@ -22,45 +23,45 @@ class ExercisesController extends Controller
             if (!$exercise) {
                 return response()->apiResponse('Exercise not found', 200, false);
             }
-    
+
             $formmated_questions = [];
-            switch($exercise->type){
+            switch ($exercise->type) {
                 case "Multiple Choice":
-                    $formmated_questions= $exercise->questions->map(function($question){
+                    $formmated_questions = $exercise->questions->map(function ($question) {
                         return [
-                            "id"=> $question->id,
-                            "question"=> $question->question,
+                            "id" => $question->id,
+                            "question" => $question->question,
                             "question_number" => $question->getNumber(),
                             "correct_answer" => $question->multiple_choice->getCorrectAnswer(),
                             "options" => $question->multiple_choice->getShuffledOptionsAttribute(),
-                            
+
                         ];
                     });
                     break;
                 case "True or False":
-                    
-                    $formmated_questions= $exercise->questions->map(function($question){
+
+                    $formmated_questions = $exercise->questions->map(function ($question) {
                         return [
-                            "id"=> $question->id,
-                            "question"=> $question->question,
+                            "id" => $question->id,
+                            "question" => $question->question,
                             "question_number" => $question->getNumber(),
                             "correct_answer" => $question->true_or_false->getCorrectAnswer(),
                         ];
                     });
-    
+
                     break;
                 case "Fill in the Blank":
-                    $formmated_questions= $exercise->questions->map(function($question){
+                    $formmated_questions = $exercise->questions->map(function ($question) {
                         return [
-                            "id"=> $question->id,
-                            "question"=> $question->question,
+                            "id" => $question->id,
+                            "question" => $question->question,
                             "question_number" => $question->getNumber(),
                             "correct_answer" => $question->fill_in_the_blank->getCorrectAnswer(),
                         ];
                     });
                     break;
             }
-    
+
             return response()->apiResponse([
                 'data' => [
                     "id" => $exercise->id,
@@ -73,42 +74,41 @@ class ExercisesController extends Controller
                     'questions' => $formmated_questions,
                 ],
             ]);
-    
         } catch (ValidationException $e) {
             return response()->apiResponse($e->errors(), 200, false);
         }
     }
-    
+
 
 
 
     public function take(Request $request)
-{
-    try {
-        // Find the student
-        $student = Student::find($request->student_id);
-        if (!$student) {
-            return response()->apiResponse('Student not found', 200, false);
+    {
+        try {
+            // Find the student
+            $student = Student::find($request->student_id);
+            if (!$student) {
+                return response()->apiResponse('Student not found', 200, false);
+            }
+
+            // Find the exercise
+            $exercise = Excercise::find($request->exercise_id);
+            if (!$exercise) {
+                return response()->apiResponse('Exercise not found', 200, false);
+            }
+
+            // Create a new TakedExam for the student
+            $taked_exam = $student->taked_exam()->create([
+                'excercise_id' => $exercise->id,
+            ]);
+
+            return response()->apiResponse([
+                'data' => $taked_exam,
+            ]);
+        } catch (ValidationException $e) {
+            return response()->apiResponse($e->errors(), 200, false);
         }
-
-        // Find the exercise
-        $exercise = Excercise::find($request->exercise_id);
-        if (!$exercise) {
-            return response()->apiResponse('Exercise not found', 200, false);
-        }
-
-        // Create a new TakedExam for the student
-        $taked_exam = $student->taked_exam()->create([
-            'excercise_id' => $exercise->id,
-        ]);
-
-        return response()->apiResponse([
-            'data' => $taked_exam,
-        ]);
-    } catch (ValidationException $e) {
-        return response()->apiResponse($e->errors(), 200, false);
     }
-}
 
 
 
@@ -123,7 +123,7 @@ class ExercisesController extends Controller
             $collection = Excercise::all();
 
             // Map lessons to desired format
-            $new_collection = $collection->map(function($item) {
+            $new_collection = $collection->map(function ($item) {
                 return [
                     "id" => $item->id,
                     "title" => $item->title,
@@ -173,7 +173,4 @@ class ExercisesController extends Controller
             return response()->apiResponse($e->errors(), 200, false);
         }
     }
-
-
-
 }
