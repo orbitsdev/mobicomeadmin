@@ -23,7 +23,7 @@ class ExercisesController extends Controller
             // Fetch exercises for the given student
             $exercises = TakedExam::where('student_id', $studentId)->get();
 
-            return response()->apiResponse(['data'=> $exercises]);
+            return response()->apiResponse(ModelResource::collection($exercises));
         } catch (\Exception $e) {
             return response()->apiResponse([], $e->getMessage(), false, 500);
         }
