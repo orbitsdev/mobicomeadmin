@@ -134,6 +134,35 @@ public function getQuestionThatHasWrongAsnwer()
 
     return $wrongQuestions;
 }
+public function getQuestionThatHasRightAsnwer()
+{
+    $wrongQuestions = [];
+
+    // Iterate through answers and check correctness
+    foreach ($this->answers as $answer) {
+        $actualAnswer = $answer->answer;
+        $questionAnswer = null;
+
+        // Check exercise type and get the correct answer accordingly
+        if ($this->excercise->type === "Multiple Choice") {
+            $questionAnswer = $answer->question->multiple_choice->correct_answer;
+        } elseif ($this->excercise->type === "True or False") {
+            $questionAnswer = $answer->question->true_or_false->getTextAnswer();
+        } elseif ($this->excercise->type === "Fill in the Blank") {
+            $questionAnswer = $answer->question->fill_in_the_blank->correct_answer;
+        } else {
+            continue; // Skip if exercise type is unknown
+        }
+
+        // Check if the answer is wrong
+        if (strtolower($questionAnswer) == strtolower($actualAnswer)) {
+            // Add the question to the list
+            $wrongQuestions[] = $answer->question;
+        }
+    }
+
+    return $wrongQuestions;
+}
 
 
 
