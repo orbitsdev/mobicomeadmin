@@ -53,7 +53,7 @@ class Question extends Model
     public function getCorrectAnswer()
     {
         $exerciseType = $this->exercise->type;
-
+        return $exerciseType;
         switch ($exerciseType) {
             case "Multiple Choice":
                 return $this->multiple_choice->getCorrectAnswer();
