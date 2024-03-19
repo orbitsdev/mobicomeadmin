@@ -22,7 +22,7 @@ class ViewScoreResource extends JsonResource
             'student_name' => $this->student->user->getFullName(),
             'total_questions' => $this->getTotalExerciseQuestions(),
              'total_score' => $this->getRealScore(),
-            //  'answers'=> $this->answers,
+             'answers'=> $this->answers,
             // 'total_mistake' => $this->getTotalWrongScore(),
             // 'questions_that_has_wrong_answers' =>   $this->getQuestionThatHasWrongAnswers(),
             // 'questions_that_has_correct_answers' => $this->getQuestionThatHasCorrectAnswers(),

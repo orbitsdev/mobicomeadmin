@@ -34,8 +34,9 @@ class TakedExam extends Model
     
     $totalScore = 0;
 
+    // $answers =[];
     foreach ($this->answers as $answer) {
-      
+        
             $question_answer = null;    
             $actual_answer =  $answer->answer;    
          if($this->excercise->type === "Multiple Choice"){
