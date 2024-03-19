@@ -66,42 +66,76 @@ class TakedExam extends Model
 
     return $totalScore;
 }
-public function getListOfWrongQuestions()
+    public function getTotalWrongAnswer()
 {
-    $wrong_answers_questions = [];
 
+    
+    $total = 0;
+
+    // $answers =[];
     foreach ($this->answers as $answer) {
-        $question_answer = null;
-        $actual_answer = $answer->answer;
+        
+            $question_answer = null;    
+            $actual_answer =  $answer->answer;    
+         if($this->excercise->type === "Multiple Choice"){
+                $question_answer =  $answer->question->multiple_choice->correct_answer;
+                if(strtolower($question_answer)  != strtolower($actual_answer)){
+                    $total++;
+                }
+          }
+          
+         if($this->excercise->type === "True or False"){
+                $question_answer =  $answer->question->true_or_false->getTextAnswer();
+                if(strtolower($question_answer) != strtolower($actual_answer)){
+                    $total++;
+                }
+          }
+          
+         if($this->excercise->type === "Fill in the Blank"){
+                $question_answer =  $answer->question->fill_in_the_blank->correct_answer;
+                if(strtolower($question_answer) != strtolower($actual_answer)){
+                    $total++;
+                }
+          }
+
+          
+    
+    }
+
+    return $total;
+}
+
+public function getQuestionThatHasWrongAsnwer()
+{
+    $wrongQuestions = [];
+
+    // Iterate through answers and check correctness
+    foreach ($this->answers as $answer) {
+        $actualAnswer = $answer->answer;
+        $questionAnswer = null;
 
         switch ($this->excercise->type) {
             case "Multiple Choice":
-                $question_answer = $answer->question->multiple_choice->correct_answer;
-                if (strtolower($question_answer) != strtolower($actual_answer)) {
-                    $wrong_answers_questions[] = $answer->question;
-                }
+                $questionAnswer = $answer->question->multiple_choice->correct_answer;
                 break;
-
             case "True or False":
-                $question_answer = $answer->question->true_or_false->getTextAnswer();
-                if (strtolower($question_answer) != strtolower($actual_answer)) {
-                    $wrong_answers_questions[] = $answer->question;
-                }
+                $questionAnswer = $answer->question->true_or_false->getTextAnswer();
                 break;
-
             case "Fill in the Blank":
-                $question_answer = $answer->question->fill_in_the_blank->correct_answer;
-                if (strtolower($question_answer) != strtolower($actual_answer)) {
-                    $wrong_answers_questions[] = $answer->question;
-                }
+                $questionAnswer = $answer->question->fill_in_the_blank->correct_answer;
                 break;
-
             default:
                 continue; // Skip if exercise type is unknown
         }
+
+        // Check if the answer is wrong
+        if (strtolower($questionAnswer) !== strtolower($actualAnswer)) {
+            // Add the question to the list
+            $wrongQuestions[] = $answer->question;
+        }
     }
 
-    return $wrong_answers_questions;
+    return $wrongQuestions;
 }
 
 
