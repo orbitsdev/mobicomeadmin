@@ -37,7 +37,7 @@ class TakedExam extends Model
             $correctAnswer = $question->correct_answer;
     
             // Compare the submitted answer with the correct answer using the compareUserAnswer method
-            $result = $answer->compareUserAnswer($correctAnswer, $question->type);
+            $result = $answer->compareUserAnswer($correctAnswer, $this->excercise->type);
     
             // Increment the total score if the answer is correct
             if ($result === 'Correct') {
