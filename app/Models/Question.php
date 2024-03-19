@@ -56,7 +56,7 @@ class Question extends Model
     }
 
 
-    public function getAnswerBaseOnType()
+    public function getAnswerBaseOnType(): ?string
     {
         switch ($this->excercise->type) {
             case "Multiple Choice":
