@@ -30,25 +30,25 @@ class TakedExam extends Model
     {
         $totalScore = 0;
 
-        foreach ($this->answers as $answer) {
-            $question = $answer->question;
+        // foreach ($this->answers as $answer) {
+        //     $question = $answer->question;
 
-            // Check the type of question and fetch the correct answer accordingly
-            $correctAnswer = null;
+        //     // Check the type of question and fetch the correct answer accordingly
+        //     $correctAnswer = null;
 
-            if ($question->multiple_choice) {
-                $correctAnswer = $question->multiple_choice->correct_answer;
-            } elseif ($question->true_or_false) {
-                $correctAnswer = $question->true_or_false->correct_answer;
-            } elseif ($question->fill_in_the_blank) {
-                $correctAnswer = $question->fill_in_the_blank->correct_answer;
-            }
+        //     if ($question->multiple_choice) {
+        //         $correctAnswer = $question->multiple_choice->correct_answer;
+        //     } elseif ($question->true_or_false) {
+        //         $correctAnswer = $question->true_or_false->correct_answer;
+        //     } elseif ($question->fill_in_the_blank) {
+        //         $correctAnswer = $question->fill_in_the_blank->correct_answer;
+        //     }
 
-            // Compare the submitted answer with the correct answer
-            if ($answer->answer === $correctAnswer) {
-                $totalScore++;
-            }
-        }
+        //     // Compare the submitted answer with the correct answer
+        //     if ($answer->answer === $correctAnswer) {
+        //         $totalScore++;
+        //     }
+        // }
 
         return $totalScore;
     }
