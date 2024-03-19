@@ -48,6 +48,26 @@ class Question extends Model
     {
         return $this->hasMany(Answer::class);
     }
+
+
+    public function getCorrectAnswer()
+    {
+        $exerciseType = $this->exercise->type;
+
+        switch ($exerciseType) {
+            case "Multiple Choice":
+                return $this->multipleChoice->getCorrectAnswer();
+                break;
+            case "True or False":
+                return $this->trueOrFalse->getTextAnswer();
+                break;
+            case "Fill in the Blank":
+                return $this->fillInTheBlank->getCorrectAnswer();
+                break;
+            default:
+                return null; // Handle unrecognized exercise type
+        }
+    }
     
 
 }

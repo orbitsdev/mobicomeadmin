@@ -8,6 +8,7 @@ use App\Models\Student;
 use App\Models\Excercise;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 
 class TakedExam extends Model
 {
@@ -39,7 +40,20 @@ class TakedExam extends Model
             ->whereHas('answers', function ($query) {
                 $query->where('status', false);
             })
-            ->get();
+            ->get()->format(function($item){
+                return [
+                    "id" => $item->id,
+                    "excercise_id"=> $item->excercise_id,
+                    "question"=> $item->question,
+                    "description"=> $item->description,
+                    "question_number_id"=> $item->question_number_id,
+                    'created_at' => Carbon::parse($this->created_at)->format('F j, Y g:i A'),
+                    'updated_at' => Carbon::parse($this->updated_at)->format('F j, Y g:i A'),
+                    'correct_answer'=> $item->getCorrectAnswer(),
+                    'user_answer'=> $item->getCorrectAnswer(),
+                    'status'=> $item->compareUserAnswer($item->getCorrectAnswer(), $item->excercise->type),
+                ];
+            });
     }
     
     public function getQuestionThatHasCorrectAnswers()
