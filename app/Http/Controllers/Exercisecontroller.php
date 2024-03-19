@@ -23,11 +23,11 @@ class Exercisecontroller extends Controller
 
     public function takeExercises(Request $request){
         try {
-            $validated_data = $request->validate([
-                'excercise_id' => 'required',
-                'student_id' => 'required',
+            // $validated_data = $request->validate([
+            //     'excercise_id' => 'required',
+            //     'student_id' => 'required',
     
-            ]);
+            // ]);
     
             return response()->json(['data'=>$request->all()]);
     
