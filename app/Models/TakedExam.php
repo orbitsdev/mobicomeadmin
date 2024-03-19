@@ -29,34 +29,7 @@ class TakedExam extends Model
 
     public function getTotalScore()
     {
-
-        $totalScore = 0;
-
-    foreach ($this->answers as $answer) {
-        $question = $answer->question;
-        $correctAnswer = null;
-
-        // Determine the correct answer based on exercise type
-        switch ($this->excercise->type) {
-            case "Multiple Choice":
-                $correctAnswer = optional($question->multiple_choice)->correct_answer;
-                break;
-            case "Fill in the Blank":
-                $correctAnswer = optional($question->fill_in_the_blank)->correct_answer;
-                break;
-            case "True or False":
-                $correctAnswer = optional($question->true_or_false)->correct_answer ? 'true' : 'false';
-                break;
-        }
-
-        // Check if the provided answer matches the correct answer
-        if ($answer->answer === $correctAnswer) {
-            $totalScore++;
-        }
-    }
-
-    return $totalScore;
-        // return $this->answers->where('status', true)->count();
+        return $this->answers->where('status', true)->count();
     }
     public function getTotalWrongScore()
     {
