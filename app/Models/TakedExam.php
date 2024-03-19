@@ -49,9 +49,7 @@ class TakedExam extends Model
                     "question_number_id"=> $item->question_number_id,
                     'created_at' => Carbon::parse($this->created_at)->format('F j, Y g:i A'),
                     'updated_at' => Carbon::parse($this->updated_at)->format('F j, Y g:i A'),
-                    'correct_answer'=> $item->getCorrectAnswer(),
-                    'user_answer'=> $item->getCorrectAnswer(),
-                    'status'=> $item->compareUserAnswer($item->getCorrectAnswer(), $item->excercise->type),
+                    
                 ];
             });
     }
