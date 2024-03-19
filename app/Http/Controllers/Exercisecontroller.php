@@ -29,7 +29,7 @@ class Exercisecontroller extends Controller
     
             ]);
     
-    
+            return response()->json(['data'=>$request->all()]);
     
             $student = Student::find($request->student_id);
             $exercise = Excercise::find($request->excercise_id);
