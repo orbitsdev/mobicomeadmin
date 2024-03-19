@@ -114,18 +114,15 @@ public function getQuestionThatHasWrongAsnwer()
         $actualAnswer = $answer->answer;
         $questionAnswer = null;
 
-        switch ($this->excercise->type) {
-            case "Multiple Choice":
-                $questionAnswer = $answer->question->multiple_choice->correct_answer;
-                break;
-            case "True or False":
-                $questionAnswer = $answer->question->true_or_false->getTextAnswer();
-                break;
-            case "Fill in the Blank":
-                $questionAnswer = $answer->question->fill_in_the_blank->correct_answer;
-                break;
-            default:
-                continue; // Skip if exercise type is unknown
+        // Check exercise type and get the correct answer accordingly
+        if ($this->excercise->type === "Multiple Choice") {
+            $questionAnswer = $answer->question->multiple_choice->correct_answer;
+        } elseif ($this->excercise->type === "True or False") {
+            $questionAnswer = $answer->question->true_or_false->getTextAnswer();
+        } elseif ($this->excercise->type === "Fill in the Blank") {
+            $questionAnswer = $answer->question->fill_in_the_blank->correct_answer;
+        } else {
+            continue; // Skip if exercise type is unknown
         }
 
         // Check if the answer is wrong
@@ -137,6 +134,8 @@ public function getQuestionThatHasWrongAsnwer()
 
     return $wrongQuestions;
 }
+
+
 
 
 
