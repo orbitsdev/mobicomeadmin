@@ -30,48 +30,37 @@ class TakedExam extends Model
     
     public function getRealScore()
 {
+
+    
     $totalScore = 0;
 
     foreach ($this->answers as $answer) {
-        $question = $answer->question;
-
-        switch ($this->excercise->type) {
-            case 'Multiple Choice':
-                if ($question->multiple_choice) {
-                    $actual_answer = $question->multiple_choice->correct_answer;
-                } else {
-                    // Handle case where question type is unsupported
-                    continue 2; // Skip to the next iteration of the outer loop
+      
+            $question_answer = null;    
+            $actual_answer =  $answer->answer;    
+         if($this->excercise->type === "Multiple Choice"){
+                $question_answer =  $answer->question->multiple_choice->correct_answer;
+                if(strtolower($question_answer)  == strtolower($actual_answer)){
+                    $totalScore++;
                 }
-                break;
-            case 'Fill in the Blank':
-                if ($question->fill_in_the_blank) {
-                    $actual_answer = $question->fill_in_the_blank->correct_answer;
-                } else {
-                    // Handle case where question type is unsupported
-                    continue 2; // Skip to the next iteration of the outer loop
+          }
+          
+         if($this->excercise->type === "True or False"){
+                $question_answer =  $answer->question->true_or_false->correct_answer;
+                if($question_answer == $actual_answer){
+                    $totalScore++;
                 }
-                break;
-            case 'True or False':
-                if ($question->true_or_false) {
-                    $actual_answer = $question->true_or_false->correct_answer;
-                } else {
-                    // Handle case where question type is unsupported
-                    continue 2; // Skip to the next iteration of the outer loop
+          }
+          
+         if($this->excercise->type === "Fill in the Blank"){
+                $question_answer =  $answer->question->fill_in_the_blank->correct_answer;
+                if(strtolower($question_answer) == strtolower($actual_answer)){
+                    $totalScore++;
                 }
-                break;
-            default:
-                // Handle unsupported question types
-                continue 2; // Skip to the next iteration of the outer loop
-        }
+          }
 
-        // Compare the submitted answer with the correct answer using the compareUserAnswer method
-        $result = $answer->compareUserAnswer($actual_answer, $this->excercise->type);
-
-        // Increment the total score if the answer is correct
-        if ($result === 'Correct') {
-            $totalScore++;
-        }
+          
+    
     }
 
     return $totalScore;
