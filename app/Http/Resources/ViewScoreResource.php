@@ -23,9 +23,75 @@ class ViewScoreResource extends JsonResource
             'total_questions' => $this->getTotalExerciseQuestions(),
             'total_score' => $this->getRealScore(),
             'total_mistake' => $this->getTotalWrongAnswer(),
-            // 'questions_that_has_correct_answers' => $this->getQuestionThatHasRightAsnwer(),
-            //  'questions_that_has_wrong_answers' =>   $this->getQuestionThatHasWrongAsnwer(),
-            'answers'=> $this->answers,
+            'answers' => $this->answers->map(function($answer){
+                if ($this->excercise->type === "Multiple Choice") {
+                    return [
+                        "id"=>  $answer->id,
+                        "taked_exam_id"=> $answer->taked_exam_id,
+                        "question_id"=>  $answer->question_id,
+                        "question_number"=>  $answer->question->getNumber(),
+                        "answer"=> $answer->answer,
+                        'created_at' => Carbon::parse($this->created_at)->format('F j, Y g:i A'),
+                        'updated_at' => Carbon::parse($this->updated_at)->format('F j, Y g:i A'),
+                        'question'=> [
+                            'id' => $answer->question->id,
+                            'question' => $answer->question->question,
+                            'created_at' => Carbon::parse($answer->question->created_at)->format('F j, Y g:i A'),
+                            'updated_at' => Carbon::parse($answer->question->updated_at)->format('F j, Y g:i A'),
+                            'correct_answer' => $answer->question->multiple_choice->correct_answer,
+                            'options' => $answer->question->multiple_choice->getShuffledOptionsAttribute(),
+                            // Include other question details as needed
+                        ],
+    
+                    ];
+                }
+                elseif ($this->excercise->type === "True or False") {
+                    return [
+                        "id"=>  $answer->id,
+                        "taked_exam_id"=> $answer->taked_exam_id,
+                        "question_id"=>  $answer->question_id,
+                        "question_number"=>  $answer->question->getNumber(),
+                        "answer"=> $answer->answer,
+                        'created_at' => Carbon::parse($this->created_at)->format('F j, Y g:i A'),
+                        'updated_at' => Carbon::parse($this->updated_at)->format('F j, Y g:i A'),
+                        'question'=> [
+                            'id' => $answer->question->id,
+                            'question' => $answer->question->question,
+                            'created_at' => Carbon::parse($answer->question->created_at)->format('F j, Y g:i A'),
+                            'updated_at' => Carbon::parse($answer->question->updated_at)->format('F j, Y g:i A'),
+                            'correct_answer' => $answer->question->true_or_false->getTextAnswer(),
+                            // Include other question details as needed
+                        ],
+    
+                    ];
+                }
+                
+                elseif ($this->excercise->type === "Fill in the Blank") {
+                    return [
+                        "id"=>  $answer->id,
+                        "taked_exam_id"=> $answer->taked_exam_id,
+                        "question_id"=>  $answer->question_id,
+                        "question_number"=>  $answer->question->getNumber(),
+                        "answer"=> $answer->answer,
+                        'created_at' => Carbon::parse($this->created_at)->format('F j, Y g:i A'),
+                        'updated_at' => Carbon::parse($this->updated_at)->format('F j, Y g:i A'),
+                        'question'=> [
+                            'id' => $answer->question->id,
+                            'question' => $answer->question->question,
+                            'created_at' => Carbon::parse($answer->question->created_at)->format('F j, Y g:i A'),
+                            'updated_at' => Carbon::parse($answer->question->updated_at)->format('F j, Y g:i A'),
+                            'correct_answer' => $answer->question->fill_in_the_blank->correct_answer,
+                            // Include other question details as needed
+                        ],
+    
+                    ];
+                }else{
+                    return [];
+                }
+
+               
+            }),
+         
             'created_at' => Carbon::parse($this->created_at)->format('F j, Y g:i A'),
             'updated_at' => Carbon::parse($this->updated_at)->format('F j, Y g:i A'),
         ];
