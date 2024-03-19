@@ -50,23 +50,25 @@ class Question extends Model
     }
 
 
-    public function getCorrectAnswer()
+    public function getAnswerBaseOnType()
     {
-        $exerciseType = $this->exercise->type;
-        return $exerciseType;
-        switch ($exerciseType) {
-            case "Multiple Choice":
-                return $this->multiple_choice->getCorrectAnswer();
-                break;
-            case "True or False":
-                return $this->true_or_false->getTextAnswer();
-                break;
-            case "Fill in the Blank":
-                return $this->fill_in_the_blank->getCorrectAnswer();
-                break;
-            default:
-                return null; // Handle unrecognized exercise type
-        }
+
+        return $this->excercise->type;
+        // $exerciseType = $this->exercise->type;
+        // return $exerciseType;
+        // switch ($exerciseType) {
+        //     case "Multiple Choice":
+        //         return $this->multiple_choice->getCorrectAnswer();
+        //         break;
+        //     case "True or False":
+        //         return $this->true_or_false->getTextAnswer();
+        //         break;
+        //     case "Fill in the Blank":
+        //         return $this->fill_in_the_blank->getCorrectAnswer();
+        //         break;
+        //     default:
+        //         return null; // Handle unrecognized exercise type
+        // }
     }
     
 
