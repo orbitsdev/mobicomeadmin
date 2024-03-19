@@ -40,7 +40,7 @@ class TakedExam extends Model
             ->whereHas('answers', function ($query) {
                 $query->where('status', false);
             })
-            ->get()->format(function($item){
+            ->get()->map(function($item){
                 return [
                     "id" => $item->id,
                     "excercise_id"=> $item->excercise_id,
