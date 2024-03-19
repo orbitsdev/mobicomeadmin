@@ -18,28 +18,34 @@ class Question extends Model
     use HasFactory;
 
 
-    public function excercise(){
+    public function excercise()
+    {
         return $this->belongsTo(Excercise::class);
     }
 
 
-    public function question_number(){
+    public function question_number()
+    {
         return $this->belongsTo(QuestionNumber::class);
     }
-    public function getNumber(){
+    public function getNumber()
+    {
         return $this->question_number->number;
     }
-    
 
-    public function multiple_choice(){
+
+    public function multiple_choice()
+    {
         return $this->hasOne(MultipleChoice::class);
     }
 
 
-    public function true_or_false(){
+    public function true_or_false()
+    {
         return $this->hasOne(TrueOrFalse::class);
     }
-    public function fill_in_the_blank(){
+    public function fill_in_the_blank()
+    {
         return $this->hasOne(FillInTheBlank::class);
     }
 
@@ -52,25 +58,18 @@ class Question extends Model
 
     public function getAnswerBaseOnType()
     {
-
-
-
-            switch($this->excercise->type){
-                case "Multiple Choice":
-                    return $this->multiple_choice->getCorrectAnswer();
-                    break;
-                    case "Fill in the Blank":
-                        return $this->fill_in_the_blank->getCorrectAnswer();
+        switch ($this->excercise->type) {
+            case "Multiple Choice":
+                return $this->multiple_choice->getCorrectAnswer();
                 break;
-                case "True or False":   
-                    return $this->fill_in_the_blank->getTextAnswer();
+            case "Fill in the Blank":
+                return $this->fill_in_the_blank->getCorrectAnswer();
                 break;
-            }
-
-
-
-       
+            case "True or False":
+                return optional($this->trueOrFalse)->getTextAnswer(); // Use optional chaining
+                break;
+            default:
+                return null; // Handle unrecognized exercise type
+        }
     }
-    
-
 }
