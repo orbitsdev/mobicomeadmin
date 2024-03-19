@@ -21,9 +21,9 @@ class ExercisesController extends Controller
             $studentId = $request->input('student_id');
 
             // Fetch exercises for the given student
-            $exercises = TakedExam::where('student_id', $studentId)->get();
+            $exercises = TakedExam::all();
 
-            return response()->apiResponse(['data'=> $exercises]);
+            return response()->apiResponse(['data'=> $exercises ,$request->all()]);
         } catch (\Exception $e) {
             return response()->apiResponse([], $e->getMessage(), false, 500);
         }
