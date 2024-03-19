@@ -37,7 +37,7 @@ class ExercisesController extends Controller
 
         try {
             // Find the exercise
-            $exercise = Excercise::find($request->exercise_id);
+            $exercise = Excercise::find($request->excercise_id);
             if (!$exercise) {
                 return response()->apiResponse('Exercise not found', 200, false);
             }
