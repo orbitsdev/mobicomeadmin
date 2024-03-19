@@ -26,6 +26,8 @@ class TakedExam extends Model
         return $this->hasMany(Answer::class);
     }
 
+    
+    
     public function getRealScore()
 {
     $totalScore = 0;
@@ -35,15 +37,32 @@ class TakedExam extends Model
 
         switch ($this->excercise->type) {
             case 'Multiple Choice':
-                $actual_answer = $answer->question->multiple_choice->correct_answer;
+                if ($question->multiple_choice) {
+                    $actual_answer = $question->multiple_choice->correct_answer;
+                } else {
+                    // Handle case where question type is unsupported
+                    continue 2; // Skip to the next iteration of the outer loop
+                }
                 break;
             case 'Fill in the Blank':
-                $actual_answer = $answer->question->fill_in_the_blank->correct_answer;
+                if ($question->fill_in_the_blank) {
+                    $actual_answer = $question->fill_in_the_blank->correct_answer;
+                } else {
+                    // Handle case where question type is unsupported
+                    continue 2; // Skip to the next iteration of the outer loop
+                }
                 break;
             case 'True or False':
-                $actual_answer = $answer->question->true_or_false->correct_answer;
+                if ($question->true_or_false) {
+                    $actual_answer = $question->true_or_false->correct_answer;
+                } else {
+                    // Handle case where question type is unsupported
+                    continue 2; // Skip to the next iteration of the outer loop
+                }
                 break;
-            // Handle unsupported question types
+            default:
+                // Handle unsupported question types
+                continue 2; // Skip to the next iteration of the outer loop
         }
 
         // Compare the submitted answer with the correct answer using the compareUserAnswer method
@@ -58,8 +77,6 @@ class TakedExam extends Model
     return $totalScore;
 }
 
-    
-    
 
     public function getTotalScore()
     {
