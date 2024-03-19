@@ -33,7 +33,15 @@ class TakedExamResource extends JsonResource
                         "answer"=> $answer->answer,
                         'created_at' => Carbon::parse($this->created_at)->format('F j, Y g:i A'),
                         'updated_at' => Carbon::parse($this->updated_at)->format('F j, Y g:i A'),
-                        'question'=> $answer->question
+                        'question'=> [
+                            'id' => $answer->question->id,
+                            'question' => $answer->question->question,
+                            'created_at' => Carbon::parse($answer->question->created_at)->format('F j, Y g:i A'),
+                            'updated_at' => Carbon::parse($answer->question->updated_at)->format('F j, Y g:i A'),
+                            'correct_answer' => $answer->question->multiple_choice->correct_answer,
+                            'options' => $answer->question->multiple_choice->getShuffledOptionsAttribute(),
+                            // Include other question details as needed
+                        ],
     
                     ];
                 }
@@ -46,7 +54,14 @@ class TakedExamResource extends JsonResource
                         "answer"=> $answer->answer,
                         'created_at' => Carbon::parse($this->created_at)->format('F j, Y g:i A'),
                         'updated_at' => Carbon::parse($this->updated_at)->format('F j, Y g:i A'),
-                        'question'=> $answer->question
+                        'question'=> [
+                            'id' => $answer->question->id,
+                            'question' => $answer->question->question,
+                            'created_at' => Carbon::parse($answer->question->created_at)->format('F j, Y g:i A'),
+                            'updated_at' => Carbon::parse($answer->question->updated_at)->format('F j, Y g:i A'),
+                            'correct_answer' => $answer->question->true_or_false->getTextAnswer(),
+                            // Include other question details as needed
+                        ],
     
                     ];
                 }
@@ -60,7 +75,14 @@ class TakedExamResource extends JsonResource
                         "answer"=> $answer->answer,
                         'created_at' => Carbon::parse($this->created_at)->format('F j, Y g:i A'),
                         'updated_at' => Carbon::parse($this->updated_at)->format('F j, Y g:i A'),
-                        'question'=> $answer->question
+                        'question'=> [
+                            'id' => $answer->question->id,
+                            'question' => $answer->question->question,
+                            'created_at' => Carbon::parse($answer->question->created_at)->format('F j, Y g:i A'),
+                            'updated_at' => Carbon::parse($answer->question->updated_at)->format('F j, Y g:i A'),
+                            'correct_answer' => $answer->question->fill_in_the_blank->correct_answer,
+                            // Include other question details as needed
+                        ],
     
                     ];
                 }else{
