@@ -23,6 +23,8 @@ class TakedExamResource extends JsonResource
             'total_questions' => $this->getTotalExerciseQuestions(),
             'total_score' => $this->getRealScore(),
             'total_mistake' => $this->getTotalWrongAnswer(),
+            'created_at' => Carbon::parse($this->created_at)->format('F j, Y g:i A'),
+            'updated_at' => Carbon::parse($this->updated_at)->format('F j, Y g:i A'),
             'answers' => $this->answers->map(function($answer){
                 if ($this->excercise->type === "Multiple Choice") {
                     return [
@@ -92,8 +94,7 @@ class TakedExamResource extends JsonResource
                
             }),
          
-            'created_at' => Carbon::parse($this->created_at)->format('F j, Y g:i A'),
-            'updated_at' => Carbon::parse($this->updated_at)->format('F j, Y g:i A'),
+           
         ];
     }
 }
