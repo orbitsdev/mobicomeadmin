@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ViewScoreResource;
 use App\Models\Student;
 use App\Models\Question;
 use App\Models\Excercise;
@@ -16,6 +17,17 @@ class ExercisesController extends Controller
 {
 
 
+
+    public function viewScore(Request $request){
+        try {
+
+            $taked_exam = TakedExam::where('id', $request->taked_exam_d)->first();
+    
+            return response()->apiResponse(new ViewScoreResource($taked_exam));
+        } catch (\Exception $e) {
+            return response()->apiResponse([], $e->getMessage(), false, 500);
+        }
+    }
     public function getStudentExercises(Request $request)
     {
         try {

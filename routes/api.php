@@ -56,6 +56,9 @@ Route::get('/exercise/questions', [ExercisesController::class, 'getExerciseQuest
 Route::get('/student-exercises', [ExercisesController::class, 'getStudentExercises'])->name('set-student-exercise');
 
 
+Route::get('/view-score', [ExercisesController::class, 'viewScore'])->name('view-score');
+
+
 
 
     
