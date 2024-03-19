@@ -66,6 +66,44 @@ class TakedExam extends Model
 
     return $totalScore;
 }
+    public function getTotalWrongAnswer()
+{
+
+    
+    $total = 0;
+
+    // $answers =[];
+    foreach ($this->answers as $answer) {
+        
+            $question_answer = null;    
+            $actual_answer =  $answer->answer;    
+         if($this->excercise->type === "Multiple Choice"){
+                $question_answer =  $answer->question->multiple_choice->correct_answer;
+                if(strtolower($question_answer)  != strtolower($actual_answer)){
+                    $total++;
+                }
+          }
+          
+         if($this->excercise->type === "True or False"){
+                $question_answer =  $answer->question->true_or_false->getTextAnswer();
+                if(strtolower($question_answer) != strtolower($actual_answer)){
+                    $total++;
+                }
+          }
+          
+         if($this->excercise->type === "Fill in the Blank"){
+                $question_answer =  $answer->question->fill_in_the_blank->correct_answer;
+                if(strtolower($question_answer) != strtolower($actual_answer)){
+                    $total++;
+                }
+          }
+
+          
+    
+    }
+
+    return $total;
+}
 
 
     public function getTotalScore()
