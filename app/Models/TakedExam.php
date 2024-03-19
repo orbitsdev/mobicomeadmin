@@ -27,26 +27,37 @@ class TakedExam extends Model
     }
 
     public function getRealScore()
-    {
-        $totalScore = 0;
-    
-        foreach ($this->answers as $answer) {
-            $question = $answer->question;
-    
-            // Check the type of question and fetch the correct answer accordingly
-            $correctAnswer = $question->correct_answer;
-    
-            // Compare the submitted answer with the correct answer using the compareUserAnswer method
-            $result = $answer->compareUserAnswer($correctAnswer, $this->excercise->type);
-    
-            // Increment the total score if the answer is correct
-            if ($result === 'Correct') {
-                $totalScore++;
-            }
+{
+    $totalScore = 0;
+
+    foreach ($this->answers as $answer) {
+        $question = $answer->question;
+
+        switch ($this->excercise->type) {
+            case 'Multiple Choice':
+                $actual_answer = $answer->question->multiple_choice->correct_answer;
+                break;
+            case 'Fill in the Blank':
+                $actual_answer = $answer->question->fill_in_the_blank->correct_answer;
+                break;
+            case 'True or False':
+                $actual_answer = $answer->question->true_or_false->correct_answer;
+                break;
+            // Handle unsupported question types
         }
-    
-        return $totalScore;
+
+        // Compare the submitted answer with the correct answer using the compareUserAnswer method
+        $result = $answer->compareUserAnswer($actual_answer, $this->excercise->type);
+
+        // Increment the total score if the answer is correct
+        if ($result === 'Correct') {
+            $totalScore++;
+        }
     }
+
+    return $totalScore;
+}
+
     
     
 
