@@ -23,6 +23,23 @@ class Question extends Model
         return $this->belongsTo(Excercise::class);
     }
 
+    public function getAnswerBaseOnType(): ?string
+{
+    switch ($this->excercise->type) {
+        case "Multiple Choice":
+            return optional($this->multiple_choice)->getCorrectAnswer();
+            break;
+        case "Fill in the Blank":
+            return optional($this->fill_in_the_blank)->getCorrectAnswer();
+            break;
+        case "True or False":
+            return optional($this->true_or_false)->getTextAnswer(); // Use optional chaining
+            break;
+        default:
+            return null; // Handle unrecognized exercise type
+    }
+}
+
 
     public function question_number()
     {
@@ -56,20 +73,5 @@ class Question extends Model
     }
 
 
-    public function getAnswerBaseOnType(): ?string
-    {
-        switch ($this->excercise->type) {
-            case "Multiple Choice":
-                return $this->multiple_choice->getCorrectAnswer();
-                break;
-            case "Fill in the Blank":
-                return $this->fill_in_the_blank->getCorrectAnswer();
-                break;
-            case "True or False":
-                return optional($this->trueOrFalse)->getTextAnswer(); // Use optional chaining
-                break;
-            default:
-                return null; // Handle unrecognized exercise type
-        }
-    }
+    
 }
