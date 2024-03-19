@@ -52,7 +52,7 @@ Route::get('/chapter/lessons', [ChapterController::class, 'getChapterLessons'])-
 Route::get('/exercises', [ExercisesController::class, 'getExercises'])->name('get-exercises');
 Route::post('/exercises/questions', [ExercisesController::class, 'getQuestions'])->name('get-exercises-questions');
 Route::get('/exercise/questions', [ExercisesController::class, 'getExerciseQuestions'])->name('get-exercise-question');
-Route::get('/student-exercises', [ExercisesController::class, 'getStudentExercise'])->name('set-student-exercise');
+Route::get('/student-exercises', [ExercisesController::class, 'getStudentExercises'])->name('set-student-exercise');
 
 
 
