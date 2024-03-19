@@ -47,7 +47,7 @@ class TakedExam extends Model
           }
           
          if($this->excercise->type === "True or False"){
-                $question_answer =  $answer->question->true_or_false->getTextAnswer;
+                $question_answer =  $answer->question->true_or_false->getTextAnswer();
                 if(strtolower($question_answer) == strtolower($actual_answer)){
                     $totalScore++;
                 }
