@@ -70,38 +70,40 @@ public function getListOfWrongQuestions()
 {
     $wrong_answers_questions = [];
 
-    // $answers =[];
     foreach ($this->answers as $answer) {
-        
-            $question_answer = null;    
-            $actual_answer =  $answer->answer;    
-         if($this->excercise->type === "Multiple Choice"){
-                $question_answer =  $answer->question->multiple_choice->correct_answer;
-                if(strtolower($question_answer)  != strtolower($actual_answer)){
-                    $wrong_answers_questions[]= $answer->question;
-                }
-          }
-          
-         if($this->excercise->type === "True or False"){
-                $question_answer =  $answer->question->true_or_false->getTextAnswer();
-                if(strtolower($question_answer)  != strtolower($actual_answer)){
-                    $wrong_answers_questions[]= $answer->question;
-                }
-          }
-          
-         if($this->excercise->type === "Fill in the Blank"){
-                $question_answer =  $answer->question->fill_in_the_blank->correct_answer;
-                if(strtolower($question_answer)  != strtolower($actual_answer)){
-                    $wrong_answers_questions[]= $answer->question;
-                }
-          }
+        $question_answer = null;
+        $actual_answer = $answer->answer;
 
-          
-    
+        switch ($this->excercise->type) {
+            case "Multiple Choice":
+                $question_answer = $answer->question->multiple_choice->correct_answer;
+                if (strtolower($question_answer) != strtolower($actual_answer)) {
+                    $wrong_answers_questions[] = $answer->question;
+                }
+                break;
+
+            case "True or False":
+                $question_answer = $answer->question->true_or_false->getTextAnswer();
+                if (strtolower($question_answer) != strtolower($actual_answer)) {
+                    $wrong_answers_questions[] = $answer->question;
+                }
+                break;
+
+            case "Fill in the Blank":
+                $question_answer = $answer->question->fill_in_the_blank->correct_answer;
+                if (strtolower($question_answer) != strtolower($actual_answer)) {
+                    $wrong_answers_questions[] = $answer->question;
+                }
+                break;
+
+            default:
+                continue; // Skip if exercise type is unknown
+        }
     }
 
     return $wrong_answers_questions;
 }
+
 
 
     public function getTotalScore()
