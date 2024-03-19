@@ -21,7 +21,7 @@ class ExercisesController extends Controller
     public function viewScore(Request $request){
         try {
 
-            $taked_exam = TakedExam::where('id', $request->taked_exam_d)->first();
+            $taked_exam = TakedExam::where('id', $request->taked_exam_id)->first();
     
             return response()->apiResponse(new ViewScoreResource($taked_exam));
         } catch (\Exception $e) {
