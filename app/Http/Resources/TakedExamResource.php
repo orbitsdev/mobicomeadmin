@@ -23,8 +23,7 @@ class TakedExamResource extends JsonResource
             'total_questions' => $this->getTotalExerciseQuestions(),
             'total_score' => $this->getRealScore(),
             'total_mistake' => $this->getTotalWrongAnswer(),
-            'questions_that_has_wrong_answers' =>   $this->getQuestionThatHasWrongAnswers(),
-            'questions_that_has_correct_answers' => $this->getQuestionThatHasCorrectAnswers(),
+            'answers'=> $this->answers,
             'created_at' => Carbon::parse($this->created_at)->format('F j, Y g:i A'),
             'updated_at' => Carbon::parse($this->updated_at)->format('F j, Y g:i A'),
         ];
