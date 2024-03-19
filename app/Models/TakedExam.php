@@ -37,7 +37,7 @@ class TakedExam extends Model
         $correctAnswer = null;
 
         // Determine the correct answer based on exercise type
-        switch ($question->excercise->type) {
+        switch ($this->excercise->type) {
             case "Multiple Choice":
                 $correctAnswer = optional($question->multiple_choice)->correct_answer;
                 break;
