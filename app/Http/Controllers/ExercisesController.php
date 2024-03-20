@@ -30,6 +30,7 @@ class ExercisesController extends Controller
                 $feedback->rate = $request->rate;
                 $feedback->message = $request->message;
                 $feedback->save();
+                return response()->apiResponse(new ModelResource($feedback));
             } else {
                 return response()->json(['message' => 'Feedback already exists for this taked exam.'], 400);
             }
