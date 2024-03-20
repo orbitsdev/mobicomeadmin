@@ -28,11 +28,12 @@ class TakedExamResource extends JsonResource
             'answers' => $this->answers->map(function($answer){
                 if ($this->excercise->type === "Multiple Choice") {
                     return [
+                        'exercise_type' => $this->excercise->type,
                         "id"=>  $answer->id,
                         "taked_exam_id"=> $answer->taked_exam_id,
                         "question_id"=>  $answer->question_id,
                         "question_number"=>  $answer->question->getNumber(),
-                        'exercise_type' => $this->excercise->type,
+
                         "answer"=> $answer->answer,
                         'created_at' => Carbon::parse($this->created_at)->format('F j, Y g:i A'),
                         'updated_at' => Carbon::parse($this->updated_at)->format('F j, Y g:i A'),
@@ -50,6 +51,7 @@ class TakedExamResource extends JsonResource
                 }
                 elseif ($this->excercise->type === "True or False") {
                     return [
+                        'exercise_type' => $this->excercise->type,
                         "id"=>  $answer->id,
                         "taked_exam_id"=> $answer->taked_exam_id,
                         "question_id"=>  $answer->question_id,
@@ -71,6 +73,7 @@ class TakedExamResource extends JsonResource
 
                 elseif ($this->excercise->type === "Fill in the Blank") {
                     return [
+                        'exercise_type' => $this->excercise->type,
                         "id"=>  $answer->id,
                         "taked_exam_id"=> $answer->taked_exam_id,
                         "question_id"=>  $answer->question_id,
