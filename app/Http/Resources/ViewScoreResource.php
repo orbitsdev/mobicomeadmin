@@ -16,7 +16,9 @@ class ViewScoreResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+
             'id' => $this->id,
+            'feed' => $this->feed,
             'exercise_name' => $this->excercise->title,
             'exercise_type' => $this->excercise->type,
             'exercise_description' => $this->excercise->description,
