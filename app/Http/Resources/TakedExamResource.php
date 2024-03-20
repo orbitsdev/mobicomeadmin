@@ -32,6 +32,7 @@ class TakedExamResource extends JsonResource
                         "taked_exam_id"=> $answer->taked_exam_id,
                         "question_id"=>  $answer->question_id,
                         "question_number"=>  $answer->question->getNumber(),
+                        'exercise_type' => $this->excercise->type,
                         "answer"=> $answer->answer,
                         'created_at' => Carbon::parse($this->created_at)->format('F j, Y g:i A'),
                         'updated_at' => Carbon::parse($this->updated_at)->format('F j, Y g:i A'),
@@ -44,7 +45,7 @@ class TakedExamResource extends JsonResource
                             'options' => $answer->question->multiple_choice->getShuffledOptionsAttribute(),
                             // Include other question details as needed
                         ],
-    
+
                     ];
                 }
                 elseif ($this->excercise->type === "True or False") {
@@ -64,10 +65,10 @@ class TakedExamResource extends JsonResource
                             'correct_answer' => $answer->question->true_or_false->getTextAnswer(),
                             // Include other question details as needed
                         ],
-    
+
                     ];
                 }
-                
+
                 elseif ($this->excercise->type === "Fill in the Blank") {
                     return [
                         "id"=>  $answer->id,
@@ -85,16 +86,16 @@ class TakedExamResource extends JsonResource
                             'correct_answer' => $answer->question->fill_in_the_blank->correct_answer,
                             // Include other question details as needed
                         ],
-    
+
                     ];
                 }else{
                     return [];
                 }
 
-               
+
             }),
-         
-           
+
+
         ];
     }
 }
