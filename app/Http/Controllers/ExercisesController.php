@@ -176,7 +176,7 @@ class ExercisesController extends Controller
 
 
 
-            $collection = Excercise::all();
+            $collection = Excercise::latest()->get();
 
             // Map lessons to desired format
             $new_collection = $collection->map(function ($item) {
