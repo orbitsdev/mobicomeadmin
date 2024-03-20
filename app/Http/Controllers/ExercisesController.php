@@ -23,8 +23,8 @@ class ExercisesController extends Controller
 
         try {
             // Check if the taked exam exists
+            return response()->apiResponse(['data'=> $request->all()]);
             $taked_exam = TakedExam::where('id', $request->taked_exam_id)->first();
-            return response()->apiResponse(new ViewScoreResource($taked_exam));
 
             // Check if it doesn't have feedback yet
             if (!$taked_exam->feed) {
