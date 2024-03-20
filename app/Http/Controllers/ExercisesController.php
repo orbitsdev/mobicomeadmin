@@ -32,12 +32,13 @@ class ExercisesController extends Controller
                 $feedback->save();
                 return response()->apiResponse(new ModelResource($feedback));
             } else {
-                return response()->json(['message' => 'Feedback already exists for this taked exam.'], 400);
+                return response()->apiResponse('Feedback already exists for this taked exam.', 200, false);
             }
 
-            return response()->json(new ViewScoreResource($taked_exam));
+            return response()->json(new ModelResource($taked_exam));
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            return response()->apiResponse($e->getMessage(), 200, false);
+
         }
     }
 
