@@ -69,7 +69,7 @@
 
         <div class="mt-4">
             <div class="p-4 border rounded-md shadow-md">
-                <p><strong>Total Score:</strong> {{ $record->getTotalScore() }}</p>
+                <p><strong>Total Score:</strong> {{ $record->getRealScore() }}</p>
                 <p><strong>Total Questions:</strong> {{ $record->getTotalExerciseQuestions() }}</p>
             </div>
         </div>

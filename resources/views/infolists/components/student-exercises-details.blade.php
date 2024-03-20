@@ -9,7 +9,7 @@
                         style="color: #3b82f6">{{ $taked_exam->excercise->title }}</a>
                 </div>
                 <div class="col-span-2">
-                    <p>Total Score: {{ $taked_exam->getTotalScore() }} / {{ $taked_exam->getTotalExerciseQuestions() }}
+                    <p>Total Score: {{ $taked_exam->getRealScore() }} / {{ $taked_exam->getTotalExerciseQuestions() }}
                     </p>
                 </div>
                 <div class="col-span-2">
