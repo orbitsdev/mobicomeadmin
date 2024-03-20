@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('feeds', function (Blueprint $table) {
             $table->id();
             $table->foreignId('taked_exam_id')->nullable();
-            $table->unsignedBigInteger('rate')->unique()->nullable();
+            $table->unsignedBigInteger('rate')->nullable();
             $table->string('message')->unique()->nullable();
             $table->boolean('is_read')->default(false)->nullable();
             $table->timestamps();
