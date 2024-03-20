@@ -22,7 +22,7 @@ class ExercisesController extends Controller
 
 
         try {
-            
+
             $taked_exam = TakedExam::where('id', $request->taked_exam_id)->first();
 
             // Check if it doesn't have feedback yet
@@ -60,7 +60,7 @@ class ExercisesController extends Controller
             $studentId = $request->input('student_id');
 
             // Fetch exercises for the given student
-            $exercises = TakedExam::where('student_id', $studentId)->get();
+            $exercises = TakedExam::where('student_id', $studentId)->latest()->get();
 
             return response()->apiResponse(TakedExamResource::collection($exercises));
         } catch (\Exception $e) {
