@@ -17,6 +17,7 @@ class TakedExamResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'feed' => $this->feed,
             'exercise_name' => $this->excercise->title,
             'exercise_type' => $this->excercise->type,
             'exercise_description' => $this->excercise->description,
