@@ -19,6 +19,7 @@ class TakedExamResource extends JsonResource
             'id' => $this->id,
             'exercise_name' => $this->excercise->title,
             'exercise_type' => $this->excercise->type,
+            'exercise_description' => $this->excercise->description,
             'student_name' => $this->student->user->getFullName(),
             'total_questions' => $this->getTotalExerciseQuestions(),
             'total_score' => $this->getRealScore(),
