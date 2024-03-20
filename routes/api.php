@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\SectionResource;
 use App\Http\Resources\TakedExamResource;
+use App\Http\Resources\UserAppResource;
 use App\Models\EnrolledSection;
 use Illuminate\Validation\ValidationException;
 /*
@@ -30,7 +31,9 @@ use Illuminate\Validation\ValidationException;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    // return $request->user();
+
+    return response()->apiResponse(['data' => new UserResource($request->user())]);
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
