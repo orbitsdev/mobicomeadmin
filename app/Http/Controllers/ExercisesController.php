@@ -20,10 +20,11 @@ class ExercisesController extends Controller
     public function addFeedback(Request $request)
     {
 
-        return response()->json(['data'=> $request->all()]);
+
         try {
             // Check if the taked exam exists
-            $taked_exam = TakedExam::findOrFail($request->taked_exam_id);
+            $taked_exam = TakedExam::where('id', $request->taked_exam_id)->first();
+            return response()->apiResponse(new ViewScoreResource($taked_exam));
 
             // Check if it doesn't have feedback yet
             if (!$taked_exam->feed) {
