@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable();
             $table->foreignId('enrolled_section_id')->nullable();
             $table->boolean('is_approved')->default(true)->nullable();
+            // $table->boolean('request_remove')->default(false)->nullable();
             // $table->string('course')->default(true)->nullable();
 
             $table->timestamps();

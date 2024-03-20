@@ -28,6 +28,10 @@ class StudentObserver
     public function deleted(Student $student): void
     {
         $student->exercises()->detach();
+        $student->remove_request()->delete();
+        $student->taked_exams()->each(function ($takedExam) {
+            $takedExam->delete();
+        });
         
     }
 

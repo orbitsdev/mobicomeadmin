@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Section;
 use App\Models\TakedExam;
 use App\Models\TakedExams;
+use App\Models\RemoveRequest;
 use App\Models\HandledSection;
 use App\Models\EnrolledSection;
 use Illuminate\Database\Eloquent\Model;
@@ -44,6 +45,10 @@ class Student extends Model
 
         // firt parameter ang  econnectahan mo while an g second ang agyan
         return $this->enrolled_section->section;
+    }
+
+    public function remove_request(){
+        return $this->hasOne(RemoveRequest::class);
     }
 
 

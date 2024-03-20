@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Request\StudentListForRemoval;
 use App\Models\Student;
 use App\Models\Excercise;
 use App\Livewire\ManageChapter;
@@ -100,16 +101,17 @@ Route::middleware([
         Route::middleware(['can:is-admin'])->group(function(){
 
             Route::get("list-users", ListUsers::class )->name('list-users');
-
-
+            
+            
             Route::get("list-teachers", ListTeachers::class )->name('list-teachers');
             Route::get("view-teacher-profile/{record}", TeacherDetails::class )->name('view-teacher-profile');
-
+            
             Route::get("manage-teacher-sections/{record}", ManageSections::class )->name('manage-teacher-sections');
             Route::get("list-teacher-sections/{record}", ListSection::class )->name('list-teacher-sections');
             Route::get("list-teacher-section/students{record}", ListStudent::class )->name('list-teacher-section-students');
-
+            
             Route::get("list-students", ListStudents::class )->name('list-students');
+            Route::get("list-of-request-for-removal", StudentListForRemoval::class )->name('list-of-request-for-removal');
             Route::get("list-chapters", ListChapters::class )->name('list-chapters');
             Route::get("student-profile/{record}", StudentDetails::class )->name('student-profile');
 
