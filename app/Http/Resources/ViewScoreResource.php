@@ -22,12 +22,13 @@ class ViewScoreResource extends JsonResource
             'student_name' => $this->student->user->getFullName(),
             'total_questions' => $this->getTotalExerciseQuestions(),
             'total_score' => $this->getRealScore(),
-            'total_mistake' => $this->getTotalWrongAnswer(), 
+            'total_mistake' => $this->getTotalWrongAnswer(),
             'created_at' => Carbon::parse($this->created_at)->format('F j, Y g:i A'),
             'updated_at' => Carbon::parse($this->updated_at)->format('F j, Y g:i A'),
             'answers' => $this->answers->map(function($answer){
                 if ($this->excercise->type === "Multiple Choice") {
                     return [
+                        'exercise_type' => $this->excercise->type,
                         "id"=>  $answer->id,
                         "taked_exam_id"=> $answer->taked_exam_id,
                         "question_id"=>  $answer->question_id,
@@ -44,11 +45,12 @@ class ViewScoreResource extends JsonResource
                             'options' => $answer->question->multiple_choice->getShuffledOptionsAttribute(),
                             // Include other question details as needed
                         ],
-    
+
                     ];
                 }
                 elseif ($this->excercise->type === "True or False") {
                     return [
+                        'exercise_type' => $this->excercise->type,
                         "id"=>  $answer->id,
                         "taked_exam_id"=> $answer->taked_exam_id,
                         "question_id"=>  $answer->question_id,
@@ -64,12 +66,13 @@ class ViewScoreResource extends JsonResource
                             'correct_answer' => $answer->question->true_or_false->getTextAnswer(),
                             // Include other question details as needed
                         ],
-    
+
                     ];
                 }
-                
+
                 elseif ($this->excercise->type === "Fill in the Blank") {
                     return [
+                        'exercise_type' => $this->excercise->type,
                         "id"=>  $answer->id,
                         "taked_exam_id"=> $answer->taked_exam_id,
                         "question_id"=>  $answer->question_id,
@@ -85,16 +88,16 @@ class ViewScoreResource extends JsonResource
                             'correct_answer' => $answer->question->fill_in_the_blank->correct_answer,
                             // Include other question details as needed
                         ],
-    
+
                     ];
                 }else{
                     return [];
                 }
 
-               
+
             }),
-         
-           
+
+
         ];
     }
 }
