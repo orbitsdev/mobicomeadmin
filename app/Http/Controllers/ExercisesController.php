@@ -19,6 +19,8 @@ class ExercisesController extends Controller
 
     public function addFeedback(Request $request)
     {
+
+        return response()->json(['data'=> $request->all()]);
         try {
             // Check if the taked exam exists
             $taked_exam = TakedExam::findOrFail($request->taked_exam_id);
