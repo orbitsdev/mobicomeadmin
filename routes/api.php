@@ -59,6 +59,8 @@ Route::get('/student-exercises', [ExercisesController::class, 'getStudentExercis
 Route::get('/view-score', [ExercisesController::class, 'viewScore'])->name('view-score');
 
 
+Route::post('/add-feedback', [ExercisesController::class, 'addFeedBack'])->name('add-feedback');
 
 
-    
+
+

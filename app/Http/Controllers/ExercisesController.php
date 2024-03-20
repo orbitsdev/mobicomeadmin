@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ViewScoreResource;
+use App\Models\Feed;
 use App\Models\Student;
 use App\Models\Question;
 use App\Models\Excercise;
@@ -11,18 +11,40 @@ use Illuminate\Http\Request;
 use Mockery\CountValidator\Exact;
 use App\Http\Resources\ModelResource;
 use App\Http\Resources\TakedExamResource;
+use App\Http\Resources\ViewScoreResource;
 use Illuminate\Validation\ValidationException;
 
 class ExercisesController extends Controller
 {
 
+    public function addFeedback(Request $request)
+    {
+        try {
+            // Check if the taked exam exists
+            $taked_exam = TakedExam::findOrFail($request->taked_exam_id);
 
+            // Check if it doesn't have feedback yet
+            if (!$taked_exam->feed) {
+                $feedback = new Feed();
+                $feedback->taked_exam_id = $request->taked_exam_id;
+                $feedback->rate = $request->rate;
+                $feedback->message = $request->message;
+                $feedback->save();
+            } else {
+                return response()->json(['message' => 'Feedback already exists for this taked exam.'], 400);
+            }
+
+            return response()->json(new ViewScoreResource($taked_exam));
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 
     public function viewScore(Request $request){
         try {
 
             $taked_exam = TakedExam::where('id', $request->taked_exam_id)->first();
-    
+
             return response()->apiResponse(new ViewScoreResource($taked_exam));
         } catch (\Exception $e) {
             return response()->apiResponse([], $e->getMessage(), false, 500);
@@ -32,16 +54,16 @@ class ExercisesController extends Controller
     {
         try {
             $studentId = $request->input('student_id');
-    
+
             // Fetch exercises for the given student
             $exercises = TakedExam::where('student_id', $studentId)->get();
-    
+
             return response()->apiResponse(TakedExamResource::collection($exercises));
         } catch (\Exception $e) {
             return response()->apiResponse([], $e->getMessage(), false, 500);
         }
     }
-    
+
 
 
     public function getExerciseQuestions(Request $request)
