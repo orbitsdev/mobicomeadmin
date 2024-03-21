@@ -32,15 +32,21 @@
                 </div>
             </div>
             @if ($taked_exam->feed)
-            <div class="bg-gray-100 rounded-lg p-2 text-xs mt-2">
+            <div class="bg-gray-100 rounded-lg p-4 mt-2">
                 <h2 class="text-lg font-semibold mb-2">Feedback:</h2>
-                <div class="grid grid-cols-1">
-                    <p>{{ $taked_exam->feed->rate }} <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></p>
-                    <p>{{ $taked_exam->feed->message }} <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></p>
-                    <p>{{ $taked_exam->feed->is_read ? 'Yes' : 'No' }} {!! $taked_exam->feed->is_read ? '<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>' : '<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>' !!}</p>
+                <div class="flex items-center mb-2">
+                    <p class="mr-2">{{ $taked_exam->feed->rate }}</p>
+                    <div class="flex">
+                        @for ($i = 0; $i < $taked_exam->feed->rate; $i++)
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M9.697 1.246a1 1 0 011.606 0l1.115 2.55a.5.5 0 00.29.29l2.55 1.115a1 1 0 010 1.607l-2.55 1.115a.5.5 0 00-.29.29l-1.115 2.55a1 1 0 01-1.607 0l-1.115-2.55a.5.5 0 00-.29-.29l-2.55-1.115a1 1 0 010-1.606l2.55-1.115a.5.5 0 00.29-.29l1.115-2.55zM10 4.018L8.426 6.44a.5.5 0 00.06.625l1.197 1.098-1.13 2.587a.5.5 0 00.719.602L10 10.983l2.229 1.17a.5.5 0 00.72-.602l-1.13-2.587 1.197-1.098a.5.5 0 00.06-.625L10 4.018z" clip-rule="evenodd" />
+                            </svg>
+                        @endfor
+                    </div>
                 </div>
+                <p class="text-gray-700"><span class="font-semibold">Message:</span> {{ $taked_exam->feed->message }}</p>
+                <p class="text-gray-700"><span class="font-semibold">Is Read:</span> {{ $taked_exam->feed->is_read ? 'Yes' : 'No' }}</p>
             </div>
-            
             @endif
         @endforeach
     </div>
