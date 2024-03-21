@@ -1,14 +1,5 @@
 <div class="container mx-auto px-4">
-    <div class="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
-        <div class="ml-4 mt-2">
-            <h1 class="text-xl font-semibold leading-6 text-gray-900">
-                Score Details
-            </h1>
-        </div>
-        <div class="ml-4 mt-2 flex-shrink-0">
-            <x-back-button :url="redirect()->back()->getTargetUrl()"> Back </x-back-button>
-        </div>
-    </div>
+    
 
     <div class="container mx-auto px-4">
         <div class="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
