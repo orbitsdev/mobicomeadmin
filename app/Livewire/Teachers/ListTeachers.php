@@ -56,24 +56,24 @@ class ListTeachers extends Component implements HasForms, HasTable
 
                 TextColumn::make('sections_count')->counts('sections'),
 
-                ToggleColumn::make('is_approved')
-                    ->label('Status')
-                    ->onColor('success')
-                    ->offColor('danger')
+                // ToggleColumn::make('is_approved')
+                //     ->label('Status')
+                //     ->onColor('success')
+                //     ->offColor('danger')
 
-                    ->afterStateUpdated(function ($record, $state) {
-                        $message  = "Not Active";
-                        if ($state) {
-                            $message  = "Active";
-                        } else {
-                            $message  = "Not Active";
-                        }
-                        Notification::make()
-                            ->title($message)
-                            ->success()
-                            ->send();
-                        // Runs after the state is saved to the database.
-                    }),    TextColumn::make('created_at')->date(),
+                //     ->afterStateUpdated(function ($record, $state) {
+                //         $message  = "Not Active";
+                //         if ($state) {
+                //             $message  = "Active";
+                //         } else {
+                //             $message  = "Not Active";
+                //         }
+                //         Notification::make()
+                //             ->title($message)
+                //             ->success()
+                //             ->send();
+                //         // Runs after the state is saved to the database.
+                //     }),    TextColumn::make('created_at')->date(),
 
 
             ])
