@@ -1,7 +1,7 @@
 <x-dynamic-component :component="$getEntryWrapperView()" :entry="$entry">
     <div>
         <div class="grid grid-cols-12 border-b">
-            <div class="col-span-8">
+            <div class="col-span-6">
                 <h2 class="text-lg font-semibold mb-2">Exam Records</h2>
             </div>
             <div class="col-span-2">
