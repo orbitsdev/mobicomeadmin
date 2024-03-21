@@ -16,11 +16,11 @@
             <div class="bg-gray-100 rounded-lg p-4 mt-2">
                 <h2 class="text-lg font-semibold mb-2">Feedback:</h2>
                 <div class="flex items-center mb-2">
-                    <p class="mr-2">{{ $taked_exam->feed->rate }}</p>
+                    <p class="mr-2">{{ $record->feed->rate }}</p>
                     <div class="flex text-4xl ">
                         @php
                             $ratingLevel = '';
-                            switch ($taked_exam->feed->rate) {
+                            switch ($record->feed->rate) {
                                 case 1:
                                     $ratingLevel = '🙂'; // Easy
                                     break;
