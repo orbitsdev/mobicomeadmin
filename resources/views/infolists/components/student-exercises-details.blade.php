@@ -17,7 +17,7 @@
 
         @foreach ($getRecord()->taked_exams as $taked_exam)
             <div class="grid grid-cols-12 border-b">
-                <div class="col-span-8">
+                <div class="col-span-6">
                     <a href="{{ route('teacher-view-exercise-score', ['record' => $taked_exam]) }}"
                         class="p-2 text-blue-600 block capitalize hover:underline">{{ $taked_exam->excercise->title }}</a>
                 </div>
