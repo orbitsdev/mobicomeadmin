@@ -7,9 +7,15 @@
         <x-validation-errors class="mb-4" />
 
         <form method="POST" action="{{ route('register') }}">
-            @csrf
 
+
+
+            @csrf
+            <p class=" text-center text-2xl font-bold uppercase text-gray-900 my-4">
+                Register As teacher
+        </p>
             <div>
+
                 <x-label for="first_name" value="{{ __('First Name') }}" />
                 <x-input id="first_name" class="block mt-1 w-full" type="text" name="first_name" :value="old('first_name')" required autofocus autocomplete="first_name" />
             </div>

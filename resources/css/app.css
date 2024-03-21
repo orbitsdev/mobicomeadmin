@@ -36,16 +36,16 @@
   @apply hidden;
 }
 
-
 .show_bg_2 {
-    background-color: black;
-    /* linear-gradient(to bottom, rgba(0, 0, 0, 0.144), rgba(0, 0, 0, 0.73)), */
-    /* url('../../public/images/bg-cover.jpg'); */
-/* 
+    background-image:
+    linear-gradient(to bottom, #000000, rgba(15, 17, 19, 0.20) ),
+    url('../../public/images/bg.png');
+
     background-size: cover;
     background-repeat: no-repeat;
     height: 400px;
     background-size: cover;
     color: white;
-    padding: 20px; */
+    padding: 20px;
 }
+
