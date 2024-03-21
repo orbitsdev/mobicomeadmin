@@ -43,7 +43,7 @@
                         <span>{{ $ratingLevel }}</span>
                     </div>
                 </div>
-                <p class="text-gray-700"><span class="font-semibold">Message:</span> {{ $taked_exam->feed->message }}</p>
+                <p class="text-gray-700"><span class="font-semibold">Message:</span> {{ $record->feed->message }}</p>
             </div>
             
             @endif
