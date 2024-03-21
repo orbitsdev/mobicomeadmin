@@ -1,23 +1,24 @@
 <div class="container mx-auto px-4">
-    <div class="bg-white rounded-md shadow-md p-4">
+    <div class="bg-white rounded-md shadow-md p-6">
         <div class="flex items-center justify-between">
             <h1 class="text-2xl font-semibold text-gray-900">Score Details</h1>
             <x-back-button :url="redirect()->back()->getTargetUrl()" class="text-gray-700">Back</x-back-button>
         </div>
-        
-        <div class="mt-4">
+
+        <div class="mt-6">
             <h2 class="text-xl font-semibold text-gray-900">{{ $record->excercise->title }}</h2>
             <div class="flex items-center mt-2">
                 <span class="text-blue-700 text-sm mr-2">Total Questions: {{ $record->excercise->getTotalQuestions() }}</span>
                 <span class="inline-block px-2 py-1 text-xs font-medium text-blue-700 bg-blue-100 rounded-full">{{ $record->excercise->type }}</span>
             </div>
         </div>
+
         @if ($record->feed)
-            <div class="bg-gray-100 rounded-lg p-4 mt-2">
+            <div class="mt-6 bg-gray-100 rounded-lg p-4">
                 <h2 class="text-lg font-semibold mb-2">Feedback:</h2>
                 <div class="flex items-center mb-2">
                     <p class="mr-2">{{ $record->feed->rate }}</p>
-                    <div class="flex text-4xl ">
+                    <div class="flex text-4xl">
                         @php
                             $ratingLevel = '';
                             switch ($record->feed->rate) {
@@ -45,15 +46,14 @@
                 </div>
                 <p class="text-gray-700"><span class="font-semibold">Message:</span> {{ $record->feed->message }}</p>
             </div>
-            
-            @endif
+        @endif
 
-        <div class="mt-4 prose max-w-none border-b py-2 mb-6">
+        <div class="mt-6 prose max-w-none border-b py-2 mb-6">
             {{-- Markdown content here --}}
         </div>
-        
+
         @foreach ($record->answers as $answer)
-            <div class="mt-4">
+            <div class="mt-6">
                 <div class="p-4 border rounded-md shadow-md">
                     <p class="flex items-center text-gray-700">
                         <span class="mr-auto"><strong>Question:</strong> {{ $answer->question->getNumber() }}. {{ $answer->question->question }}</span>
@@ -68,7 +68,7 @@
                         @endif
                     </p>
                     @if ($record->excercise->type === 'Multiple Choice')
-                        <div class="mt-2 flex flex-wrap">
+                        <div class="mt-4 flex flex-wrap">
                             @foreach ($answer->question->multiple_choice->getShuffledOptionsAttribute() as $option)
                                 <label class="inline-flex items-center mr-4 mb-2 text-gray-700">{{ $option }}</label>
                             @endforeach
@@ -80,9 +80,8 @@
             </div>
         @endforeach
 
-        <div class="mt-4 p-4 bg-gray-800 rounded-md text-white">
-            <p>Total Score: {{ $record->getRealScore() }}</p>
-            <p>Total Questions: {{ $record->getTotalExerciseQuestions() }}</p>
+        <div class="mt-6 p-4 bg-gray-800 rounded-md text-white">
+            <p>Total Score: {{ $record->getRealScore() }} / {{ $record->getTotalExerciseQuestions() }}</p>
         </div>
     </div>
 </div>
