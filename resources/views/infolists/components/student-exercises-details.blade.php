@@ -22,7 +22,7 @@
                         class="p-2 text-blue-600 block capitalize hover:underline">{{ $taked_exam->excercise->title }}</a>
                 </div>
                 <div class="col-span-2">
-                    <p>{{ $taked_exam->excercise->type }}</p>
+                    <span class="text-sm text-gray-600">{{ $taked_exam->excercise->type }}</span>
                 </div>
                 <div class="col-span-2">
                     <p>Total Score: <span class="text-green-600">{{ $taked_exam->getRealScore() }}</span> / {{ $taked_exam->getTotalExerciseQuestions() }}</p>
