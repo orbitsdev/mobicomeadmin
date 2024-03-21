@@ -37,16 +37,34 @@
                 <div class="flex items-center mb-2">
                     <p class="mr-2">{{ $taked_exam->feed->rate }}</p>
                     <div class="flex">
-                        @for ($i = 0; $i < $taked_exam->feed->rate; $i++)
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M9.697 1.246a1 1 0 011.606 0l1.115 2.55a.5.5 0 00.29.29l2.55 1.115a1 1 0 010 1.607l-2.55 1.115a.5.5 0 00-.29.29l-1.115 2.55a1 1 0 01-1.607 0l-1.115-2.55a.5.5 0 00-.29-.29l-2.55-1.115a1 1 0 010-1.606l2.55-1.115a.5.5 0 00.29-.29l1.115-2.55zM10 4.018L8.426 6.44a.5.5 0 00.06.625l1.197 1.098-1.13 2.587a.5.5 0 00.719.602L10 10.983l2.229 1.17a.5.5 0 00.72-.602l-1.13-2.587 1.197-1.098a.5.5 0 00.06-.625L10 4.018z" clip-rule="evenodd" />
-                            </svg>
-                        @endfor
+                        @php
+                            $ratingLevel = '';
+                            switch ($taked_exam->feed->rate) {
+                                case 1:
+                                    $ratingLevel = '🙂'; // Easy
+                                    break;
+                                case 2:
+                                    $ratingLevel = '😊'; // Moderately easy
+                                    break;
+                                case 3:
+                                    $ratingLevel = '😐'; // Moderate
+                                    break;
+                                case 4:
+                                    $ratingLevel = '😕'; // Moderately difficult
+                                    break;
+                                case 5:
+                                    $ratingLevel = '😫'; // Difficult
+                                    break;
+                                default:
+                                    $ratingLevel = '😐'; // Default to Moderate if not specified
+                            }
+                        @endphp
+                        <span>{{ $ratingLevel }}</span>
                     </div>
                 </div>
                 <p class="text-gray-700"><span class="font-semibold">Message:</span> {{ $taked_exam->feed->message }}</p>
-                <p class="text-gray-700"><span class="font-semibold">Is Read:</span> {{ $taked_exam->feed->is_read ? 'Yes' : 'No' }}</p>
             </div>
+            
             @endif
         @endforeach
     </div>
