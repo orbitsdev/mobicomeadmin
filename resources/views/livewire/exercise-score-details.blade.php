@@ -12,7 +12,7 @@
                 <span class="inline-block px-2 py-1 text-xs font-medium text-blue-700 bg-blue-100 rounded-full">{{ $record->excercise->type }}</span>
             </div>
         </div>
-        @if ($taked_exam->feed)
+        @if ($record->feed)
             <div class="bg-gray-100 rounded-lg p-4 mt-2">
                 <h2 class="text-lg font-semibold mb-2">Feedback:</h2>
                 <div class="flex items-center mb-2">
