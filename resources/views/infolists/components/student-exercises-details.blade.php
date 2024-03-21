@@ -32,14 +32,15 @@
                 </div>
             </div>
             @if ($taked_exam->feed)
-                <div class="bg-gray-100 rounded-lg p-2 text-xs mt-2">
-                    <h2 class="text-lg font-semibold mb-2">Feedback:</h2>
-                    <div class="grid grid-cols-1">
-                        <p><span class="font-semibold">Rate:</span> {{ $taked_exam->feed->rate }}</p>
-                        <p><span class="font-semibold">Message:</span> {{ $taked_exam->feed->message }}</p>
-                        <p><span class="font-semibold">Is Read:</span> {{ $taked_exam->feed->is_read ? 'Yes' : 'No' }}</p>
-                    </div>
+            <div class="bg-gray-100 rounded-lg p-2 text-xs mt-2">
+                <h2 class="text-lg font-semibold mb-2">Feedback:</h2>
+                <div class="grid grid-cols-1">
+                    <p>{{ $taked_exam->feed->rate }} <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></p>
+                    <p>{{ $taked_exam->feed->message }} <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></p>
+                    <p>{{ $taked_exam->feed->is_read ? 'Yes' : 'No' }} {!! $taked_exam->feed->is_read ? '<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>' : '<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>' !!}</p>
                 </div>
+            </div>
+            
             @endif
         @endforeach
     </div>
