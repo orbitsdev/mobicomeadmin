@@ -12,6 +12,41 @@
                 <span class="inline-block px-2 py-1 text-xs font-medium text-blue-700 bg-blue-100 rounded-full">{{ $record->excercise->type }}</span>
             </div>
         </div>
+        @if ($taked_exam->feed)
+            <div class="bg-gray-100 rounded-lg p-4 mt-2">
+                <h2 class="text-lg font-semibold mb-2">Feedback:</h2>
+                <div class="flex items-center mb-2">
+                    <p class="mr-2">{{ $taked_exam->feed->rate }}</p>
+                    <div class="flex text-4xl ">
+                        @php
+                            $ratingLevel = '';
+                            switch ($taked_exam->feed->rate) {
+                                case 1:
+                                    $ratingLevel = '🙂'; // Easy
+                                    break;
+                                case 2:
+                                    $ratingLevel = '😊'; // Moderately easy
+                                    break;
+                                case 3:
+                                    $ratingLevel = '😐'; // Moderate
+                                    break;
+                                case 4:
+                                    $ratingLevel = '😕'; // Moderately difficult
+                                    break;
+                                case 5:
+                                    $ratingLevel = '😫'; // Difficult
+                                    break;
+                                default:
+                                    $ratingLevel = '😐'; // Default to Moderate if not specified
+                            }
+                        @endphp
+                        <span>{{ $ratingLevel }}</span>
+                    </div>
+                </div>
+                <p class="text-gray-700"><span class="font-semibold">Message:</span> {{ $taked_exam->feed->message }}</p>
+            </div>
+            
+            @endif
 
         <div class="mt-4 prose max-w-none border-b py-2 mb-6">
             {{-- Markdown content here --}}
