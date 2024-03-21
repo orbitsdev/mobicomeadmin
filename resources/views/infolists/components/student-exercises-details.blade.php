@@ -36,7 +36,7 @@
                 <h2 class="text-lg font-semibold mb-2">Feedback:</h2>
                 <div class="flex items-center mb-2">
                     <p class="mr-2">{{ $taked_exam->feed->rate }}</p>
-                    <div class="flex">
+                    <div class="flex text-4xl ">
                         @php
                             $ratingLevel = '';
                             switch ($taked_exam->feed->rate) {
