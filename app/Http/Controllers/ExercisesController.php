@@ -175,7 +175,16 @@ class ExercisesController extends Controller
 
 
 
+            // $student = Student::find($request->student_id);
 
+            // $exercises = Excercise::latest()
+            //     ->where('created_by', 'Admin') // Fetch exercises created by Admin
+            //     ->orWhere(function ($query) use ($student) {
+            //         $query->whereHas('user.teacher', function($subQuery) use ($student) {
+            //             $subQuery->where('id', $student->enrolled_section->teacher->id);
+            //         });
+            //     })
+            //     ->get();
             $collection = Excercise::latest()->get();
 
             // Map lessons to desired format
