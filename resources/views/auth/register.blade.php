@@ -34,9 +34,9 @@
                     <option selected>Choose a country</option>
                     <option value="Aadmin">Teacher</option>
                     <option value="Teacher">Canada</option>
-                   
+
                   </select>
-                
+
             </div> --}}
 
             <div class="mt-4">
