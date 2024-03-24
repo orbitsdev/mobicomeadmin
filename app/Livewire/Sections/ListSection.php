@@ -75,7 +75,9 @@ class ListSection extends Component implements HasForms, HasTable
                 ])
                 ->label('Actions')
                 ,
-            ]);
+            ])
+            ->modifyQueryUsing(fn (Builder $query) => $query->latest())
+            ;
     }
 
     public function render(): View
