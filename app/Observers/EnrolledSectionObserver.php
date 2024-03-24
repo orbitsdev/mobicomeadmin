@@ -27,7 +27,9 @@ class EnrolledSectionObserver
      */
     public function deleted(EnrolledSection $enrolledSection): void
     {
-         $enrolledSection->students()->delete();
+         $enrolledSection->students->each(function ( $student) {
+            $student->delete();
+         });
     }
 
     /**
