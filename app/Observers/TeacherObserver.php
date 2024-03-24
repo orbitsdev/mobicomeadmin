@@ -28,6 +28,9 @@ class TeacherObserver
     public function deleted(Teacher $teacher): void
     {
         $teacher->sections()->detach();
+        $teacher->enrolled_sections->each(function ($section) {
+            $section->delete();
+        });
     }
 
     /**
