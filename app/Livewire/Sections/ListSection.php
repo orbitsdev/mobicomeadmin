@@ -9,12 +9,14 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Actions\BulkAction;
+use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\DeleteAction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Concerns\InteractsWithTable;
 
 class ListSection extends Component implements HasForms, HasTable
@@ -34,8 +36,32 @@ class ListSection extends Component implements HasForms, HasTable
             ->filters([
                 //
             ])
+
+            ->headerActions([
+
+                CreateAction::make()
+                    ->color('primary')
+                    ->icon('heroicon-m-sparkles')
+                    ->label('New Section')
+                    ->form([
+                        TextInput::make('title')
+                            ->required()
+                            
+                       
+                    ])
+                    
+
+
+            ])
             ->actions([
-                            EditAction::make('edit'),
+                            EditAction::make('edit')
+                            ->form([
+                                TextInput::make('title')
+                                    ->required()
+                                    
+                                // ...
+                            ])
+                            ,
                             DeleteAction::make('delete'),
 
             ])
