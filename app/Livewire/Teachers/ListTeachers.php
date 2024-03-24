@@ -162,6 +162,9 @@ class ListTeachers extends Component implements HasForms, HasTable
                                     name: 'sections',
                                     titleAttribute: 'title'
                                 )
+                                ->createForm([
+                                    TextInput::make('title'),
+                                ])
                                 ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->title}")
                                 ->bulkToggleable()
                                 ->columns(3)
