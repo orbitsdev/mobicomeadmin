@@ -98,6 +98,7 @@ Route::middleware([
     Route::get("edit/profile/{record}", EditUser::class )->name('edit-profile');
     // Route::middleware(['can:admin-and-teacher'])->group(function(){
 
+        Route::get("list-sections", \App\Livewire\Sections\ListSection::class )->name('list-sections');
         Route::middleware(['can:is-admin'])->group(function(){
 
             Route::get("list-users", ListUsers::class )->name('list-users');
