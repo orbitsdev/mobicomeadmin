@@ -15,6 +15,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
@@ -51,7 +52,7 @@ class ManageTrueOrFalse extends Component implements HasForms
                             ->label('Set Exercise Questions')
                             ->schema([
 
-                                TextInput::make('question')->required(),
+                                Textarea::make('question')->required(),
 
 
                                 Select::make('question_number_id')

@@ -9,6 +9,7 @@ use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
@@ -44,7 +45,7 @@ class ManageFillInTheBlank extends Component implements HasForms
                         ])
                         ->label('Set Exercise Questions')
                         ->schema([
-                            TextInput::make('question')->required(),
+                            Textarea::make('question')->required(),
 
 
                             Select::make('question_number_id')
@@ -68,14 +69,14 @@ class ManageFillInTheBlank extends Component implements HasForms
 
                                 ->schema([
 
-                                  
+
 
                                     TextInput::make('correct_answer')
                                         ->label('Answer')
                                         ->required(),
 
                                 ])->columnSpanFull(),
-                                
+
                         ])
                         ->defaultItems(3)
                         ->maxItems(50)
