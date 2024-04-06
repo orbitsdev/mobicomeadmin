@@ -57,6 +57,8 @@ class ListTakedExam extends Component implements HasForms, HasTable
                     Select::make('section_id')
                         ->options(Section::whereHas('enrolled_sections')->get()->pluck('title', 'id'))
                         ->label('Section')
+                        ->native(false)
+                        ->searchable()
 
                 ])
                 ->query(function (Builder $query, array $data): Builder {
