@@ -27,8 +27,8 @@ class ListTakedExam extends Component implements HasForms, HasTable
         return $table
             ->query(TakedExam::query())
             ->columns([
-                Tables\Columns\TextColumn::make('student_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('student.enrolled_section.section.title')
+                    // ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('excercise_id')
                     ->numeric()
