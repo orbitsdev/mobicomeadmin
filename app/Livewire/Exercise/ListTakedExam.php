@@ -10,9 +10,12 @@ use Filament\Tables\Table;
 use Filament\Tables\Grouping\Group;
 use Illuminate\Contracts\View\View;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Tables\Actions\DeleteAction;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
 
@@ -44,12 +47,16 @@ class ListTakedExam extends Component implements HasForms, HasTable
                 //
             ])
             ->actions([
-                //
+                  DeleteAction::make('delete'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    //
-                ]),
+
+                    BulkAction::make('delete')
+                        ->requiresConfirmation()
+                        ->action(fn (Collection $records) => $records->each->delete())
+                ])
+                    ->label('Actions'),
             ])
             ->groups([
                 Group::make('student.enrolled_section.section.title')
