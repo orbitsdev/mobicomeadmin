@@ -35,6 +35,13 @@ class UserObserver
             }
         }
 
+        if($user->teacher){
+            $user->teacher()->delete();
+        }
+        if($user->student){
+            $user->student()->delete();
+        }
+
     }
 
     /**
