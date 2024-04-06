@@ -132,6 +132,23 @@ class ListExcercises extends Component implements HasForms, HasTable
                         // return ('livewire.chapters.manage-lessons', ['record' => $record]);
                         // return route('manage-exercise', ['record' => $record]);
                     }),
+                Action::make('Response')
+                    ->color('primary')
+
+                    
+                    // ->icon('heroicon-m-pencil')
+                    ->label(function(Model $record){
+                        return 'Response ('. $record->taked_exams->count().')'; 
+                    })
+                    ->button()
+                    ->outlined()
+                    ->url(function (Model $record) {
+
+                        return route('exercise-taked-exams-by-sections',['record'=> $record]);
+
+                        // return ('livewire.chapters.manage-lessons', ['record' => $record]);
+                        // return route('manage-exercise', ['record' => $record]);
+                    }),
 
                 ActionGroup::make([
                     Action::make('view')
