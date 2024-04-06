@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Chapters;
 
+use App\Models\User;
 use Filament\Tables;
 use App\Models\Chapter;
 use Livewire\Component;
@@ -11,12 +12,14 @@ use Filament\Tables\Actions\Action;
 use Illuminate\Contracts\View\View;
 use Filament\Forms\Components\Group;
 use Filament\Support\Enums\MaxWidth;
+use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Contracts\HasTable;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Forms\Components\FileUpload;
@@ -47,8 +50,19 @@ class ListChapters extends Component implements HasForms, HasTable
                     ->numeric()
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('lessons_count')->counts('lessons')
+                Tables\Columns\TextColumn::make('lessons_count')->counts('lessons'),
+                Tables\Columns\TextColumn::make('user_id')->label('Created by')
+                    ->formatStateUsing(function (Model $record) {
+                        return $record?->user?->getFullNameWithRole() ?? '';
+                    })
+                    ->color(fn (Model $record): string => match ($record->user->role) {
+                        User::ADMIN => 'info',
+                        User::TEACHER => 'success',
+                        default => 'gray',
 
+                    })
+                    ->badge()
+                    ->searchable(),
             ])
             ->filters([
                 //
@@ -56,12 +70,12 @@ class ListChapters extends Component implements HasForms, HasTable
 
             ->headerActions([
 
-                Action::make('create_chapter')->url(function(){
+                Action::make('create_chapter')->url(function () {
                     return route('create-chapter');
                 })
-                ->color('primary')
-                ->icon('heroicon-m-sparkles')
-                ->label('New Chapter')
+                    ->color('primary')
+                    ->icon('heroicon-m-sparkles')
+                    ->label('New Chapter')
 
                 // CreateAction::make()
                 //     ->successNotificationTitle('Chapter Created')
@@ -185,13 +199,31 @@ class ListChapters extends Component implements HasForms, HasTable
                         }),
 
                     Action::make('edit')
-                    ->icon('heroicon-m-pencil-square')
-                    ->label('Edit Chapter')
+                        ->icon('heroicon-m-pencil-square')
+                        ->label('Edit Chapter')
                         ->color('primary')
                         ->url(function (Chapter $record) {
                             // return ('livewire.chapters.manage-lessons', ['record' => $record]);
                             return route('edit-chapter', ['record' => $record]);
-                        }),
+                        })
+                        ->hidden(function (Model $record) {
+
+                            $authenticated_id = Auth::id();
+
+                            if (!empty($record->user_id)) {
+                                switch (Auth::user()->role) {
+                                    case User::ADMIN:
+                                        return false;
+                                    case User::TEACHER:
+                                        return $record->user_id !== $authenticated_id;
+                                    case User::STUDENT:
+                                        return true;
+                                }
+                            } else {
+                                return Auth::user()->isStudent();
+                            }
+                        })
+                        ,
                     DeleteAction::make('delete'),
                 ]),
 
@@ -207,7 +239,7 @@ class ListChapters extends Component implements HasForms, HasTable
                     ->label('Actions'),
             ])
             ->modifyQueryUsing(fn (Builder $query) => $query->join('chapter_numbers', 'chapters.chapter_number_id', '=', 'chapter_numbers.id')
-            ->orderBy('chapter_numbers.number'));
+                ->orderBy('chapter_numbers.number'));
     }
 
     public function render(): View

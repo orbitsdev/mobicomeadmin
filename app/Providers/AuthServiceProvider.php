@@ -31,10 +31,9 @@ class AuthServiceProvider extends ServiceProvider
     {
 
 
-        // Gate::define('admin-and-teacher', function () {
-        //     // we can create another fnction in user for this
-        //     return Auth::user()->isAdmin() || Auth::user()->isTeacher() ;
-        // });
+        Gate::define('admin-and-teacher', function () {
+            return Auth::user()->isAdmin() || Auth::user()->isTeacher() ;
+        });
         Gate::define('is-admin', function () {
 
             return Auth::user()->isAdmin();

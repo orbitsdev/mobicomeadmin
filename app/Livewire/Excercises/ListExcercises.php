@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Excercises;
 
+use App\Models\User;
 use Filament\Tables;
 use App\Models\Lesson;
 use Livewire\Component;
@@ -13,6 +14,7 @@ use Filament\Tables\Actions\Action;
 use Filament\Tables\Grouping\Group;
 use Illuminate\Contracts\View\View;
 use Filament\Support\Enums\MaxWidth;
+use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Contracts\HasForms;
@@ -64,8 +66,18 @@ class ListExcercises extends Component implements HasForms, HasTable
                 // Tables\Columns\TextColumn::make('user_id')
                 //     ->numeric()
                 //     ->sortable(),
-                Tables\Columns\TextColumn::make('created_by')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('user_id')->label('Created by')
+                ->formatStateUsing(function (Model $record) {
+                    return $record?->user?->getFullNameWithRole() ?? '';
+                })
+                ->color(fn (Model $record): string => match ($record->user->role) {
+                    User::ADMIN => 'info',
+                    User::TEACHER => 'success',
+                    default => 'gray',
+  
+                })
+                ->badge()
+                ->searchable(),
                 // Tables\Columns\IconColumn::make('is_lock')
                 //     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -138,7 +150,25 @@ class ListExcercises extends Component implements HasForms, HasTable
                         ->url(function (Model $record) {
                             // return ('livewire.chapters.manage-lessons', ['record' => $record]);
                             return route('edit-exercise', ['record' => $record]);
-                        }),
+                        })
+                        ->hidden(function (Model $record) {
+
+                            $authenticated_id = Auth::id();
+
+                            if (!empty($record->user_id)) {
+                                switch (Auth::user()->role) {
+                                    case User::ADMIN:
+                                        return false;
+                                    case User::TEACHER:
+                                        return $record->user_id !== $authenticated_id;
+                                    case User::STUDENT:
+                                        return true;
+                                }
+                            } else {
+                                return Auth::user()->isStudent();
+                            }
+                        })
+                        ,
 
 
                     DeleteAction::make('delete'),

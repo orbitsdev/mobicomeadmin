@@ -22,6 +22,11 @@ class Teacher extends Model
     }
 
 
+    public function role(){
+        return $this->user->role;
+    }
+
+
     public function sections(){
         return $this->belongsToMany(Section::class,'enrolled_sections','teacher_id','section_id');
     }

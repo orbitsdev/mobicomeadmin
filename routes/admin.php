@@ -99,6 +99,7 @@ Route::middleware([
     // Route::middleware(['can:admin-and-teacher'])->group(function(){
 
         Route::get("list-sections", \App\Livewire\Sections\ListSection::class )->name('list-sections');
+       
         Route::middleware(['can:is-admin'])->group(function(){
 
             Route::get("list-users", ListUsers::class )->name('list-users');
@@ -113,9 +114,23 @@ Route::middleware([
             
             Route::get("list-students", ListStudents::class )->name('list-students');
             Route::get("list-of-request-for-removal", StudentListForRemoval::class )->name('list-of-request-for-removal');
-            Route::get("list-chapters", ListChapters::class )->name('list-chapters');
+        
             Route::get("student-profile/{record}", StudentDetails::class )->name('student-profile');
 
+         
+            Route::get("list-excercises", ListExcercises::class)->name('list-excercises');
+            Route::get("excercise/multiple-choice/{record}", ManageMultipleChoice::class)->name('manage-multiple-choice');
+            Route::get("excercise/true-or-false/{record}", ManageTrueOrFalse::class)->name('manage-true-or-false');
+            Route::get("excercise/fill-in-the-blank/{record}", ManageFillInTheBlank::class)->name('manage-fill-in-the-blank');
+            Route::get("excercise/view/{record}",  ExerciseDetails::class)->name('view-exercise');
+            // Route::get("manage-excercise/questions/{record}", ListQuestions::class)->name('manage-excercise-questions');
+            Route::get("view-question/{record}", QuestionDetails::class)->name('view-question-details');
+            Route::get("excercise/create", CreateExercise::class)->name('create-exercise');
+            Route::get("excercise/edit/{record}", EditExcercise::class)->name('edit-exercise');
+        });
+
+        Route::middleware(['can:admin-and-teacher'])->group(function(){
+            Route::get("list-chapters", ListChapters::class )->name('list-chapters');
             Route::get("create-chapter", CreateChapter::class)->name('create-chapter');
             Route::get("edit-chapter/{record}", EditChapter::class)->name('edit-chapter');
             Route::get("view-chapter/{record}", ChapterDetails::class )->name('view-chapter');
@@ -129,15 +144,6 @@ Route::middleware([
             Route::get("list-lessons", LessonsListLessons::class)->name('list-lessons');
             Route::get("lessons/view/lesson/{record}", LessonsLessonDetails::class)->name('lessons-lessonn-details');
 
-            Route::get("list-excercises", ListExcercises::class)->name('list-excercises');
-            Route::get("excercise/multiple-choice/{record}", ManageMultipleChoice::class)->name('manage-multiple-choice');
-            Route::get("excercise/true-or-false/{record}", ManageTrueOrFalse::class)->name('manage-true-or-false');
-            Route::get("excercise/fill-in-the-blank/{record}", ManageFillInTheBlank::class)->name('manage-fill-in-the-blank');
-            Route::get("excercise/view/{record}",  ExerciseDetails::class)->name('view-exercise');
-            // Route::get("manage-excercise/questions/{record}", ListQuestions::class)->name('manage-excercise-questions');
-            Route::get("view-question/{record}", QuestionDetails::class)->name('view-question-details');
-            Route::get("excercise/create", CreateExercise::class)->name('create-exercise');
-            Route::get("excercise/edit/{record}", EditExcercise::class)->name('edit-exercise');
         });
 
         // make it available to admin and  teacher

@@ -15,6 +15,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+
+
+    public const ADMIN = 'Admin';
+    public const TEACHER = 'Teacher';
+    public const STUDENT = 'Student';
+
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
@@ -64,6 +70,9 @@ class User extends Authenticatable
 
     public function getFullName(){
         return ($this->first_name ?? '') . ' ' . ($this->last_name ?? '');
+    }
+    public function getFullNameWithRole(){
+        return ($this->first_name ?? '') . ' ' . ($this->last_name ?? '') . ' - (' . ($this->role ?? '').')';
     }
     public function getImage(){
 

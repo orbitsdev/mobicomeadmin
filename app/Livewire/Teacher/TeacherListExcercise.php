@@ -2,12 +2,14 @@
 
 namespace App\Livewire\Teacher;
 
+use App\Models\User;
 use Filament\Tables;
 use Livewire\Component;
 use App\Models\Excercise;
 use Filament\Tables\Table;
 use Filament\Tables\Actions\Action;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\TextColumn;
@@ -32,11 +34,7 @@ class TeacherListExcercise extends Component implements HasForms, HasTable
         return $table
             ->query(Excercise::query())
             ->columns([
-                 // Tables\Columns\TextColumn::make('exerciseable_id')
-                //     ->numeric()
-                //     ->sortable(),
-                // Tables\Columns\TextColumn::make('exerciseable_type')
-                //     ->searchable(),
+         
               TextColumn::make('title')
               ->searchable(),
         TextColumn::make('type')
@@ -45,15 +43,24 @@ class TeacherListExcercise extends Component implements HasForms, HasTable
 
               Tables\Columns\TextColumn::make('questions_count')->counts('questions')->label('Number of Questions'),
 
+              Tables\Columns\TextColumn::make('user_id')->label('Created by')
+              ->formatStateUsing(function (Model $record) {
+                  return $record?->user?->getFullNameWithRole() ?? '';
+              })
+              ->color(fn (Model $record): string => match ($record->user->role) {
+                  User::ADMIN => 'info',
+                  User::TEACHER => 'success',
+                  default => 'gray',
 
+              })
+              ->badge()
+              ->searchable(),
 //                 TextColumn::make('questions.content')
 // ->listWithLineBreaks()
 // ->bulleted()
           // Tables\Columns\TextColumn::make('user_id')
           //     ->numeric()
           //     ->sortable(),
-          Tables\Columns\TextColumn::make('created_by')
-              ->searchable(),
           // Tables\Columns\IconColumn::make('is_lock')
           //     ->boolean(),
           Tables\Columns\TextColumn::make('created_at')
@@ -125,7 +132,25 @@ class TeacherListExcercise extends Component implements HasForms, HasTable
                     ->url(function (Model $record) {
                         // return ('livewire.chapters.manage-lessons', ['record' => $record]);
                         return route('teacher-edit-exercise', ['record' => $record]);
-                    }),
+                    })
+                    ->hidden(function (Model $record) {
+
+                        $authenticated_id = Auth::id();
+
+                        if (!empty($record->user_id)) {
+                            switch (Auth::user()->role) {
+                                case User::ADMIN:
+                                    return false;
+                                case User::TEACHER:
+                                    return $record->user_id !== $authenticated_id;
+                                case User::STUDENT:
+                                    return true;
+                            }
+                        } else {
+                            return Auth::user()->isStudent();
+                        }
+                    })
+                    ,
 
 
                 DeleteAction::make('delete'),

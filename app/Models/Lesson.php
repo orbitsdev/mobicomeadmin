@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use App\Models\Chapter;
 use App\Models\LessonNumber;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +14,10 @@ class Lesson extends Model
 {
     use HasFactory;
 
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
     public function chapter()
     {
         return $this->belongsTo(Chapter::class);

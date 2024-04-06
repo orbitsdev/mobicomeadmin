@@ -308,6 +308,27 @@
                                 <div class="text-lg mb-1 uppercase font-semibold leading-6 text-gray-600">Teacher Management</div>
                                 <ul role="list" class="-mx-2 mt-2 space-y-1">
                                     <li>
+                                        <a href="{{ route('list-chapters') }}"
+                                            class="group flex gap-x-3 rounded-md p-2 text-sm leading-6  {{ (request()->routeIs('list-chapters') ||  request()->routeIs('edit-chapter') ||  request()->routeIs('list-chapters')|| request()->routeIs('create-chapter')||request()->routeIs('chapter-lessons-list') || request()->routeIs('view-chapter') || request()->routeIs('chapter-edit-lesson') ||request()->routeIs('chapter-view-lesson') )? 'selected-higlight ' : 'text-gray-600' }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m7.875 14.25 1.214 1.942a2.25 2.25 0 0 0 1.908 1.058h2.006c.776 0 1.497-.4 1.908-1.058l1.214-1.942M2.41 9h4.636a2.25 2.25 0 0 1 1.872 1.002l.164.246a2.25 2.25 0 0 0 1.872 1.002h2.092a2.25 2.25 0 0 0 1.872-1.002l.164-.246A2.25 2.25 0 0 1 16.954 9h4.636M2.41 9a2.25 2.25 0 0 0-.16.832V12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 12V9.832c0-.287-.055-.57-.16-.832M2.41 9a2.25 2.25 0 0 1 .382-.632l3.285-3.832a2.25 2.25 0 0 1 1.708-.786h8.43c.657 0 1.281.287 1.709.786l3.284 3.832c.163.19.291.404.382.632M4.5 20.25h15A2.25 2.25 0 0 0 21.75 18v-2.625c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125V18a2.25 2.25 0 0 0 2.25 2.25Z" />
+                                              </svg>
+
+                                            Chapters
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('list-lessons') }}"
+                                            class="group flex gap-x-3 rounded-md p-2 text-sm leading-6  {{ (request()->routeIs('list-lessons') || request()->routeIs('view-lesson') || request()->routeIs('edit-lesson') )? 'selected-higlight ' : 'text-gray-600' }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+                                              </svg>
+
+
+                                                Lessons
+                                        </a>
+                                    </li>
+                                    <li>
                                         <a href="{{ route('teacher-list-excercises') }}"
                                             class="group flex gap-x-3 rounded-md p-2 text-sm leading-6  {{ (request()->routeIs('teacher-list-excercises') || request()->routeIs('teacher-manage-excercise-questions') || request()->routeIs('teacher-create-exercise') || request()->routeIs('teacher-edit-exercise')  ||   request()->routeIs('teacher-manage-multiple-choice') ||   request()->routeIs('teacher-manage-true-or-false') ||   request()->routeIs('teacher-manage-fill-in-the-blank')  ||   request()->routeIs('teacher-view-question-details') ||   request()->routeIs('teacher-view-exercise') )? 'selected-higlight ' : 'text-gray-600' }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -383,7 +404,7 @@
                 </div>
             </div>
 
-            <div class="lg:pl-72 max-w-[1640px] mx-auto p-6">
+            <div class="lg:pl-72 max-w-[1640px] mx-auto p-6 mt-4">
 
                 {{$slot}}
 

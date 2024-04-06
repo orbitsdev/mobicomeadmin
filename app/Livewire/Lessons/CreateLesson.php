@@ -8,6 +8,7 @@ use App\Models\Chapter;
 use Livewire\Component;
 use Filament\Forms\Form;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Contracts\HasForms;
@@ -106,7 +107,7 @@ class CreateLesson extends Component implements HasForms
         $data = $this->form->getState();
         $data['chapter_id'] = $this->record->id;
         // dd($data);
-
+        $data['user_id'] =  Auth::user()->id;
         $record = Lesson::create($data);
 
         $this->form->model($record)->saveRelationships();

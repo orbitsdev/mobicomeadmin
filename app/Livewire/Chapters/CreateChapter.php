@@ -7,6 +7,7 @@ use App\Models\Chapter;
 use Livewire\Component;
 use Filament\Forms\Form;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Contracts\HasForms;
@@ -98,7 +99,9 @@ class CreateChapter extends Component implements HasForms
     public function create()
     {
         $data = $this->form->getState();
+        
 
+        $data['user_id'] =  Auth::user()->id;
         $record = Chapter::create($data);
 
         $this->form->model($record)->saveRelationships();

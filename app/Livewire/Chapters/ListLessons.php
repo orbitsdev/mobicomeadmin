@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Chapters;
 
+use App\Models\User;
 use Filament\Tables;
 use App\Models\Lesson;
 use App\Models\Chapter;
@@ -11,6 +12,7 @@ use Filament\Actions\StaticAction;
 use Filament\Tables\Actions\Action;
 use Illuminate\Contracts\View\View;
 use Filament\Support\Enums\MaxWidth;
+use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Actions\BulkAction;
@@ -56,6 +58,19 @@ class ListLessons extends Component implements HasForms, HasTable
                 //     ->numeric()
                 //     ->sortable(),
 
+                Tables\Columns\TextColumn::make('user_id')->label('Created by')
+                    ->formatStateUsing(function (Model $record) {
+                        return $record?->user?->getFullNameWithRole() ?? '';
+                    })
+                    ->color(fn (Model $record): string => match ($record->user->role) {
+                        User::ADMIN => 'info',
+                        User::TEACHER => 'success',
+                        default => 'gray',
+
+                    })
+                    ->badge()
+                    ->searchable(),
+
             ])
             ->filters([
                 //
@@ -79,11 +94,30 @@ class ListLessons extends Component implements HasForms, HasTable
                         ->icon('heroicon-m-eye')
                         ->label('View Lesson')
                         ->url(fn (Model $record): string => route('chapter-view-lesson', ['record' => $record])),
+                        
                     Action::make('edit')
                         ->color('primary')
                         ->icon('heroicon-m-pencil-square')
                         ->label('Edit Lesson')
-                        ->url(fn (Model $record): string => route('chapter-edit-lesson', ['record' => $record])),
+                        ->url(fn (Model $record): string => route('chapter-edit-lesson', ['record' => $record]))
+                        ->hidden(function (Model $record) {
+
+                            $authenticated_id = Auth::id();
+
+                            if (!empty($record->user_id)) {
+                                switch (Auth::user()->role) {
+                                    case User::ADMIN:
+                                        return false;
+                                    case User::TEACHER:
+                                        return $record->user_id !== $authenticated_id;
+                                    case User::STUDENT:
+                                        return true;
+                                }
+                            } else {
+                                return Auth::user()->isStudent();
+                            }
+                        })
+                        ,
 
 
 

@@ -21,6 +21,9 @@ class Student extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+    public function role(){
+        return $this->user->role;
+    }
 
     public function handled_section(){
         return $this->belongsTo(HandledSection::class);
