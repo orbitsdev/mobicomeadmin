@@ -284,6 +284,7 @@
                                                   request()->routeIs('manage-fill-in-the-blank')  ||  
                                                    request()->routeIs('view-question-details') || 
                                                      request()->routeIs('view-exercise') ||
+                                                     request()->routeIs('exercise-teachers') ||
                                                      request()->routeIs('exercise-taked-exams-by-sections') 
                                                      
                                                      )? 'selected-higlight ' : 'text-gray-600' }}">
@@ -351,6 +352,7 @@
                                                    request()->routeIs('teacher-manage-fill-in-the-blank')  || 
                                                      request()->routeIs('teacher-view-question-details') || 
                                                        request()->routeIs('teacher-view-exercise') ||
+                                                       request()->routeIs('exercise-teachers') ||
                                                        request()->routeIs('exercise-taked-exams-by-sections') 
                                                        
                                                        )? 'selected-higlight ' : 'text-gray-600' }}">
