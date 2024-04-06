@@ -30,21 +30,15 @@ class ListTakedExam extends Component implements HasForms, HasTable
             ->columns([
                 Tables\Columns\TextColumn::make('student_id')->formatStateUsing(function(Model $record){
                     return $record->student?->user->getFullName();
-                }),
+                })->label('Student'),
                     
-                Tables\Columns\TextColumn::make('excercise_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('completed')
-                    ->boolean(),
+
+           
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->date()
+                    ->label('Date')
+                    
+                
             ])
             ->filters([
                 //
