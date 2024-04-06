@@ -28,7 +28,7 @@ class ListTeacherUnderExercise extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Teacher::query())
+            ->query(Teacher::whereHas('enrolled_sections')->query())
             ->columns([
                 TextColumn::make('user')->formatStateUsing(function ($state) {
                     return $state->getFullName();
