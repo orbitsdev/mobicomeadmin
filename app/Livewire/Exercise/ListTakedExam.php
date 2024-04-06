@@ -11,6 +11,7 @@ use Filament\Tables\Grouping\Group;
 use Illuminate\Contracts\View\View;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Contracts\HasTable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -27,9 +28,10 @@ class ListTakedExam extends Component implements HasForms, HasTable
         return $table
             ->query(TakedExam::query())
             ->columns([
-                Tables\Columns\TextColumn::make('student.enrolled_section.section.title')
-                    // ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('student_id')->formatStateUsing(function(Model $record){
+                    return $record->student?->user->getFullName();
+                }),
+                    
                 Tables\Columns\TextColumn::make('excercise_id')
                     ->numeric()
                     ->sortable(),
