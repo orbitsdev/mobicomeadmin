@@ -7,6 +7,7 @@ use Livewire\Component;
 use App\Models\Excercise;
 use App\Models\TakedExam;
 use Filament\Tables\Table;
+use Filament\Tables\Grouping\Group;
 use Illuminate\Contracts\View\View;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Contracts\HasTable;
@@ -53,7 +54,14 @@ class ListTakedExam extends Component implements HasForms, HasTable
                 Tables\Actions\BulkActionGroup::make([
                     //
                 ]),
+            ])
+            ->groups([
+                Group::make('student.enrolled_section.section.title')
+                    ->label('Section')
+                    ->titlePrefixedWithLabel(false)
+                    ,
             ]);
+    
     }
 
     public function render(): View
