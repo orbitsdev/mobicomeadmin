@@ -144,7 +144,7 @@ class ListExcercises extends Component implements HasForms, HasTable
                     ->outlined()
                     ->url(function (Model $record) {
 
-                        return route('exercise-taked-exams-by-sections',['record'=> $record]);
+                        return route('exercise-teachers',['record'=> $record]);
 
                         // return ('livewire.chapters.manage-lessons', ['record' => $record]);
                         // return route('manage-exercise', ['record' => $record]);
