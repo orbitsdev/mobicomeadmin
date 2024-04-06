@@ -59,7 +59,7 @@ class ListTakedExam extends Component implements HasForms, HasTable
                     ->label('Actions'),
             ])
             ->groups([
-                Group::make('student.enrolled_section.section.title')
+                Group::make('student.enrolled_section.created_at')
                     ->label('Section')
                     // ->titlePrefixedWithLabel(false)
                     ,
