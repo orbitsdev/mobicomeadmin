@@ -86,7 +86,9 @@ class ListTakedExam extends Component implements HasForms, HasTable
                     ->label('Section')
                 // ->titlePrefixedWithLabel(false)
                 ,
-            ]);
+            ])
+            ->defaultGroup('student.enrolled_section.section.title')
+            ;
     }
 
     public function render(): View
