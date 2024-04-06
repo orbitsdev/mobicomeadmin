@@ -55,7 +55,7 @@ class ListTakedExam extends Component implements HasForms, HasTable
                 Filter::make('section')
                 ->form([
                     Select::make('section_id')
-                        ->options(Section::all()->pluck('title', 'id'))
+                        ->options(Section::whereHas('enrolled_sections')->get()->pluck('title', 'id'))
                         ->label('Section')
 
                 ])
