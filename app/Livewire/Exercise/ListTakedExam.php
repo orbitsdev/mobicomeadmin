@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Forms\Components\Section as FSection;
 use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
 
 class ListTakedExam extends Component implements HasForms, HasTable
@@ -71,24 +72,35 @@ class ListTakedExam extends Component implements HasForms, HasTable
                 Filter::make('section')
                 ->form([
 
-                    Select::make('section_id')
-                    ->options(Section::whereHas('enrolled_sections')->get()->pluck('title', 'id'))
-                    ->label('Section')
-                    ->native(false)
-                   
-                    ->searchable(),
-                Select::make('teacher_id')
-                    ->options(Teacher::whereHas('enrolled_sections')->get()->map(function($item){
-                        return [
-                            'id'=> $item->id,
-                            'fullname'=> $item?->user?->getFullName()
-                        ];
-                    })->pluck('fullname', 'id'))
-                    ->label('Teacher')
-                  
+                     FSection::make()
+                            ->columns([
+                                'sm' => 3,
+                                'xl' => 6,
+                                '2xl' => 8,
+                            ])
+                            ->schema([
+                                Select::make('section_id')
+                                ->options(Section::whereHas('enrolled_sections')->get()->pluck('title', 'id'))
+                                ->label('Section')
+                                ->native(false)
+                               ->columnSpan(4)
+                                ->searchable(),
+                            Select::make('teacher_id')
+                                ->options(Teacher::whereHas('enrolled_sections')->get()->map(function($item){
+                                    return [
+                                        'id'=> $item->id,
+                                        'fullname'=> $item?->user?->getFullName()
+                                    ];
+                                })->pluck('fullname', 'id'))
+                                ->label('Teacher')
+                                ->columnSpan(4)
 
-                    ->native(false)
-                    ->searchable(),
+            
+                                ->native(false)
+                                ->searchable(),
+                            ]),
+
+                  
                    
 
                 ])
