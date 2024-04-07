@@ -55,7 +55,8 @@ class StudentDetails extends Component implements HasForms, HasInfolists
         //         // ...
         //     ]),
         ])
-        ->activeTab(1)
+        // ->activeTab(1)
+        ->persistTabInQueryString()
 
         ,
 
