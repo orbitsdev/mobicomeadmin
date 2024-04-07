@@ -6,13 +6,18 @@ use Filament\Tables;
 use Livewire\Component;
 use App\Models\TakedExam;
 use Filament\Tables\Table;
+use Filament\Actions\StaticAction;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Grouping\Group;
 use Illuminate\Contracts\View\View;
+use Filament\Support\Enums\MaxWidth;
 use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Contracts\HasTable;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Tables\Actions\DeleteAction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -31,34 +36,49 @@ class ListTakedExcercise extends Component implements HasForms, HasTable
                 $query->where('id', Auth::user()->id);
             }))
             ->columns([
-                Tables\Columns\TextColumn::make('excercise.title')
-                  
-                ->searchable(),
-                TextColumn::make('student.user')->formatStateUsing(function ($state) {
-                    return $state->getFullName();
-                })
-                    ->label('Student Name')
-                    ->searchable(query: function (Builder $query, string $search): Builder {
-                        return $query->whereHas('student.user', function ($query) use ($search) {
-                            $query->where('first_name', 'like', "%{$search}%")
-                                ->orWhere('last_name', 'like', "%{$search}%");
-                        });
-                    }),
-                 
-              
+                Tables\Columns\TextColumn::make('excercise.title')->searchable()->label('Exercise'),
+                Tables\Columns\TextColumn::make('student_id')->formatStateUsing(function (Model $record) {
+                    return $record->student?->user->getFullName();
+                })->label('Student'),
+
+
+
+            ViewColumn::make(' ')->view('tables.columns.exercise-score')
+                    ->label('Score'),
+
+
+                    Tables\Columns\TextColumn::make('student.enrolled_section.teacher')->formatStateUsing(function ($state) {
+                        return $state?->user->getFullName();
+                    })
+                    ->badge()
+                    ->color('success')
+                    ->label('Teacher'),
+                    
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable(),
-                    // ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable(),
-                    // ->toggleable(isToggledHiddenByDefault: true),
+                ->date()
+                ->label('Date'),
+            
             ])
             ->filters([
                 //
             ])
             ->actions([
+                Action::make('view')
+                ->color('primary')
+                ->label('View Score')
+
+                ->button()
+
+
+                ->outlined()
+                ->modalSubmitAction(false)
+                ->modalCancelAction(fn (StaticAction $action) => $action->label('Close'))
+                ->disabledForm()
+                ->modalContent(fn (Model $record): View => view(
+                    'livewire.exercise.view-official-result',
+                    ['record' => $record],
+                ))
+                ->modalWidth(MaxWidth::SevenExtraLarge),
                 DeleteAction::make('delete'),
             ])
             
@@ -72,11 +92,14 @@ class ListTakedExcercise extends Component implements HasForms, HasTable
                     ->label('Actions'),
             ])
             ->groups([
+                Group::make('student.enrolled_section.section.title')
+                ->label('Section'),
                 Group::make('excercise.title')
                     ->label('Exercise')
                     ->titlePrefixedWithLabel(false),
                     
             ])
+            ->defaultGroup('student.enrolled_section.section.title')
             // ->default('excercise.title')
              ;
     }

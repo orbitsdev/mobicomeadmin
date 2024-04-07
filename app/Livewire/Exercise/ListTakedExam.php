@@ -15,6 +15,7 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Grouping\Group;
 use Illuminate\Contracts\View\View;
 use Filament\Support\Enums\MaxWidth;
+use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Filters\Indicator;
@@ -42,7 +43,16 @@ class ListTakedExam extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(TakedExam::query()->where('excercise_id', $this->record->id))
+            ->query(function(){
+                if(Auth::user()->isAdmin()){
+                    return TakedExam::query()->where('excercise_id', $this->record->id);
+                }else{
+                    return TakedExam::query()->where('excercise_id', $this->record->id)->whereHas('student.enrolled_section.teacher', function($query){
+                        $query->where('user_id', Auth::user()->id);
+                    });
+
+                }
+            })
             ->columns([
                
                 Tables\Columns\TextColumn::make('student_id')->formatStateUsing(function (Model $record) {
@@ -100,8 +110,18 @@ class ListTakedExam extends Component implements HasForms, HasTable
 
             
                                 ->native(false)
-                                ->searchable(),
-                            ]),
+                                ->searchable()
+                                ->hidden(function(){
+                                    if(Auth::user()->isTeacher()){
+                                        return true;
+                                    }else{
+                                        return false;
+                                    }
+                                })
+                                ,
+                            ])
+                            
+                            ,
 
                   
                    

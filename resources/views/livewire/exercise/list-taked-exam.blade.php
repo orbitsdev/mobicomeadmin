@@ -4,7 +4,13 @@
             <h1 class="text-2xl uppercase font-bold">
                 {{ $record->title }} ({{ $record->type }}) - {{ $record->getTotalQuestions() }} Questions
             </h1>
+            @can('is-admin')
             <a href="{{ route('list-excercises') }}" class="text-blue-500 hover:text-blue-700">Back</a>
+            @endcan
+            @can('is-teacher')
+            <a href="{{ route('teacher-list-excercises') }}" class="text-blue-500 hover:text-blue-700">Back</a>
+                
+            @endcan
         </div>
         
         <div class="border-t prose max-w-none py-2">

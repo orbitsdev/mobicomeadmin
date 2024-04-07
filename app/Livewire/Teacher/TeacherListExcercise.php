@@ -115,6 +115,32 @@ class TeacherListExcercise extends Component implements HasForms, HasTable
                     // return route('manage-exercise', ['record' => $record]);
                 }),
 
+                Action::make('Response')
+                ->color('primary')
+
+                
+                // ->icon('heroicon-m-pencil')
+                ->label(function(Model $record){
+                    if(Auth::user()->isAdmin()){
+                        return 'Response ('. $record->taked_exams->count().')'; 
+                        
+                    }else{
+                        
+                        return 'Response ('. $record->taked_exams()->whereHas('student.enrolled_section.teacher', function($query){
+                            $query->where('user_id', Auth::user()->id);
+                        })->count().')'; 
+                    }
+                })
+                ->button()
+                ->outlined()
+                ->url(function (Model $record) {
+
+                    return route('exercise-taked-exams-by-sections',['record'=> $record]);
+
+                    // return ('livewire.chapters.manage-lessons', ['record' => $record]);
+                    // return route('manage-exercise', ['record' => $record]);
+                }),
+
             ActionGroup::make([
                 Action::make('view')
                     ->color('primary')

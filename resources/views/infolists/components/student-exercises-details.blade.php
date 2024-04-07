@@ -21,13 +21,13 @@
                     <a href="{{ route('exercise-official-result', ['record' => $taked_exam]) }}"
                         class="p-2 text-blue-600 block capitalize hover:underline">{{ $taked_exam->excercise->title }}</a>
                 </div>
-                <div class="col-span-2">
-                    <span class="text-sm text-gray-600">{{ $taked_exam->excercise->type }}</span>
+                <div class="col-span-2 flex items-center ">
+                    <span class=" text-gray-600 ">{{ $taked_exam->excercise->type }}</span>
                 </div>
-                <div class="col-span-2">
+                <div class="col-span-2 flex items-center ">
                     <p>Total Score: <span class="text-green-600">{{ $taked_exam->getRealScore() }}</span> / {{ $taked_exam->getTotalExerciseQuestions() }}</p>
                 </div>
-                <div class="col-span-2">
+                <div class="col-span-2 flex items-center ">
                     <p>{{ Carbon\Carbon::parse($taked_exam->created_at)->format('F j, Y') }}</p>
                 </div>
             </div>
