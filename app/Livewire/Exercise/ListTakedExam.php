@@ -128,7 +128,7 @@ class ListTakedExam extends Component implements HasForms, HasTable
             ->actions([
                 Action::make('view')
                     ->color('primary')
-                    ->label('View Profile')
+                    ->label('View Score')
     
                     ->button()
 
