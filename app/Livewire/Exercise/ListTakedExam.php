@@ -126,11 +126,7 @@ class ListTakedExam extends Component implements HasForms, HasTable
 
             ], layout: FiltersLayout::AboveContent)
             ->actions([
-                DeleteAction::make('delete'),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Action::make('view')
+                Action::make('view')
                     ->color('primary')
                     ->label('View Profile')
     
@@ -150,6 +146,11 @@ class ListTakedExam extends Component implements HasForms, HasTable
                     // ->url(function(Model $record){
                     //     return route('view-profile',['record'=> $record]);
                     // })
+                DeleteAction::make('delete'),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    
                     
                     BulkAction::make('delete')
                         ->requiresConfirmation()
