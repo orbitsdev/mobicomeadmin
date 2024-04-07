@@ -64,32 +64,24 @@ class ListTakedExam extends Component implements HasForms, HasTable
                 Filter::make('section')
                 ->form([
 
-                    Section::make()
-                    ->columns([
-                        'sm' => 3,
-                        'xl' => 6,
-                        '2xl' => 8,
-                    ])
-                    ->schema([
-                        Select::make('section_id')
-                        ->options(Section::whereHas('enrolled_sections')->get()->pluck('title', 'id'))
-                        ->label('Section')
-                        ->native(false)
-                        ->columnSpan(4)
-                        ->searchable(),
-                    Select::make('teacher_id')
-                        ->options(Teacher::whereHas('enrolled_sections')->get()->map(function($item){
-                            return [
-                                'id'=> $item->id,
-                                'fullname'=> $item?->user?->getFullName()
-                            ];
-                        })->pluck('fullname', 'id'))
-                        ->label('Teacher')
-                        ->columnSpan(4)
+                    Select::make('section_id')
+                    ->options(Section::whereHas('enrolled_sections')->get()->pluck('title', 'id'))
+                    ->label('Section')
+                    ->native(false)
+                    ->columnSpan(4)
+                    ->searchable(),
+                Select::make('teacher_id')
+                    ->options(Teacher::whereHas('enrolled_sections')->get()->map(function($item){
+                        return [
+                            'id'=> $item->id,
+                            'fullname'=> $item?->user?->getFullName()
+                        ];
+                    })->pluck('fullname', 'id'))
+                    ->label('Teacher')
+                    ->columnSpan(4)
 
-                        ->native(false)
-                        ->searchable(),
-                    ]),
+                    ->native(false)
+                    ->searchable(),
                    
 
                 ])
@@ -129,6 +121,7 @@ class ListTakedExam extends Component implements HasForms, HasTable
                 // ->titlePrefixedWithLabel(false)
                 
             ])
+            ->filtersFormColumns(2)
             ->defaultGroup('student.enrolled_section.section.title')
             ;
     }
