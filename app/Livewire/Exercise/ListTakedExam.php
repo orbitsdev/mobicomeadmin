@@ -15,6 +15,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Filters\Indicator;
 use Filament\Tables\Actions\BulkAction;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Tables\Enums\FiltersLayout;
@@ -38,6 +39,7 @@ class ListTakedExam extends Component implements HasForms, HasTable
         return $table
             ->query(TakedExam::query()->where('excercise_id', $this->record->id))
             ->columns([
+               
                 Tables\Columns\TextColumn::make('student_id')->formatStateUsing(function (Model $record) {
                     return $record->student?->user->getFullName();
                 })->label('Student'),
@@ -46,7 +48,10 @@ class ListTakedExam extends Component implements HasForms, HasTable
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->date()
-                    ->label('Date')
+                    ->label('Date'),
+                    ViewColumn::make('tables.columns.exercise-score')
+                    ->label('Score'),
+
 
 
             ])
