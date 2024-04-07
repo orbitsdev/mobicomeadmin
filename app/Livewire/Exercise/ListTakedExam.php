@@ -63,10 +63,19 @@ class ListTakedExam extends Component implements HasForms, HasTable
 
                 Filter::make('section')
                 ->form([
-                    Select::make('section_id')
+
+                    Section::make()
+                    ->columns([
+                        'sm' => 3,
+                        'xl' => 6,
+                        '2xl' => 8,
+                    ])
+                    ->schema([
+                        Select::make('section_id')
                         ->options(Section::whereHas('enrolled_sections')->get()->pluck('title', 'id'))
                         ->label('Section')
                         ->native(false)
+                        ->columnSpan(4)
                         ->searchable(),
                     Select::make('teacher_id')
                         ->options(Teacher::whereHas('enrolled_sections')->get()->map(function($item){
@@ -75,9 +84,13 @@ class ListTakedExam extends Component implements HasForms, HasTable
                                 'fullname'=> $item?->user?->getFullName()
                             ];
                         })->pluck('fullname', 'id'))
-                        ->label('Section')
+                        ->label('Teacher')
+                        ->columnSpan(4)
+
                         ->native(false)
                         ->searchable(),
+                    ]),
+                   
 
                 ])
                 ->query(function (Builder $query, array $data): Builder {
@@ -86,7 +99,15 @@ class ListTakedExam extends Component implements HasForms, HasTable
                             $data['section_id'], fn (Builder $query) => $query->whereHas('student.enrolled_section', function($query) use($data){ 
                                 $query->where('section_id', $data['section_id']);
                             }),
-                        );
+                        )
+
+                        ->when(
+                            $data['teacher_id'], fn (Builder $query) => $query->whereHas('student.enrolled_section', function($query) use($data){ 
+                                $query->where('teacher_id', $data['teacher_id']);
+                            }),
+                        )
+                        
+                        ;
                 }),
 
             ], layout: FiltersLayout::AboveContent)
