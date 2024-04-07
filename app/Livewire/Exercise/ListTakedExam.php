@@ -150,7 +150,7 @@ class ListTakedExam extends Component implements HasForms, HasTable
                     // ->url(function(Model $record){
                     //     return route('view-profile',['record'=> $record]);
                     // })
-                    ,
+                    
                     BulkAction::make('delete')
                         ->requiresConfirmation()
                         ->action(fn (Collection $records) => $records->each->delete())
