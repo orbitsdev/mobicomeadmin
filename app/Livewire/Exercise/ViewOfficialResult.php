@@ -14,8 +14,10 @@ class ViewOfficialResult extends Component
      public function mount(){
         
         $this->record = TakedExam::whereHas('excercise', function($query){
-            $query->where('type', Excercise::MULTIPLECHOICE);
+            $query->where('type', Excercise::FILL_IN_THE_BLANK);
         })->first();
+
+    //  dd($this->record);
      }
     public function render()
     {

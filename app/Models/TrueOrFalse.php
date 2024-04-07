@@ -4,6 +4,7 @@ namespace App\Models;
 
 
 use App\Models\Question;
+use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -24,10 +25,22 @@ class TrueOrFalse extends Model
 
     }
 
+   
+
     public function getTextAnswer(){
         
         return $this->correct_answer? 'True': 'False';
 
+    }
+
+    public function getShuffledOptionsAttribute($answer)
+    {
+        $options[] = $answer;
+        $options[] = $this->getTextAnswer();
+        shuffle($options);
+
+
+        return Arr::flatten($options);
     }
 
 
