@@ -36,7 +36,7 @@ class ListTakedExam extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(TakedExam::query())
+            ->query(TakedExam::query()->where('excercise_id', $this->record->id))
             ->columns([
                 Tables\Columns\TextColumn::make('student_id')->formatStateUsing(function (Model $record) {
                     return $record->student?->user->getFullName();
