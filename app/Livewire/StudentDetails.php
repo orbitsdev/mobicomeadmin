@@ -55,8 +55,10 @@ class StudentDetails extends Component implements HasForms, HasInfolists
         //         // ...
         //     ]),
         ])
+        ->persistTab()
+        ->id('order-tabs')
         // ->activeTab(1)
-        ->persistTabInQueryString()
+        // ->persistTabInQueryString()
 
         ,
 
