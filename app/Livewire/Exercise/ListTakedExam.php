@@ -4,6 +4,7 @@ namespace App\Livewire\Exercise;
 
 use Filament\Tables;
 use App\Models\Section;
+use App\Models\Teacher;
 use Livewire\Component;
 use App\Models\Excercise;
 use App\Models\TakedExam;
@@ -66,7 +67,17 @@ class ListTakedExam extends Component implements HasForms, HasTable
                         ->options(Section::whereHas('enrolled_sections')->get()->pluck('title', 'id'))
                         ->label('Section')
                         ->native(false)
-                        ->searchable()
+                        ->searchable(),
+                    Select::make('teacher_id')
+                        ->options(Teacher::whereHas('enrolled_sections')->get()->map(function($item){
+                            return [
+                                'id'=> $item->id,
+                                'fullname'=> $item?->user?->getFullName()
+                            ];
+                        })->pluck('fullname', 'id'))
+                        ->label('Section')
+                        ->native(false)
+                        ->searchable(),
 
                 ])
                 ->query(function (Builder $query, array $data): Builder {
@@ -76,7 +87,7 @@ class ListTakedExam extends Component implements HasForms, HasTable
                                 $query->where('section_id', $data['section_id']);
                             }),
                         );
-                })
+                }),
 
             ], layout: FiltersLayout::AboveContent)
             ->actions([
