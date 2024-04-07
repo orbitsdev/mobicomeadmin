@@ -181,7 +181,7 @@ Route::middleware([
     
     
     
-    Route::get("exercise/teachers/{record}/", ListTeacherUnderExercise::class)->name('exercise-teachers');
+    // Route::get("exercise/teachers/{record}/", ListTeacherUnderExercise::class)->name('exercise-teachers');
     Route::get("exercise/{record}/taked-exams", ListTakedExam::class)->name('exercise-taked-exams-by-sections');
 
 
