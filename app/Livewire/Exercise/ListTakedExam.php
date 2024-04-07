@@ -50,6 +50,13 @@ class ListTakedExam extends Component implements HasForms, HasTable
             ViewColumn::make(' ')->view('tables.columns.exercise-score')
                     ->label('Score'),
 
+
+                    Tables\Columns\TextColumn::make('student.enrolled_section.teacher')->formatStateUsing(function ($state) {
+                        return $state?->user->getFullName();
+                    })
+                    ->badge()
+                    ->color('success')
+                    ->label('Teacher'),
                     
                 Tables\Columns\TextColumn::make('created_at')
                 ->date()
