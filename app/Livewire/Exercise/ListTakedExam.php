@@ -49,7 +49,8 @@ class ListTakedExam extends Component implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('created_at')
                     ->date()
                     ->label('Date'),
-                    ViewColumn::make('tables.columns.exercise-score')
+                
+ViewColumn::make(' ')->view('tables.columns.exercise-score')
                     ->label('Score'),
 
 
