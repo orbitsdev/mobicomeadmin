@@ -38,6 +38,7 @@ use App\Livewire\Chapters\EditChapterLesson;
 use App\Livewire\EnrolledExcerciseScoreDetails;
 use App\Livewire\Excercises\ExerciseDetails;
 use App\Livewire\Exercise\ListTakedExam;
+use App\Livewire\Exercise\ViewOfficialResult;
 use App\Livewire\Exercises\ManageTrueOrFalse;
 use App\Livewire\Teacher\TeacherEditExcercise;
 use App\Livewire\Teacher\TeacherListExcercise;
@@ -177,12 +178,14 @@ Route::middleware([
     Route::get("teacher-enrolled-student-view/{record}", EnrolledStudentDetails::class )->name('enrolled-view-student');
 
     Route::get("teacher/enrolled/student/exercise/score/{record}", EnrolledExcerciseScoreDetails::class)->name('enrolled-teacher-view-exercise-score');
+
     Route::get("teacher/student/taked/exercises", ListTakedExcercise::class)->name('teacher-list-taked-exercises');
     
     
     
     // Route::get("exercise/teachers/{record}/", ListTeacherUnderExercise::class)->name('exercise-teachers');
     Route::get("exercise/{record}/taked-exams", ListTakedExam::class)->name('exercise-taked-exams-by-sections');
+    Route::get("exercise/result/{record}", ViewOfficialResult::class)->name('exercise-official-result');
 
 
     // Route::get("view-excercise/{record}", ExerciseDetails::class)->name('view-excercise');

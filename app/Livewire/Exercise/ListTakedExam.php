@@ -9,9 +9,12 @@ use Livewire\Component;
 use App\Models\Excercise;
 use App\Models\TakedExam;
 use Filament\Tables\Table;
+use Filament\Actions\StaticAction;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Grouping\Group;
 use Illuminate\Contracts\View\View;
+use Filament\Support\Enums\MaxWidth;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Filters\Indicator;
@@ -127,7 +130,27 @@ class ListTakedExam extends Component implements HasForms, HasTable
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
+                    Action::make('view')
+                    ->color('primary')
+                    ->label('View Profile')
+    
+                    ->button()
 
+
+                    ->outlined()
+                    ->modalSubmitAction(false)
+                    ->modalCancelAction(fn (StaticAction $action) => $action->label('Close'))
+                    ->disabledForm()
+                    ->modalContent(fn (Model $record): View => view(
+                        'livewire.exercise.view-official-result',
+                        ['record' => $record],
+                    ))
+                    ->modalWidth(MaxWidth::SevenExtraLarge)
+                    ,
+                    // ->url(function(Model $record){
+                    //     return route('view-profile',['record'=> $record]);
+                    // })
+                    ,
                     BulkAction::make('delete')
                         ->requiresConfirmation()
                         ->action(fn (Collection $records) => $records->each->delete())
