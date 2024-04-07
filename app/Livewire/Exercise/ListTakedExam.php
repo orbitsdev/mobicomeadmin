@@ -75,7 +75,7 @@ class ListTakedExam extends Component implements HasForms, HasTable
                     ->options(Section::whereHas('enrolled_sections')->get()->pluck('title', 'id'))
                     ->label('Section')
                     ->native(false)
-                    ->columnSpan(4)
+                   
                     ->searchable(),
                 Select::make('teacher_id')
                     ->options(Teacher::whereHas('enrolled_sections')->get()->map(function($item){
@@ -85,7 +85,7 @@ class ListTakedExam extends Component implements HasForms, HasTable
                         ];
                     })->pluck('fullname', 'id'))
                     ->label('Teacher')
-                    ->columnSpan(4)
+                  
 
                     ->native(false)
                     ->searchable(),
