@@ -18,39 +18,40 @@
         </div>
 
         @if ($record->feed)
-            <div class="mt-6 bg-gray-100 rounded-lg p-4">
-                <h2 class="text-lg font-semibold mb-2">Feedback:</h2>
-                <div class="flex items-center mb-2">
-                    <p class="mr-2">{{ $record->feed->rate }}</p>
-                    <div class="flex text-4xl">
-                        @php
-                            $ratingLevel = '';
-                            switch ($record->feed->rate) {
-                                case 1:
-                                    $ratingLevel = '🙂'; // Easy
-                                    break;
-                                case 2:
-                                    $ratingLevel = '😊'; // Moderately easy
-                                    break;
-                                case 3:
-                                    $ratingLevel = '😐'; // Moderate
-                                    break;
-                                case 4:
-                                    $ratingLevel = '😕'; // Moderately difficult
-                                    break;
-                                case 5:
-                                    $ratingLevel = '😫'; // Difficult
-                                    break;
-                                default:
-                                    $ratingLevel = '😐'; // Default to Moderate if not specified
-                            }
-                        @endphp
-                        <span>{{ $ratingLevel }}</span>
-                    </div>
+        <div class="mt-6 bg-gray-100 rounded-lg p-4 flex items-center">
+            <h2 class="text-lg font-semibold mb-2 mr-4">Feedback:</h2>
+            <div class="flex items-center">
+                <p class="mr-2">{{ $record->feed->rate }}</p>
+                <div class="text-4xl">
+                    @php
+                        $ratingLevel = '';
+                        switch ($record->feed->rate) {
+                            case 1:
+                                $ratingLevel = '😫'; // Difficult
+                                break;
+                            case 2:
+                                $ratingLevel = '😕'; // Moderately difficult
+                                break;
+                            case 3:
+                                $ratingLevel = '😐'; // Moderate
+                                break;
+                            case 4:
+                                $ratingLevel = '😊'; // Moderately easy
+                                break;
+                            case 5:
+                                $ratingLevel = '🙂'; // Easy
+                                break;
+                            default:
+                                $ratingLevel = '😐'; // Default to Moderate if not specified
+                        }
+                    @endphp
+                    <span style="font-size: 200%;">{{ $ratingLevel }}</span>
                 </div>
-                <p class="text-gray-700"><span class="font-semibold">Message:</span> {{ $record->feed->message }}</p>
             </div>
-        @endif
+            <p class="text-gray-700 ml-4"><span class="font-semibold">Message:</span> {{ $record->feed->message }}</p>
+        </div>
+    @endif
+    
 
         <div class="mt-6 prose max-w-none border-b py-2 mb-6">
             {{-- Markdown content here --}}
