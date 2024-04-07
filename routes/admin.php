@@ -57,6 +57,7 @@ use App\Livewire\Teacher\Management\ListTakedExcercise;
 use App\Livewire\Teacher\TeacherDetails;
 use App\Livewire\TeacherManagement\ListStudent as TeacherManagementListStudent;
 
+Route::get("test", ViewOfficialResult::class )->name('test');
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
