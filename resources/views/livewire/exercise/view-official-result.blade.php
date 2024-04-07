@@ -1,9 +1,13 @@
 <div>
 
+    {{-- @dump($record->excercise) --}}
 
+        @if(request()->routeIs('exercise-official-result'))
 
-
-    <div class="bg-white rounded-md shadow-md p-8">
+        <div class="flex itemce justify-end"> <x-back-button-2 :url="route('student-profile',['record'=> $record->student])"> Back</x-back-button-2> </div>
+        
+        @endif
+    <div class="bg-white rounded-md shadow-md p-8 mt-6">
 
         <div class="grid grid-cols-12 gap-4">
             <div class="col-span-9">
