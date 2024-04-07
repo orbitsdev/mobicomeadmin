@@ -128,7 +128,7 @@ class ListTakedExam extends Component implements HasForms, HasTable
                 // ->titlePrefixedWithLabel(false)
                 
             ])
-            ->filtersFormColumns(2)
+            ->filtersFormColumns(1)
             ->defaultGroup('student.enrolled_section.section.title')
             ;
     }
