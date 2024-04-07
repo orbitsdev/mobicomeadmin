@@ -12,10 +12,17 @@ class Excercise extends Model
 {
     use HasFactory;
 
+
+    public const MULTIPLECHOICE  = 'Multiple Choice';
+    public const TRUE_OR_FALSE  = 'True or False';
+    public const FILL_IN_THE_BLANK  = 'Fill in the Blank';
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
+    
 
     public function questions()
     {
