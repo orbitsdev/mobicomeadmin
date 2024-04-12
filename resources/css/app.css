@@ -49,3 +49,8 @@
     padding: 20px;
 }
 
+.bg-feed {
+    background-image:
+    linear-gradient(to bottom, #3b93f1, rgba(31, 92, 153, 0.866) );
+}
+

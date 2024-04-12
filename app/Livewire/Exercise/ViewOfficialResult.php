@@ -11,14 +11,14 @@ class ViewOfficialResult extends Component
 
      public TakedExam $record;
 
-    //  public function mount(){
-        
-    //     $this->record = TakedExam::whereHas('excercise', function($query){
-    //         $query->where('type', Excercise::FILL_IN_THE_BLANK);
-    //     })->first();
+     public function mount(){
 
-    // //  dd($this->record);
-    //  }
+        $this->record = TakedExam::whereHas('excercise', function($query){
+            $query->where('type', Excercise::FILL_IN_THE_BLANK);
+        })->first();
+
+    //  dd($this->record);
+     }
     public function render()
     {
         return view('livewire.exercise.view-official-result');

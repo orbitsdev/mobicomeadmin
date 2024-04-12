@@ -4,14 +4,14 @@
 
         @if(request()->routeIs('exercise-official-result'))
             @can('is-admin')
-                
+
             <div class="flex itemce justify-end"> <x-back-button-2 :url="route('student-profile',['record'=> $record->student])"> Back</x-back-button-2> </div>
             @endcan
             @can('is-teacher')
             <div class="flex itemce justify-end"> <x-back-button-2 :url="route('enrolled-view-student',['record'=> $record->student])"> Back</x-back-button-2> </div>
-                
+
             @endcan
-        
+
         @endif
     <div class="bg-white rounded-md shadow-md p-8 mt-6">
 
@@ -38,64 +38,90 @@
             </div>
         </div>
 
-        <div class="mt-2 border-t prose max-w-none py-2 mb-6">
+        <div class="mt-2 border-t prose max-w-none py-2 mb-2">
             @markdown($record->excercise->description)
         </div>
 
 
 
         @if ($record->feed)
-            <div class="mt-6 border-t">
+    <div class="   p-4 bg-feed  rounded-lg">
+        <h1 class="text-white uppercase text-lg font-semibold mb-1">FEED</h1>
+        <div class="  rounded  flex items-center">
+            <div class="mr-4 flex items-center mt-2">
 
-                <h1 class="text-gray-800 uppercase text-lg font-semibold mt-4">FEED</h1>
-                <div class="mb-6 mt-4 bg-blue-50 rounded p-6">
+                <div  class="text-white ">
 
-                    <div class="flex items-start mt-4">
-                        <div class="text-center flex items-center justify-start flex-col mr-6">
-                            <p class="">
-                                @switch($record->feed->rate)
-                                    @case(1)
-                                        <span class="text-7xl" role="img" aria-label="Difficult">😫</span>
-                                    <p class="text-sm text-gray-600 mt-2">Difficulty</p>
+                @php
+                    $rating = $record->feed->rate;
+                    $maxRating = 5;
+                    $diff = $maxRating - $rating;
+                @endphp
+                @for ($i = 1; $i <= $maxRating; $i++)
+                    @if ($i <= $rating)
+                        @switch($rating)
+                            @case(1)
+                                <span class="text-3xl" role="img" aria-label="Difficult">😫</span>
                                 @break
-
-                                @case(2)
-                                    <span class="text-7xl" role="img" aria-label="Moderately difficult">😕</span>
-                                    <p class="text-sm text-gray-600 mt-2">Moderately difficult</p>
+                            @case(2)
+                                <span class="text-3xl" role="img" aria-label="Moderately difficult">😕</span>
                                 @break
-
-                                @case(3)
-                                    <span class="text-7xl" role="img" aria-label="Moderate">😐</span>
-                                    <p class="text-sm text-gray-600 mt-2">Moderate</p>
+                            @case(3)
+                                <span class="text-3xl" role="img" aria-label="Moderate">😐</span>
                                 @break
-
-                                @case(4)
-                                    <span class="text-7xl" role="img" aria-label="Moderately easy">😊</span>
-                                    <p class="text-sm text-gray-600 mt-2">Moderately easy</p>
+                            @case(4)
+                                <span class="text-3xl" role="img" aria-label="Moderately easy">😊</span>
                                 @break
-
-                                @case(5)
-                                    <span class="text-7xl" role="img" aria-label="Easy">🙂</span>
-                                    <p class="text-sm text-gray-600 mt-2">Easy</p>
+                            @case(5)
+                                <span class="text-3xl" role="img" aria-label="Easy">😄</span>
                                 @break
-
-                                @default
-                                    <span class="text-7xl" role="img" aria-label="Moderate">😐</span>
-                                    <p class="text-sm text-gray-600 mt-2">Moderate</p>
-                            @endswitch
-                            </p>
-                        </div>
-
-                        <div class="text-gray-700">
-
-                            <p class="mt-2">
-                                {{ $record->feed->message }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                            @default
+                                <span class="text-3xl" role="img" aria-label="Neutral">😐</span>
+                        @endswitch
+                    @else
+                    <span class="text-3xl text-gray-300 " role="img" aria-label="Neutral"><i class="fa-solid fa-face-smile"></i></span>
+                    @endif
+                @endfor
             </div>
-        @endif
+
+            <div class=" text-lg  rounded-2xl px-4 text-gray-800 font-semibold ml-6 bg-yellow-400 ">
+                {{$record->feed->rate}} / 5 (
+                @switch($record->feed->rate)
+                    @case(1)
+                        Difficult
+                        @break
+                    @case(2)
+                        Moderately difficult
+                        @break
+                    @case(3)
+                        Neutral
+                        @break
+                    @case(4)
+                        Moderately easy
+                        @break
+                    @case(5)
+                        Easy
+                        @break
+                    @default
+                        Neutral
+                @endswitch
+                )
+            </div>
+
+
+
+
+
+        </div>
+
+
+        </div>
+        <div class="text-white mt-2">
+            <p>{{ $record->feed->message  }}  </p>
+        </div>
+    </div>
+@endif
+
 
 
 
@@ -117,15 +143,15 @@
                                 </div>
                                 @foreach ($answer->question->multiple_choice->getShuffledOptionsAttribute() as $option)
                                     <div
-                                        class="px-4 py-2 text-sm border-t 
+                                        class="px-4 py-2 text-sm border-t
                 @if (
                     $answer->compareUserAnswer($answer->question->multiple_choice->getCorrectAnswer(), $record->excercise->type) ==
-                        'Correct') {{ $option === $answer->answer ? 'bg-green-50 border border-green-400 text-green-600' : '' }} 
+                        'Correct') {{ $option === $answer->answer ? 'bg-green-50 border border-green-400 text-green-600' : '' }}
                 @elseif (
                     $answer->compareUserAnswer($answer->question->multiple_choice->getCorrectAnswer(), $record->excercise->type) ==
-                        'Wrong') 
-                    {{ $option === $answer->answer ? 'bg-red-50 border border-red-300 text-red-600' : '' }} 
-                @else 
+                        'Wrong')
+                    {{ $option === $answer->answer ? 'bg-red-50 border border-red-300 text-red-600' : '' }}
+                @else
                     {{ $option === $answer->answer ? 'bg-white text-gray-600' : '' }} @endif">
                                         <label class="flex items-center py-2">
                                             @if ($option === $answer->answer)
@@ -254,21 +280,21 @@
                     @endforeach
                 </div>
             @break
-            
+
 
                 @default
             @endswitch
             {{-- @switch($record->excercise->type)
                     @case()
-                        
+
                         @break
-                
+
                     @default
-                        
+
                 @endswitch --}}
         </div>
 
-        {{-- 
+        {{--
         @if ($record->feed)
         <div class="mt-6 rounded-lg p-4 bg-gradient-to-r from-blue-400 to-blue-600">
             <h2 class="text-lg font-semibold mb-2 uppercase text-white">Feedback:</h2>
@@ -306,18 +332,18 @@
     @endif --}}
 
 
-        {{-- 
+        {{--
         <div class="mt-6 prose max-w-none border-b py-2 mb-6">
             Markdown content here
         </div> --}}
-        {{-- 
+        {{--
         @foreach ($record->answers as $answer)
             <div class="mt-6">
                 <div class="p-4 border rounded-md shadow-md">
                     <p class="flex items-center text-gray-700">
                         <span class="mr-auto"><strong>Question:</strong> {{ $answer->question->getNumber() }}. {{ $answer->question->question }}</span>
 
-                        
+
                         {{$answer->compareUserAnswer()}}
                         @if ($answer->is_correct)
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
